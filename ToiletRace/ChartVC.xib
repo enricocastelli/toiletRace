@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="landscape">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ChartVC" customModule="TheRace" customModuleProvider="target">
+            <connections>
+                <outlet property="tableView" destination="6MJ-au-9WO" id="Mlx-Jq-fNu"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="6MJ-au-9WO">
+                    <rect key="frame" x="0.0" y="64" width="667" height="311"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="jCB-e4-rz3"/>
+                        <outlet property="delegate" destination="-1" id="ato-HG-xzb"/>
+                    </connections>
+                </tableView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X0U-kC-Yjo">
+                    <rect key="frame" x="16" y="16" width="40" height="30"/>
+                    <state key="normal" title="BACK"/>
+                    <connections>
+                        <action selector="backTapped:" destination="-1" eventType="touchUpInside" id="4d5-Y1-Wx2"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ppc-xe-apw">
+                    <rect key="frame" x="605" y="16" width="46" height="30"/>
+                    <state key="normal" title="RESET"/>
+                    <connections>
+                        <action selector="reset:" destination="-1" eventType="touchUpInside" id="9PC-LH-6kA"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="X0U-kC-Yjo" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="16" id="7Eg-1Y-CR4"/>
+                <constraint firstItem="Ppc-xe-apw" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="16" id="HVo-FE-9Y8"/>
+                <constraint firstItem="6MJ-au-9WO" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Z5H-o9-aw6"/>
+                <constraint firstItem="6MJ-au-9WO" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="64" id="goN-cs-kNG"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Ppc-xe-apw" secondAttribute="trailing" constant="16" id="hwy-6Q-wdp"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="6MJ-au-9WO" secondAttribute="bottom" id="hx9-Lm-Rid"/>
+                <constraint firstItem="X0U-kC-Yjo" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="knO-Vz-BVi"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="6MJ-au-9WO" secondAttribute="trailing" id="lQS-Jh-Jya"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+        </view>
+    </objects>
+</document>
