@@ -9,11 +9,11 @@
 /* Begin PBXBuildFile section */
 		1C034D00218CA06E001C5694 /* BonusButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C034CFF218CA06E001C5694 /* BonusButton.swift */; };
 		1C03B3A4217E658F003CD652 /* Loading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C03B3A3217E658F003CD652 /* Loading.swift */; };
-		1C03B3A6217F479F003CD652 /* Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C03B3A5217F479F003CD652 /* Navigation.swift */; };
 		1C0EEBC4217F56DE008EE331 /* spluff.scnp in Resources */ = {isa = PBXBuildFile; fileRef = 1C0EEBC2217F56DE008EE331 /* spluff.scnp */; };
 		1C0EEBC5217F56DE008EE331 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C0EEBC3217F56DE008EE331 /* spark.png */; };
 		1C657ECA219CB44800783BD9 /* WaterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C657EC9219CB44800783BD9 /* WaterViewController.swift */; };
 		1C7C1C1921C7B2E400D47FC8 /* ContactManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7C1C1821C7B2E400D47FC8 /* ContactManager.swift */; };
+		1C7C1C1B21C7B79200D47FC8 /* Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7C1C1A21C7B79200D47FC8 /* Navigation.swift */; };
 		1C815D2F21806496006557D4 /* ShowroomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C815D2D21806496006557D4 /* ShowroomVC.swift */; };
 		1C815D3021806496006557D4 /* ShowroomVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C815D2E21806496006557D4 /* ShowroomVC.xib */; };
 		1CAD18412194847900A310A7 /* mud.scnp in Resources */ = {isa = PBXBuildFile; fileRef = 1CAD18402194847900A310A7 /* mud.scnp */; };
@@ -52,11 +52,11 @@
 /* Begin PBXFileReference section */
 		1C034CFF218CA06E001C5694 /* BonusButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonusButton.swift; sourceTree = "<group>"; };
 		1C03B3A3217E658F003CD652 /* Loading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loading.swift; sourceTree = "<group>"; };
-		1C03B3A5217F479F003CD652 /* Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigation.swift; sourceTree = "<group>"; };
 		1C0EEBC2217F56DE008EE331 /* spluff.scnp */ = {isa = PBXFileReference; lastKnownFileType = file.scp; path = spluff.scnp; sourceTree = "<group>"; };
 		1C0EEBC3217F56DE008EE331 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		1C657EC9219CB44800783BD9 /* WaterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterViewController.swift; sourceTree = "<group>"; };
 		1C7C1C1821C7B2E400D47FC8 /* ContactManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactManager.swift; sourceTree = "<group>"; };
+		1C7C1C1A21C7B79200D47FC8 /* Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigation.swift; sourceTree = "<group>"; };
 		1C815D2D21806496006557D4 /* ShowroomVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowroomVC.swift; sourceTree = "<group>"; };
 		1C815D2E21806496006557D4 /* ShowroomVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShowroomVC.xib; sourceTree = "<group>"; };
 		1CAD18402194847900A310A7 /* mud.scnp */ = {isa = PBXFileReference; lastKnownFileType = file.scp; path = mud.scnp; sourceTree = "<group>"; };
@@ -147,9 +147,9 @@
 				1CB8A5962193171E00084496 /* ToiletViewController.swift */,
 				1CB8A59A21932A6E00084496 /* PipeViewController.swift */,
 				1C657EC9219CB44800783BD9 /* WaterViewController.swift */,
-				1C03B3A5217F479F003CD652 /* Navigation.swift */,
 				1CBD9E682178A29900109DC3 /* NodeCreator.swift */,
 				1C03B3A3217E658F003CD652 /* Loading.swift */,
+				1C7C1C1A21C7B79200D47FC8 /* Navigation.swift */,
 				1C7C1C1821C7B2E400D47FC8 /* ContactManager.swift */,
 				1CB8D7B6217616D500B38BA2 /* Main.storyboard */,
 				1CB8D7952176168200B38BA2 /* ChartCell.swift */,
@@ -272,6 +272,7 @@
 				1CB8D7AC2176168300B38BA2 /* ChartVC.swift in Sources */,
 				1CB8D7B22176168300B38BA2 /* ResultCell.swift in Sources */,
 				1CB8D7A92176168300B38BA2 /* Pilot.swift in Sources */,
+				1C7C1C1B21C7B79200D47FC8 /* Navigation.swift in Sources */,
 				1CBD9E692178A29900109DC3 /* NodeCreator.swift in Sources */,
 				1C034D00218CA06E001C5694 /* BonusButton.swift in Sources */,
 				1CB8D77D217615C000B38BA2 /* AppDelegate.swift in Sources */,
@@ -279,7 +280,6 @@
 				1CB8D7AE2176168300B38BA2 /* Stuff.swift in Sources */,
 				1CB8D7A32176168300B38BA2 /* GameResultVC.swift in Sources */,
 				1CB8A59B21932A6E00084496 /* PipeViewController.swift in Sources */,
-				1C03B3A6217F479F003CD652 /* Navigation.swift in Sources */,
 				1C657ECA219CB44800783BD9 /* WaterViewController.swift in Sources */,
 				1CB8D7AD2176168300B38BA2 /* FirstVC.swift in Sources */,
 				1CFE97082191D942007F837A /* Bonus.swift in Sources */,
