@@ -149,17 +149,6 @@ class ShowroomVC: UIViewController {
     @objc func goToRace() {
         let gameVC : GameViewController = {
             return ToiletViewController()
-            if selectedItem == 2 {
-                return ToiletViewController()
-            } else if selectedItem == 1 {
-                return PipeViewController()
-            } else if selectedItem == 0 {
-                return JumpingViewController()
-            } else if selectedItem == 3 {
-                return WaterViewController()
-            } else {
-                return HouseViewController()
-            }
         }()
         Navigation.main.pushViewController(gameVC, animated: true)
         Navigation.startLoading()

@@ -120,7 +120,7 @@ class Poo {
         }
     }
     
-    /// Restitution force when poop collide with impediment.
+    /// Restitution force when poop collide with obstacle.
     func restitution() -> CGFloat {
         switch name {
         case .GuanoStar:

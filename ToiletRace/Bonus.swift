@@ -17,7 +17,7 @@ enum Bonus {
     case Sprint
     /// Makes opponents slower
     case Slower
-    /// Passes trough impediments
+    /// Passes trough obstacles
     case Ghost
     /// Teleports 20 points forward
     case Teleport

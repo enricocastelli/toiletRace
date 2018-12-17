@@ -29,7 +29,7 @@ import UIKit
 class Collider {
     static let ball: Int = 4
     static let bounds : Int = 8
-    static let impediment: Int = 16
+    static let obstacle: Int = 16
     static let floor: Int = 32
 }
 

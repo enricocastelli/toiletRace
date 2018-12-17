@@ -37,16 +37,16 @@ class ToiletViewController: GameViewController {
     
     override func prepare() {
         super.prepare()
-        self.sceneView.prepare([scene, SCNScene(named: "art.scnassets/Nodes/ToiletPaper.scn")!, SCNScene(named: "art.scnassets/Nodes/pill.scn")!]) { (done) in
-            self.newGame()
-        }
         let carpetNode = NodeCreator.createCarpet(zed: length)
         self.scene.rootNode.addChildNode(carpetNode)
         for node in NodeCreator.createBound(zed: abs(length)) {
             self.scene.rootNode.addChildNode(node)
         }
-        self.addImpediment()
+        self.addObstacle()
         self.scene.rootNode.addChildNode(NodeCreator.createFinish(zed: self.length))
+        self.sceneView.prepare([scene, SCNScene(named: "art.scnassets/Nodes/ToiletPaper.scn")!, SCNScene(named: "art.scnassets/Nodes/pill.scn")!, scene.rootNode]) { (done) in
+            self.newGame()
+        }
     }
     
     override func newGame() {
@@ -54,7 +54,7 @@ class ToiletViewController: GameViewController {
         eulerYes = false
     }
     
-    func addImpediment() {
+    func addObstacle() {
         let safeLength = abs(length) - 20
         let supersafefeLength = abs(length) - 30
         let safeStart = UInt32(abs(length) - 40)
@@ -103,59 +103,8 @@ class ToiletViewController: GameViewController {
         guard started == true else { return }
     }
     
-    override func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
-        super.physicsWorld(world, didBegin: contact)
-        detectImpedimentCollision(contact: contact)
-        if contact.nodeB.name == "bound" {
-            
-        } else if contact.nodeB.name == "carpet" {
-            guard contact.nodeB.name != "floor" else { return }
-            jump(node: contact.nodeA)
-        } else if contact.nodeA.name == "carpet" {
-            guard contact.nodeB.name != "floor" && contact.nodeB.name != "sponge" && contact.nodeB.name != "paper" else { return }
-            jump(node: contact.nodeB)
-        }
-    }
     
-    func detectImpedimentCollision(contact: SCNPhysicsContact) {
-        let nodeA = contact.nodeA
-        let nodeB = contact.nodeB
-        if nodeA.name == "bath" {
-            if nodeB.name == "paper" || nodeB.name == "sponge" || nodeB.name == "pill" {
-                Logger(ms: "removing \(nodeB.name!)")
-                nodeB.removeFromParentNode()
-            }
-        } else if nodeB.name == "bath" {
-            if nodeA.name == "paper" || nodeA.name == "sponge" || nodeA.name == "pill"  {
-                Logger(ms: "removing \(nodeA.name!)")
-                nodeA.removeFromParentNode()
-            }
-        }
-        if nodeA.name == "pill" {
-            if nodeB.name == "paper" || nodeB.name == "sponge" {
-                Logger(ms: "removing \(nodeB.name!)")
-                nodeB.removeFromParentNode()
-            }
-        } else if nodeB.name == "pill" {
-            if nodeA.name == "paper" || nodeA.name == "sponge" {
-                Logger(ms: "removing \(nodeA.name!)")
-                nodeA.removeFromParentNode()
-            }
-        }
-        if nodeA.name == "sponge" {
-            if nodeB.name == "paper" {
-                Logger(ms: "removing \(nodeB.name!)")
-                nodeB.removeFromParentNode()
-            }
-        } else if nodeB.name == "sponge" {
-            if nodeA.name == "paper" {
-                Logger(ms: "removing \(nodeA.name!)")
-                nodeA.removeFromParentNode()
-            }
-        }
-    }
-    
-    func jump(node: SCNNode) {
+    override func jump(node: SCNNode) {
         node.physicsBody?.clearAllForces()
         if node == ballNode {
             eulerYes = true

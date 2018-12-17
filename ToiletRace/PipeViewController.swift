@@ -43,7 +43,7 @@ class PipeViewController: GameViewController {
         sceneView.prepare([scene, SCNScene(named: "art.scnassets/Nodes/trash.scn")!, SCNScene(named: "art.scnassets/Nodes/rat.scn")!]) { (done) in
             self.newGame()
         }
-        addImpediment()
+        addObstacle()
         setFinish()
         addSmoke()
     }
@@ -52,7 +52,7 @@ class PipeViewController: GameViewController {
         super.setupFloor()
     }
     
-    func addImpediment() {
+    func addObstacle() {
         let safeLength = abs(length) - 20
         let safeStart = UInt32(abs(length) - 70)
         for _ in 0...Int(abs(length)/10) {
@@ -97,7 +97,7 @@ class PipeViewController: GameViewController {
     func setFinish() {
         finishNode.physicsBody = SCNPhysicsBody.kinematic()
         finishNode.physicsBody?.categoryBitMask = Collider.bounds
-        finishNode.physicsBody?.collisionBitMask = Collider.impediment
+        finishNode.physicsBody?.collisionBitMask = Collider.obstacle
         finishNode.name = "finish"
     }
     
@@ -114,37 +114,6 @@ class PipeViewController: GameViewController {
         }
     }
     
-    override func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
-        super.physicsWorld(world, didBegin: contact)
-        detectImpedimentCollision(contact: contact)
-    }
-    
-    func detectImpedimentCollision(contact: SCNPhysicsContact) {
-        let nodeA = contact.nodeA
-        let nodeB = contact.nodeB
-        if nodeA.name == "rat" {
-            if nodeB.name == "trash" || nodeB.name == "rock" {
-                Logger(ms: "removing \(nodeB.name!)")
-                nodeB.removeFromParentNode()
-            }
-        } else if nodeB.name == "rat" {
-            if nodeA.name == "trash" || nodeA.name == "rock" {
-                Logger(ms: "removing \(nodeA.name!)")
-                nodeA.removeFromParentNode()
-            }
-        }
-        if nodeA.name == "rock" {
-            if nodeB.name == "trash" {
-                Logger(ms: "removing \(nodeB.name!)")
-                nodeB.removeFromParentNode()
-            }
-        } else if nodeB.name == "rock" {
-            if nodeA.name == "trash" {
-                Logger(ms: "removing \(nodeA.name!)")
-                nodeA.removeFromParentNode()
-            }
-        }
-    }
     
     override func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         super.renderer(renderer, updateAtTime: time)
@@ -178,8 +147,4 @@ class PipeViewController: GameViewController {
         }
     }
     
-//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        super.touchesBegan(touches, with: event)
-//
-//    }
 }

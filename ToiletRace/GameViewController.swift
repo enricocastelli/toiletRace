@@ -23,7 +23,7 @@ class GameViewController: UIViewController {
     var ballNode:SCNNode!
     var selfieStickNode:SCNNode!
     var floor : SCNNode!
-    
+    var contactManager: ContactManager!
     /// length of track
     var length: Float = -250
     
@@ -100,7 +100,10 @@ class GameViewController: UIViewController {
         sceneView = SCNView(frame: view.frame)
         view.addSubview(sceneView)
         prepare()
+        contactManager = ContactManager(gameVC: self)
     }
+    
+    // MARK:- PREPARATION AND INITIAL COMMON METHODS
     
     func prepare() {
         self.setupScene()
@@ -116,7 +119,7 @@ class GameViewController: UIViewController {
         sceneView.allowsCameraControl = false
         scene = sceneForWorld()
         sceneView.scene = scene
-        scene.physicsWorld.contactDelegate = self
+        scene.physicsWorld.contactDelegate = contactManager
         sceneView.isPlaying = false
         selfieStickNode = scene.rootNode.childNode(withName: "selfieStick", recursively: true)!
     }
@@ -160,14 +163,7 @@ class GameViewController: UIViewController {
     
     @objc func moveCamera() {
         Navigation.stopLoading()
-        let ballPosition = ballNode.presentation.position
-        let targetPosition = SCNVector3(x: ballPosition.x + xTot, y: ballPosition.y + yTot, z:ballPosition.z + zTot)
-        var cameraPosition = selfieStickNode.position
-        let camDamping:Float = 0.3
-        let xComponent = cameraPosition.x * (1 - camDamping) + targetPosition.x * camDamping
-        let yComponent = cameraPosition.y * (1 - camDamping) + targetPosition.y * camDamping
-        let zComponent = cameraPosition.z * (1 - camDamping) + targetPosition.z * camDamping
-        cameraPosition = SCNVector3(x: xComponent, y: yComponent, z: zComponent)
+        let cameraPosition = getCameraPosition()
         let action = SCNAction.move(to: cameraPosition, duration: 3)
         
         selfieStickNode.runAction(action) {
@@ -258,7 +254,7 @@ class GameViewController: UIViewController {
     func setupFloor() {
         floor = scene.rootNode.childNode(withName: "floor", recursively: true)!
         floor.physicsBody?.categoryBitMask = Collider.floor
-        floor.physicsBody?.collisionBitMask = Collider.impediment | Collider.ball
+        floor.physicsBody?.collisionBitMask = Collider.obstacle | Collider.ball
     }
     
     func setupTable() {
@@ -487,6 +483,18 @@ class GameViewController: UIViewController {
         return offset
     }
     
+    func getCameraPosition() -> SCNVector3 {
+        let ballPosition = ballNode.presentation.position
+        let targetPosition = SCNVector3(x: ballPosition.x + xTot, y: ballPosition.y + yTot, z:ballPosition.z + zTot)
+        var cameraPosition = selfieStickNode.position
+        let camDamping:Float = 0.3
+        let xComponent = cameraPosition.x * (1 - camDamping) + targetPosition.x * camDamping
+        let yComponent = cameraPosition.y * (1 - camDamping) + targetPosition.y * camDamping
+        let zComponent = cameraPosition.z * (1 - camDamping) + targetPosition.z * camDamping
+        cameraPosition = SCNVector3(x: xComponent, y: yComponent, z: zComponent)
+        return cameraPosition
+    }
+    
     @objc func blockAvoider() {
         for opponent in currentPlayers {
             if opponent.name == .GuanoStar {
@@ -522,6 +530,28 @@ class GameViewController: UIViewController {
     
     func addFinalAnimation() {
         
+    }
+    
+    
+    func calculateTime(firstDate: Date) -> Float {
+        return Float(Date().timeIntervalSince(firstDate))
+    }
+    
+    @objc func checkFinish() {
+        if !winners.contains(ballNode) {
+            let time : Float =  (calculateTime(firstDate: startDate!) + 3)
+            winners.append(ballNode)
+            //            let total = Data.shared.scores[node.name!] ?? 0
+            let total : Float = 0
+            let result = Result(player: Poo(name: PooName(rawValue: ballNode.name!)!), time: time, timeToWinner: nil, points: 0, totalPoints: total)
+            finalResults.append(result)
+            gameOver = true
+            gameIsOver()
+        }
+    }
+    
+    func jump(node: SCNNode) {
+        // TO BE OVERRIDDEN
     }
     
     func handleFinish(ball: SCNNode) {
@@ -569,15 +599,7 @@ extension GameViewController : SCNSceneRendererDelegate {
     
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         if shouldMoveCamera {
-            let ball = ballNode.presentation
-            let ballPosition = ball.position
-            let targetPosition = SCNVector3(x: ballPosition.x + xTot, y: ballPosition.y + yTot, z:ballPosition.z + zTot)
-            var cameraPosition = selfieStickNode.position
-            let camDamping:Float = 0.3
-            let xComponent = cameraPosition.x * (1 - camDamping) + targetPosition.x * camDamping
-            let yComponent = cameraPosition.y * (1 - camDamping) + targetPosition.y * camDamping
-            let zComponent = cameraPosition.z * (1 - camDamping) + targetPosition.z * camDamping
-            cameraPosition = SCNVector3(x: xComponent, y: yComponent, z: zComponent)
+            let cameraPosition = getCameraPosition()
             selfieStickNode.position = cameraPosition
         }
         guard started == true else { return }
@@ -585,35 +607,7 @@ extension GameViewController : SCNSceneRendererDelegate {
         blockAvoider()
     }
 }
-
-extension GameViewController : SCNPhysicsContactDelegate {
     
-    func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
-        if contact.nodeB.name == "finish" {
-            handleFinish(ball: contact.nodeA)
-        } else if contact.nodeA.name == "finish" {
-            handleFinish(ball: contact.nodeB)
-        }
-    }
-    
-    func calculateTime(firstDate: Date) -> Float {
-        return Float(Date().timeIntervalSince(firstDate))
-    }
-    
-    @objc func checkFinish() {
-        if !winners.contains(ballNode) {
-            let time : Float =  (calculateTime(firstDate: startDate!) + 3)
-            winners.append(ballNode)
-            //            let total = Data.shared.scores[node.name!] ?? 0
-            let total : Float = 0
-            let result = Result(player: Poo(name: PooName(rawValue: ballNode.name!)!), time: time, timeToWinner: nil, points: 0, totalPoints: total)
-            finalResults.append(result)
-            gameOver = true
-            gameIsOver()
-        }
-    }
-    
-}
 
 extension GameViewController: UITableViewDataSource {
     

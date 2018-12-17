@@ -15,7 +15,7 @@ class NodeCreator {
         ballNode.position = postion ?? SCNVector3(0.0, 0.0, 0.0)
         ballNode.physicsBody = SCNPhysicsBody.dynamic()
         ballNode.physicsBody?.restitution = Data.shared.selectedPlayer.restitution()
-        ballNode.physicsBody?.contactTestBitMask = Collider.ball | Collider.impediment | Collider.bounds
+        ballNode.physicsBody?.contactTestBitMask = Collider.ball | Collider.obstacle | Collider.bounds
         ballNode.physicsBody?.categoryBitMask = Collider.ball
         ballNode.name = Data.shared.selectedPlayer.name.rawValue
         return ballNode
@@ -39,7 +39,7 @@ class NodeCreator {
         oppNode.position = actualPosition
         oppNode.physicsBody = SCNPhysicsBody(type: SCNPhysicsBodyType.dynamic, shape: nil)
         oppNode.physicsBody?.restitution = players[index].restitution()
-        oppNode.physicsBody?.contactTestBitMask = Collider.ball | Collider.bounds | Collider.impediment
+        oppNode.physicsBody?.contactTestBitMask = Collider.ball | Collider.bounds | Collider.obstacle
         oppNode.physicsBody?.categoryBitMask = Collider.ball
         return oppNode
     }
@@ -89,7 +89,7 @@ class NodeCreator {
         return tubeNode
     }
     
-    //MARK:- Impediment
+    //MARK:- obstacle
     
     static func createPee(zed: Float) -> SCNNode {
         let pee = SCNCylinder(radius: 2, height: 0)
@@ -132,8 +132,8 @@ class NodeCreator {
 //        let randomX = Float(spongeIndex)
         spongeNode.position = SCNVector3(randomX, -0.5, Float(zed))
         spongeNode.physicsBody = SCNPhysicsBody(type: SCNPhysicsBodyType.kinematic, shape: nil)
-        spongeNode.physicsBody?.contactTestBitMask = Collider.impediment
-        spongeNode.physicsBody?.categoryBitMask = Collider.impediment
+        spongeNode.physicsBody?.contactTestBitMask = Collider.obstacle
+        spongeNode.physicsBody?.categoryBitMask = Collider.obstacle
         spongeNode.physicsBody?.restitution = 2
         spongeNode.name = "sponge"
         return spongeNode
@@ -149,7 +149,7 @@ class NodeCreator {
         let randomX = 5 - Float(arc4random_uniform(+10))
         paperNode.position = SCNVector3(randomX, 0, Float(zed))
         paperNode.physicsBody = SCNPhysicsBody(type: SCNPhysicsBodyType.kinematic, shape: nil)
-        paperNode.physicsBody?.categoryBitMask = Collider.impediment
+        paperNode.physicsBody?.categoryBitMask = Collider.obstacle
         paperNode.name = "paper"
         return paperNode
     }
@@ -162,8 +162,8 @@ class NodeCreator {
         pillNode.eulerAngles = SCNVector3(x: Float.pi/2, y: 0, z: 0)
         pillNode.physicsBody = SCNPhysicsBody(type: SCNPhysicsBodyType.kinematic, shape: nil)
         pillNode.physicsBody?.mass = 6
-        pillNode.physicsBody?.contactTestBitMask = Collider.impediment
-        pillNode.physicsBody?.categoryBitMask = Collider.impediment
+        pillNode.physicsBody?.contactTestBitMask = Collider.obstacle
+        pillNode.physicsBody?.categoryBitMask = Collider.obstacle
         pillNode.name = "pill"
         pillNode.moveForever()
         return pillNode
@@ -212,8 +212,8 @@ class NodeCreator {
         geoPlane.materials.first?.diffuse.contents = UIColor.clear
         let planeNode = SCNNode(geometry: geoPlane)
         planeNode.physicsBody = SCNPhysicsBody(type: SCNPhysicsBodyType.kinematic, shape: nil)
-        planeNode.physicsBody?.contactTestBitMask = Collider.impediment
-        planeNode.physicsBody?.categoryBitMask = Collider.impediment
+        planeNode.physicsBody?.contactTestBitMask = Collider.obstacle
+        planeNode.physicsBody?.categoryBitMask = Collider.obstacle
         planeNode.eulerAngles = SCNVector3(Float.pi/2, 0, 0)
         planeNode.position = SCNVector3(0, -0.5, Float(zed + 2))
         planeNode.name = "bath"
@@ -268,7 +268,7 @@ class NodeCreator {
         trashNode.physicsBody = SCNPhysicsBody(type: SCNPhysicsBodyType.static, shape: nil)
         trashNode.physicsBody?.isAffectedByGravity = false
         trashNode.physicsBody?.restitution = 2
-        trashNode.physicsBody?.categoryBitMask = Collider.impediment
+        trashNode.physicsBody?.categoryBitMask = Collider.obstacle
         trashNode.physicsBody?.collisionBitMask = Collider.ball
         trashNode.name = "trash"
         return trashNode
@@ -310,8 +310,8 @@ class NodeCreator {
         rockNode.position = SCNVector3(randomX, 5, Float(zed))
         rockNode.physicsBody = SCNPhysicsBody(type: SCNPhysicsBodyType.dynamic, shape: nil)
         rockNode.physicsBody?.mass = 20
-        rockNode.physicsBody?.contactTestBitMask = Collider.impediment
-        rockNode.physicsBody?.categoryBitMask = Collider.impediment
+        rockNode.physicsBody?.contactTestBitMask = Collider.obstacle
+        rockNode.physicsBody?.categoryBitMask = Collider.obstacle
         rockNode.physicsBody?.restitution = 0.5
         rockNode.name = "rock"
         return rockNode

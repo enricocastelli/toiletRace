@@ -49,7 +49,7 @@ class WaterViewController: GameViewController {
             self.addBubble()
             let _ = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(self.addBubble), userInfo: nil, repeats: true)
             let _ = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(self.moveY), userInfo: nil, repeats: true)
-            self.addImpediments()
+            self.addObstacles()
         }
     }
     
@@ -67,7 +67,7 @@ class WaterViewController: GameViewController {
         ballNode.physicsBody?.applyTorque(torque, asImpulse: true)
     }
     
-    func addImpediments() {
+    func addObstacles() {
         fishTimer = Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(addFish), userInfo: nil, repeats: true)
     }
     
@@ -139,8 +139,5 @@ class WaterViewController: GameViewController {
         }
     }
     
-    override func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
-        super.physicsWorld(world, didBegin: contact)
-    }
 
 }
