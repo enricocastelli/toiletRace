@@ -20,7 +20,6 @@
 		1C815D3021806496006557D4 /* ShowroomVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C815D2E21806496006557D4 /* ShowroomVC.xib */; };
 		1CAD18412194847900A310A7 /* mud.scnp in Resources */ = {isa = PBXBuildFile; fileRef = 1CAD18402194847900A310A7 /* mud.scnp */; };
 		1CB8A5972193171E00084496 /* ToiletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8A5962193171E00084496 /* ToiletViewController.swift */; };
-		1CB8A5992193298E00084496 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CB8A5982193298E00084496 /* Main.storyboard */; };
 		1CB8A59B21932A6E00084496 /* PipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8A59A21932A6E00084496 /* PipeViewController.swift */; };
 		1CB8D77D217615C000B38BA2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8D77C217615C000B38BA2 /* AppDelegate.swift */; };
 		1CB8D77F217615C000B38BA2 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 1CB8D77E217615C000B38BA2 /* art.scnassets */; };
@@ -65,7 +64,6 @@
 		1C815D2E21806496006557D4 /* ShowroomVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShowroomVC.xib; sourceTree = "<group>"; };
 		1CAD18402194847900A310A7 /* mud.scnp */ = {isa = PBXFileReference; lastKnownFileType = file.scp; path = mud.scnp; sourceTree = "<group>"; };
 		1CB8A5962193171E00084496 /* ToiletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToiletViewController.swift; sourceTree = "<group>"; };
-		1CB8A5982193298E00084496 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		1CB8A59A21932A6E00084496 /* PipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipeViewController.swift; sourceTree = "<group>"; };
 		1CB8D779217615C000B38BA2 /* ToiletRace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToiletRace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CB8D77C217615C000B38BA2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -125,6 +123,69 @@
 			path = Particles;
 			sourceTree = "<group>";
 		};
+		1C7C1C2F21C7FBE800D47FC8 /* Worlds */ = {
+			isa = PBXGroup;
+			children = (
+				1CB8D780217615C000B38BA2 /* GameViewController.swift */,
+				1CB8A5962193171E00084496 /* ToiletViewController.swift */,
+				1CB8A59A21932A6E00084496 /* PipeViewController.swift */,
+				1C657EC9219CB44800783BD9 /* WaterViewController.swift */,
+			);
+			path = Worlds;
+			sourceTree = "<group>";
+		};
+		1C7C1C3021C7FBFD00D47FC8 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				1CBD9E682178A29900109DC3 /* NodeCreator.swift */,
+				1C7C1C1A21C7B79200D47FC8 /* Navigation.swift */,
+				1C7C1C1821C7B2E400D47FC8 /* ContactManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		1C7C1C3121C7FC2600D47FC8 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				1CB8D7922176168200B38BA2 /* Extension.swift */,
+				1CB8D79C2176168200B38BA2 /* Stuff.swift */,
+				1C7C1C2D21C7F7D700D47FC8 /* Values.swift */,
+				1CB8D7972176168200B38BA2 /* Poo.swift */,
+				1CFE97072191D942007F837A /* Bonus.swift */,
+			);
+			path = Objects;
+			sourceTree = "<group>";
+		};
+		1C7C1C3221C7FC3300D47FC8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				1C03B3A3217E658F003CD652 /* Loading.swift */,
+				1C7C1C1C21C7B85A00D47FC8 /* ControllerView.swift */,
+				1C034CFF218CA06E001C5694 /* BonusButton.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		1C7C1C3321C7FC4100D47FC8 /* Navigation and VC */ = {
+			isa = PBXGroup;
+			children = (
+				1CB8D7B6217616D500B38BA2 /* Main.storyboard */,
+				1CB8D7952176168200B38BA2 /* ChartCell.swift */,
+				1CB8D7992176168200B38BA2 /* ChartCell.xib */,
+				1CB8D79A2176168200B38BA2 /* ChartVC.swift */,
+				1CB8D7902176168200B38BA2 /* ChartVC.xib */,
+				1CB8D79B2176168200B38BA2 /* FirstVC.swift */,
+				1CB8D7A12176168200B38BA2 /* FirstVC.xib */,
+				1CB8D7912176168200B38BA2 /* GameResultVC.swift */,
+				1CB8D79E2176168200B38BA2 /* GameResultVC.xib */,
+				1C815D2D21806496006557D4 /* ShowroomVC.swift */,
+				1C815D2E21806496006557D4 /* ShowroomVC.xib */,
+				1CB8D7A02176168200B38BA2 /* ResultCell.swift */,
+				1CB8D79F2176168200B38BA2 /* ResultCell.xib */,
+			);
+			path = "Navigation and VC";
+			sourceTree = "<group>";
+		};
 		1CB8D770217615C000B38BA2 = {
 			isa = PBXGroup;
 			children = (
@@ -147,38 +208,14 @@
 				1CB8D77C217615C000B38BA2 /* AppDelegate.swift */,
 				1C657EC82199D5CF00783BD9 /* Particles */,
 				1CB8D77E217615C000B38BA2 /* art.scnassets */,
-				1CB8D780217615C000B38BA2 /* GameViewController.swift */,
-				1CB8A5962193171E00084496 /* ToiletViewController.swift */,
-				1CB8A59A21932A6E00084496 /* PipeViewController.swift */,
-				1C657EC9219CB44800783BD9 /* WaterViewController.swift */,
-				1CBD9E682178A29900109DC3 /* NodeCreator.swift */,
-				1C03B3A3217E658F003CD652 /* Loading.swift */,
-				1C7C1C1A21C7B79200D47FC8 /* Navigation.swift */,
-				1C7C1C1821C7B2E400D47FC8 /* ContactManager.swift */,
-				1C7C1C1C21C7B85A00D47FC8 /* ControllerView.swift */,
-				1C034CFF218CA06E001C5694 /* BonusButton.swift */,
-				1C7C1C2D21C7F7D700D47FC8 /* Values.swift */,
-				1CB8D7972176168200B38BA2 /* Poo.swift */,
-				1CFE97072191D942007F837A /* Bonus.swift */,
-				1CB8D7B6217616D500B38BA2 /* Main.storyboard */,
-				1CB8D7952176168200B38BA2 /* ChartCell.swift */,
-				1CB8D7992176168200B38BA2 /* ChartCell.xib */,
-				1CB8D79A2176168200B38BA2 /* ChartVC.swift */,
-				1CB8D7902176168200B38BA2 /* ChartVC.xib */,
-				1CB8D7922176168200B38BA2 /* Extension.swift */,
-				1CB8D79B2176168200B38BA2 /* FirstVC.swift */,
-				1CB8D7A12176168200B38BA2 /* FirstVC.xib */,
-				1CB8D7912176168200B38BA2 /* GameResultVC.swift */,
-				1CB8D79E2176168200B38BA2 /* GameResultVC.xib */,
-				1C815D2D21806496006557D4 /* ShowroomVC.swift */,
-				1C815D2E21806496006557D4 /* ShowroomVC.xib */,
-				1CB8D7A02176168200B38BA2 /* ResultCell.swift */,
-				1CB8D79F2176168200B38BA2 /* ResultCell.xib */,
-				1CB8D79C2176168200B38BA2 /* Stuff.swift */,
+				1C7C1C2F21C7FBE800D47FC8 /* Worlds */,
+				1C7C1C3221C7FC3300D47FC8 /* Views */,
+				1C7C1C3021C7FBFD00D47FC8 /* Managers */,
+				1C7C1C3121C7FC2600D47FC8 /* Objects */,
+				1C7C1C3321C7FC4100D47FC8 /* Navigation and VC */,
 				1CB8D7B82176171C00B38BA2 /* Info.plist */,
 				1CB8D785217615C100B38BA2 /* Assets.xcassets */,
 				1CB8D787217615C100B38BA2 /* LaunchScreen.storyboard */,
-				1CB8A5982193298E00084496 /* Main.storyboard */,
 			);
 			path = ToiletRace;
 			sourceTree = "<group>";
@@ -256,7 +293,6 @@
 				1CBD9E6621775A7000109DC3 /* smoke.png in Resources */,
 				1CE3CB33219CBF48007DB899 /* bubble.scnp in Resources */,
 				1CE3CB32219CBF48007DB899 /* bokeh.png in Resources */,
-				1CB8A5992193298E00084496 /* Main.storyboard in Resources */,
 				1CB8D7B7217616D500B38BA2 /* Main.storyboard in Resources */,
 				1CB8D7B02176168300B38BA2 /* GameResultVC.xib in Resources */,
 				1CB8D7A22176168300B38BA2 /* ChartVC.xib in Resources */,
