@@ -82,5 +82,4 @@ enum Bonus {
             return 4
         }
     }
-    
 }

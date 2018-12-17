@@ -23,12 +23,12 @@ class WaterViewController: GameViewController {
     
     func basicSetup() {
         world = .water
-        yTot = 2
-        zTot = 4
+        Values.yTot = 2
+        Values.zTot = 4
         length = 200
         position = SCNVector3(0, 0, 0)
-        cellTextColor = UIColor.white
-        backgroundCellColor = UIColor.darkGray
+        controllerView.cellTextColor = UIColor.white
+        controllerView.backgroundCellColor = UIColor.darkGray
         shouldRotateCamera = false
     }
     
@@ -100,35 +100,35 @@ class WaterViewController: GameViewController {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else { return }
-        let loc = touch.location(in: self.view)
-        location = loc
-        guard gameOver == false && started == true else { return }
-        if loc.x > UIScreen.main.bounds.width/2 {
-            //right
-            let force = SCNVector3(Data.shared.selectedPlayer.turningForce()/4, 0, 0.01)
-            ballNode.physicsBody?.applyForce(force, asImpulse: true)
-            let torque = SCNVector4(0, 0, -0.05, 0.05)
-            ballNode.physicsBody?.applyTorque(torque, asImpulse: true)
-            if shouldRotateCamera {
-                let rotateAction = SCNAction.rotateBy(x: 0, y: 0, z: 0.05, duration: 0.4)
-                selfieStickNode.runAction(rotateAction) {
-                    self.selfieStickNode.runAction(rotateAction.reversed())
-                }
-            }
-        } else {
-            //left
-            let torque = SCNVector4(0, 0, 0.05, 0.05)
-            let force = SCNVector3(-Data.shared.selectedPlayer.turningForce()/4, 0, 0.01)
-            ballNode.physicsBody?.applyTorque(torque, asImpulse: true)
-            ballNode.physicsBody?.applyForce(force, asImpulse: true)
-            if shouldRotateCamera {
-                let rotateAction = SCNAction.rotateBy(x: 0, y: 0, z: -0.05, duration: 0.3)
-                selfieStickNode.runAction(rotateAction) {
-                    self.selfieStickNode.runAction(rotateAction.reversed())
-                }
-            }
-        }
+//        guard let touch = touches.first else { return }
+//        let loc = touch.location(in: self.view)
+//        location = loc
+//        guard gameOver == false && started == true else { return }
+//        if loc.x > UIScreen.main.bounds.width/2 {
+//            //right
+//            let force = SCNVector3(Data.shared.selectedPlayer.turningForce()/4, 0, 0.01)
+//            ballNode.physicsBody?.applyForce(force, asImpulse: true)
+//            let torque = SCNVector4(0, 0, -0.05, 0.05)
+//            ballNode.physicsBody?.applyTorque(torque, asImpulse: true)
+//            if shouldRotateCamera {
+//                let rotateAction = SCNAction.rotateBy(x: 0, y: 0, z: 0.05, duration: 0.4)
+//                selfieStickNode.runAction(rotateAction) {
+//                    self.selfieStickNode.runAction(rotateAction.reversed())
+//                }
+//            }
+//        } else {
+//            //left
+//            let torque = SCNVector4(0, 0, 0.05, 0.05)
+//            let force = SCNVector3(-Data.shared.selectedPlayer.turningForce()/4, 0, 0.01)
+//            ballNode.physicsBody?.applyTorque(torque, asImpulse: true)
+//            ballNode.physicsBody?.applyForce(force, asImpulse: true)
+//            if shouldRotateCamera {
+//                let rotateAction = SCNAction.rotateBy(x: 0, y: 0, z: -0.05, duration: 0.3)
+//                selfieStickNode.runAction(rotateAction) {
+//                    self.selfieStickNode.runAction(rotateAction.reversed())
+//                }
+//            }
+//        }
     }
     
     override func movePoops() {

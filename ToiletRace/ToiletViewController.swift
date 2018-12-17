@@ -23,8 +23,8 @@ class ToiletViewController: GameViewController {
     
     func basicSetup() {
         world = .toilet
-        yTot = 2.5
-        zTot = 4.0
+        Values.yTot = 2.5
+        Values.zTot = 4.0
         length = -250
     }
     
@@ -81,21 +81,21 @@ class ToiletViewController: GameViewController {
     override func showBonus(bonus: Bonus, node: SCNNode) {
         super.showBonus(bonus: bonus, node: node)
         if bonus == .Sprint && node == ballNode {
-            zTot = 2.5
+            Values.zTot = 2.5
         }
     }
     
     override func stopShowBonus(bonus: Bonus, node: SCNNode) {
         super.stopShowBonus(bonus: bonus, node: node)
-        zTot = 4.0
+        Values.zTot = 4.0
     }
     
     
     override func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         guard gameOver == false else { return }
         if eulerYes == true {
-            if zTot > 1 { zTot -= 0.03 }
-            if yTot < 5 { yTot += 0.01 }
+            if Values.zTot > 1 { Values.zTot -= 0.03 }
+            if Values.yTot < 5 { Values.yTot += 0.01 }
             if selfieStickNode.eulerAngles.x > -Float.pi/3 { selfieStickNode.eulerAngles.x -= 0.01 }
         }
         super.renderer(renderer, updateAtTime: time)

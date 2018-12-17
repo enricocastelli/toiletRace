@@ -24,18 +24,12 @@ class GameViewController: UIViewController {
     var selfieStickNode:SCNNode!
     var floor : SCNNode!
     var contactManager: ContactManager!
+    var controllerView: ControllerView!
     /// length of track
     var length: Float = -250
     
     /// timer that triggers specific opponents actions (bonus usage)
     var oppTimer = Timer()
-    
-    /// timer that triggers update of the table result
-    var tableTimer = Timer()
-    
-    // UI: Label ready/Go, bonus button
-    var startLabel = UILabel()
-    var bonusButton : BonusButton?
 
     /// started is true when game is playing, so balls are moved
     var started = false
@@ -48,8 +42,6 @@ class GameViewController: UIViewController {
     
     /// startDate is saved when game start (calculate the timing off players when they finish the track -> totalTime = startDate - arrivalDate
     var startDate : Date?
-    /// tableView showing the results in real time (updated every 0.3 sec)
-    var resultTable: UITableView!
     
     /// array of nodes that finished the track
     var winners : [SCNNode] = []
@@ -71,39 +63,22 @@ class GameViewController: UIViewController {
     //test
 //    var ranking = [Poo(name: PooName.IndianSurprise)]
 
-    
-    /// Ydistance of camera from user poop
-    var yTot : Float = 4.0
-    
-    /// Zdistance of camera from user poop
-    var zTot : Float = 4.0
-    
-    /// Zdistance of camera from user poop
-    var xTot : Float = 0
-
     /// if is bonus from slower activated
     var slowerActivated = false
-    
-    /// color of text in table result
-    var cellTextColor = UIColor.black
-    
-    /// color of layer background of cell text if poop has bonus enabled
-    var backgroundCellColor = UIColor.white
-    
     /// specifies a special position at beginning for poos
     var position: SCNVector3?
-    
     /// bool if it should rotate camera
     var shouldRotateCamera: Bool = true
-
+    
+    // MARK:- PREPARATION AND INITIAL COMMON METHODS
+    
     override func viewDidLoad() {
         sceneView = SCNView(frame: view.frame)
         view.addSubview(sceneView)
         prepare()
         contactManager = ContactManager(gameVC: self)
+        controllerView = ControllerView(gameVC: self)
     }
-    
-    // MARK:- PREPARATION AND INITIAL COMMON METHODS
     
     func prepare() {
         self.setupScene()
@@ -111,7 +86,6 @@ class GameViewController: UIViewController {
         self.scene.rootNode.addChildNode(self.ballNode)
         self.addOpponents()
         self.setupFloor()
-        self.setupTable()
     }
     
     func setupScene(){
@@ -122,6 +96,12 @@ class GameViewController: UIViewController {
         scene.physicsWorld.contactDelegate = contactManager
         sceneView.isPlaying = false
         selfieStickNode = scene.rootNode.childNode(withName: "selfieStick", recursively: true)!
+    }
+    
+    func setupFloor() {
+        floor = scene.rootNode.childNode(withName: "floor", recursively: true)!
+        floor.physicsBody?.categoryBitMask = Collider.floor
+        floor.physicsBody?.collisionBitMask = Collider.obstacle | Collider.ball
     }
     
     func sceneForWorld() -> SCNScene {
@@ -161,185 +141,40 @@ class GameViewController: UIViewController {
         perform(#selector(moveCamera), with: nil, afterDelay: 1)
     }
     
+    /// initial animation of camera moving from end off track to beginning. Scope of this action is also to load the nodes so that the rendering is less bumpy during the race.
     @objc func moveCamera() {
         Navigation.stopLoading()
         let cameraPosition = getCameraPosition()
         let action = SCNAction.move(to: cameraPosition, duration: 3)
-        
         selfieStickNode.runAction(action) {
-            self.prepareForStart()
+            self.start()
         }
     }
     
-    @objc func prepareForStart() {
-        startLabel = UILabel(frame: CGRect(x: 300, y: 200, width: 400, height: 100))
-        startLabel.font = UIFont.boldSystemFont(ofSize: 50)
-        startLabel.text = "READY"
-        startLabel.textColor = UIColor.red
-        self.view.insertSubview(startLabel, at: 2)
-        perform(#selector(start), with: nil, afterDelay: 1)
-    }
+    // MARK:- START RACE
     
     @objc func start() {
         shouldMoveCamera = true
         started = true
         scene.isPaused = false
         startDate = Date()
-        startLabel.text = "GO!!!"
-        startLabel.textColor = UIColor.green
         sceneView.isPlaying = true
-        perform(#selector(removeLabel), with: nil, afterDelay: 1)
+        controllerView.start()
         perform(#selector(startOppTimer), with: nil, afterDelay: 1)
-        startUpdateTimer()
         UIView.animate(withDuration: 0.3) {
-            self.resultTable.alpha = 1
+            self.controllerView.alpha = 1
         }
-        addBonusButton()
-        addStopButton()
-//        let _ = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(blockAvoider), userInfo: nil, repeats: true)
     }
     
-    @objc func removeLabel() {
-        UIView.animate(withDuration: 1, animations: {
-            self.startLabel.alpha = 0
-        }) { (done) in
-            self.startLabel.removeFromSuperview()
-        }
-    }
+    // MARK:- BONUS RELATED STUFF
         
     @objc func startOppTimer() {
         oppTimer = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(createRandomBonusOpponent), userInfo: nil, repeats: true)
     }
     
-    @objc func startUpdateTimer() {
-        tableTimer = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(updateTable), userInfo: nil, repeats: true)
-    }
-    
-    @objc func updateTable() {
-        ranking = currentPlayers.sorted { (obj1, obj2) -> Bool in
-            return obj1.distance < obj2.distance
-        }
-        DispatchQueue.main.async {
-            self.resultTable.reloadData()
-        }
-    }
-    
-    func addBonusButton() {
-        guard let bonus = Data.shared.selectedPlayer.bonus() else { return }
-        bonusButton = BonusButton(frame: CGRect(x: view.frame.width - 100, y: view.frame.height - 100, width: 64, height: 64))
-        bonusButton?.initWithBonus(bonus: bonus)
-        stopBonus()
-        bonusButton?.addTarget(self, action: #selector(activateBonus), for: .touchUpInside)
-        view.addSubview(bonusButton!)
-    }
-    
-    func addStopButton() {
-        let stopButton = UIButton(frame: CGRect(x: view.frame.width - 44, y: 8, width: 36, height: 36))
-        stopButton.setTitle("⏹", for: .normal)
-        stopButton.addTarget(self, action: #selector(stopped), for: .touchUpInside)
-        stopButton.alpha = 0.3
-        view.addSubview(stopButton)
-    }
-    
     @objc func createRandomBonusOpponent() {
         let random = Int(arc4random_uniform(UInt32(currentPlayers.count)))
         activateOpponentBonus(index: random)
-    }
-    
-    @objc func stopped() {
-        oppTimer.invalidate()
-        Navigation.main.popToRootViewController(animated: true)
-    }
-
-    func setupFloor() {
-        floor = scene.rootNode.childNode(withName: "floor", recursively: true)!
-        floor.physicsBody?.categoryBitMask = Collider.floor
-        floor.physicsBody?.collisionBitMask = Collider.obstacle | Collider.ball
-    }
-    
-    func setupTable() {
-        resultTable = UITableView(frame: CGRect(x: 10, y: 10, width: 250, height: 400), style: .plain)
-        resultTable.delegate = self
-        resultTable.dataSource = self
-        resultTable.backgroundColor = UIColor.clear
-        resultTable.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        resultTable.separatorStyle = .none
-        resultTable.rowHeight = 34
-        resultTable.isUserInteractionEnabled = false
-        resultTable.alpha = 0
-        self.view.addSubview(resultTable)
-    }
-    
-    @objc func gameIsOver() {
-        oppTimer.invalidate()
-        DispatchQueue.main.async {
-            self.perform(#selector(self.showResults), with: nil, afterDelay: 2)
-        }
-    }
-    
-    @objc func showResults() {
-        tableTimer.invalidate()
-        if finalResults.count != currentPlayers.count {
-            for opponent in opponents {
-                if finalResults.contains(where: { $0.player.name.rawValue == opponent.name.rawValue}) {
-                } else {
-                    let distance = abs(length) + opponent.node!.presentation.position.z
-                    var time = calculateTime(firstDate: startDate!)
-                    time += distance/10
-                    let timeToWinner : Float = {
-                        if let winner = finalResults.first?.time {
-                            return winner - time
-                        }
-                        return 0
-                    }()
-                    let total = (Data.shared.scores[opponent.name.rawValue] ?? 0)
-                    let res = Result(player: Poo(name: PooName(rawValue: opponent.name.rawValue)!), time: time, timeToWinner: timeToWinner, points: 0, totalPoints: total)
-                    finalResults.append(res)
-                }
-            }
-        }
-        let result = GameResultVC(results: finalResults)
-        self.navigationController?.viewControllers = [result]
-    }
-    
-    var location = CGPoint()
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else { return }
-        let loc = touch.location(in: self.view)
-        location = loc
-        guard gameOver == false && started == true else { return }
-        if loc.x > UIScreen.main.bounds.width/2 {
-            //right
-            let force = SCNVector3(Data.shared.selectedPlayer.turningForce(), 0, 0.01)
-            ballNode.physicsBody?.applyForce(force, asImpulse: true)
-            if shouldRotateCamera {
-                let rotateAction = SCNAction.rotateBy(x: 0, y: 0, z: 0.05, duration: 0.4)
-                selfieStickNode.runAction(rotateAction) {
-                    self.selfieStickNode.runAction(rotateAction.reversed())
-                }
-            }
-        } else {
-            //left
-            let force = SCNVector3(-Data.shared.selectedPlayer.turningForce(), 0, 0.01)
-            ballNode.physicsBody?.applyForce(force, asImpulse: true)
-            if shouldRotateCamera {
-                let rotateAction = SCNAction.rotateBy(x: 0, y: 0, z: -0.05, duration: 0.3)
-                selfieStickNode.runAction(rotateAction) {
-                    self.selfieStickNode.runAction(rotateAction.reversed())
-                }
-            }
-        }
-    }
-    
-    @objc func activateBonus() {
-        // ENABLE POWER UP
-        if let bonus = Data.shared.selectedPlayer.bonus() {
-            guard Data.shared.selectedPlayer.canUseBonus == true else { return }
-            Data.shared.selectedPlayer.bonusEnabled = true
-            perform(#selector(stopBonus), with: nil, afterDelay: TimeInterval(bonus.duration()))
-            showBonus(bonus: bonus, node: ballNode)
-        }
     }
     
     func activateOpponentBonus(index: Int) {
@@ -366,23 +201,26 @@ class GameViewController: UIViewController {
         }
     }
     
-    @objc func stopBonus() {
-        if let bonus = Data.shared.selectedPlayer.bonus() {
-            Data.shared.selectedPlayer.bonusEnabled = false
-            stopShowBonus(bonus: bonus, node: ballNode)
-            bonusButton?.stopped()
-            perform(#selector(rechargeBonus), with: nil, afterDelay: TimeInterval(bonus.rechargeDuration()))
-        }
-    }
-    
-    @objc func rechargeBonus() {
-        bonusButton?.alpha = 0.6
-        bonusButton?.ready()
-    }
-    
     @objc func rechargeOpponentBonus(sender: Timer) {
         guard let info = sender.userInfo as? [String: Int], let index = info["index"] else { return }
         currentPlayers[index].canUseBonus = true
+    }
+    
+    
+    // MARK:- MOVING POOPS, CAMERA AND TURNING
+    
+    func shouldTurn(right: Bool) {
+        let turningForce = Data.shared.selectedPlayer.turningForce()
+        let rightLeftForce = right ? turningForce : -turningForce
+        let force = SCNVector3(rightLeftForce, 0, 0.01)
+        ballNode.physicsBody?.applyForce(force, asImpulse: true)
+        if shouldRotateCamera {
+            let rotation: CGFloat = right ? 0.05 : -0.05
+            let rotateAction = SCNAction.rotateBy(x: 0, y: 0, z: rotation, duration: 0.4)
+            selfieStickNode.runAction(rotateAction) {
+                self.selfieStickNode.runAction(rotateAction.reversed())
+            }
+        }
     }
     
     func showBonus(bonus: Bonus, node: SCNNode) {
@@ -455,7 +293,7 @@ class GameViewController: UIViewController {
                 if ball.node == ballNode {
                     ball.canUseBonus = false
                     DispatchQueue.main.async {
-                        self.bonusButton?.removeFromSuperview()
+                        self.controllerView.removeBonus()
                     }
                 } else {
                     ball.canUseBonus = false
@@ -485,7 +323,7 @@ class GameViewController: UIViewController {
     
     func getCameraPosition() -> SCNVector3 {
         let ballPosition = ballNode.presentation.position
-        let targetPosition = SCNVector3(x: ballPosition.x + xTot, y: ballPosition.y + yTot, z:ballPosition.z + zTot)
+        let targetPosition = SCNVector3(x: ballPosition.x + Values.xTot, y: ballPosition.y + Values.yTot, z:ballPosition.z + Values.zTot)
         var cameraPosition = selfieStickNode.position
         let camDamping:Float = 0.3
         let xComponent = cameraPosition.x * (1 - camDamping) + targetPosition.x * camDamping
@@ -498,7 +336,7 @@ class GameViewController: UIViewController {
     @objc func blockAvoider() {
         for opponent in currentPlayers {
             if opponent.name == .GuanoStar {
-            opponent.turn(direction: getBestDirection(pos: opponent.node.presentation.position))
+                opponent.turn(direction: getBestDirection(pos: opponent.node.presentation.position))
             }
         }
     }
@@ -524,17 +362,8 @@ class GameViewController: UIViewController {
         return leftList.count > rightList.count ? .right : .left
     }
     
-   func shouldAvoidBlock(hitResult: PoopHitResult, opponent: Poo) {
-
-    }
-    
-    func addFinalAnimation() {
-        
-    }
-    
-    
-    func calculateTime(firstDate: Date) -> Float {
-        return Float(Date().timeIntervalSince(firstDate))
+    func shouldAvoidBlock(hitResult: PoopHitResult, opponent: Poo) {
+        // TO BE OVERRIDDEN
     }
     
     @objc func checkFinish() {
@@ -553,6 +382,9 @@ class GameViewController: UIViewController {
     func jump(node: SCNNode) {
         // TO BE OVERRIDDEN
     }
+    
+
+    // MARK:- END OF RACE
     
     func handleFinish(ball: SCNNode) {
         if ball == ballNode {
@@ -581,18 +413,62 @@ class GameViewController: UIViewController {
         }
     }
     
-    @objc func addFinishView(_ sender: Timer) {
+    @objc func gameIsOver() {
+        oppTimer.invalidate()
         DispatchQueue.main.async {
-            let finishView = UIView(frame: self.view.frame)
-            finishView.backgroundColor = UIColor.white
-            finishView.alpha = 0
-            self.view.addSubview(finishView)
-            UIView.animate(withDuration: 0.5, animations: {
-                finishView.alpha = 1
-            }, completion: { (done) in
-            })
+            self.perform(#selector(self.showResults), with: nil, afterDelay: 2)
         }
     }
+    
+    func stopped() {
+        oppTimer.invalidate()
+        Navigation.main.popToRootViewController(animated: true)
+    }
+    
+    func calculateTime(firstDate: Date) -> Float {
+        return Float(Date().timeIntervalSince(firstDate))
+    }
+    
+    @objc func showResults() {
+        controllerView.stop()
+        if finalResults.count != currentPlayers.count {
+            for opponent in opponents {
+                if finalResults.contains(where: { $0.player.name.rawValue == opponent.name.rawValue}) {
+                } else {
+                    let distance = abs(length) + opponent.node!.presentation.position.z
+                    var time = calculateTime(firstDate: startDate!)
+                    time += distance/10
+                    let timeToWinner : Float = {
+                        if let winner = finalResults.first?.time {
+                            return winner - time
+                        }
+                        return 0
+                    }()
+                    let total = (Data.shared.scores[opponent.name.rawValue] ?? 0)
+                    let res = Result(player: Poo(name: PooName(rawValue: opponent.name.rawValue)!), time: time, timeToWinner: timeToWinner, points: 0, totalPoints: total)
+                    finalResults.append(res)
+                }
+            }
+        }
+        let result = GameResultVC(results: finalResults)
+        self.navigationController?.viewControllers = [result]
+    }
+    
+    func addFinalAnimation() {
+        // TO BE OVERRIDDEN
+    }
+    
+    @objc func addFinishView(_ sender: Timer) {
+        controllerView.addFinishView()
+    }
+}
+
+extension GameViewController : BonusButtonDelegate {
+    
+    func didTapButton(bonus: Bonus) {
+        showBonus(bonus: bonus, node: ballNode)
+    }
+    
 }
 
 extension GameViewController : SCNSceneRendererDelegate {
@@ -608,55 +484,3 @@ extension GameViewController : SCNSceneRendererDelegate {
     }
 }
     
-
-extension GameViewController: UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ranking.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
-        cell.textLabel?.layer.cornerRadius = 10
-        if finalResults.count > indexPath.row {
-            cell.textLabel?.text = "\(indexPath.row + 1)) \(finalResults[indexPath.row].player.name.rawValue)"
-            cell.imageView?.image = UIImage(color: finalResults[indexPath.row].player.color())
-            
-            let ball = finalResults[indexPath.row]
-            if indexPath.row != 0 {
-                cell.detailTextLabel?.text = "\((ball.timeToWinner ?? 0).string())"
-                cell.detailTextLabel?.textColor = UIColor.red
-            } else {
-                cell.detailTextLabel?.text = "\(ball.time.string())"
-                cell.detailTextLabel?.textColor = cellTextColor
-            }
-        } else {
-            cell.textLabel?.text = " \(indexPath.row + 1)) \(ranking[indexPath.row].name.rawValue) "
-            cell.imageView?.image = UIImage(color: ranking[indexPath.row].color())
-            if ranking[indexPath.row].bonusEnabled == true {
-                cell.textLabel?.layer.backgroundColor = backgroundCellColor.cgColor
-            } else {
-                cell.textLabel?.layer.backgroundColor = UIColor.clear.cgColor
-            }
-        }
-        
-        // common config
-        cell.textLabel?.textColor = cellTextColor
-        cell.backgroundColor = UIColor.clear
-        cell.imageView?.layer.masksToBounds = true
-        cell.imageView?.layer.cornerRadius = 10
-        if cell.textLabel?.text?.contains(Data.shared.selectedPlayer.name.rawValue) ?? false {
-            cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-            cell.contentView.alpha = 0.8
-        } else {
-            cell.textLabel?.font = UIFont.systemFont(ofSize: 16)
-            cell.contentView.alpha = 0.4
-        }
-        return cell
-    }
-}
-
-extension GameViewController: UITableViewDelegate {
-
-
-}

@@ -29,7 +29,7 @@ class ShowroomVC: UIViewController {
             nameLabel.frame.size.height = nameLabel.intrinsicContentSize.height + 2
             nameLabel.center.x = view.center.x
             if let bonus = players[selectedItem].bonus() {
-                bonusView.initWithBonus(bonus: bonus)
+                bonusView = BonusButton(frame: bonusView.frame, bonus: bonus, delegate: nil)
                 if bonus == .NoBonus {
                     bonusView.alpha = 0 } else
                 { bonusView.alpha = 1 }
@@ -136,9 +136,8 @@ class ShowroomVC: UIViewController {
     }
     
     func addBonus() {
-        bonusView = BonusButton(frame: CGRect(x: view.frame.width - 100, y: view.frame.height - 100, width: 64, height: 64))
         if let bonus = players[selectedItem].bonus() {
-            bonusView.initWithBonus(bonus: bonus)
+        bonusView = BonusButton(frame: CGRect(x: view.frame.width - 100, y: view.frame.height - 100, width: 64, height: 64), bonus: bonus, delegate: nil)
             if bonus == .NoBonus {
                 bonusView.alpha = 0 } else
             { bonusView.alpha = 1 }

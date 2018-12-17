@@ -23,11 +23,11 @@ class PipeViewController: GameViewController {
     
     func basicSetup() {
         world = .pipe
-        yTot = 2.0
-        zTot = 3.5
+        Values.yTot = 2.0
+        Values.zTot = 3.5
         length = -290
-        cellTextColor = UIColor.white
-        backgroundCellColor = UIColor.darkGray
+        controllerView.cellTextColor = UIColor.white
+        controllerView.backgroundCellColor = UIColor.darkGray
     }
     
     override func setupScene() {
