@@ -28,7 +28,6 @@ class BonusButton : UIButton {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-        setup()
     }
     
     private func setup() {

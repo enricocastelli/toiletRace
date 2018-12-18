@@ -150,9 +150,7 @@ class GameViewController: UIViewController {
             self.start()
         }
     }
-    
-    // MARK:- START RACE
-    
+        
     @objc func start() {
         shouldMoveCamera = true
         started = true

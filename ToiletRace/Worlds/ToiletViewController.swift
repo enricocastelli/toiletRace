@@ -14,8 +14,9 @@ class ToiletViewController: GameViewController {
     var toiletNode: SCNNode!
     /// Euler angles are activated
     var eulerYes = false
-    var animatingCamera = false
 
+    // MARK:- PREPARATION AND INITIAL COMMON METHODS
+    
     override func viewDidLoad() {
         basicSetup()
         super.viewDidLoad()
@@ -78,6 +79,8 @@ class ToiletViewController: GameViewController {
 //        scene.rootNode.addChildNode(NodeCreator.createTunnel(zed: 0 - zedRand))
     }
     
+    // MARK:- BONUS ACTIVATION AND MOVING
+    
     override func showBonus(bonus: Bonus, node: SCNNode) {
         super.showBonus(bonus: bonus, node: node)
         if bonus == .Sprint && node == ballNode {
@@ -103,6 +106,7 @@ class ToiletViewController: GameViewController {
         guard started == true else { return }
     }
     
+    // MARK:- FINISH METHOD
     
     override func jump(node: SCNNode) {
         node.physicsBody?.clearAllForces()
