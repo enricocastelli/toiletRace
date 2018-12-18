@@ -72,8 +72,10 @@ class RaceResultManager: NSObject {
     }
     
     @objc func showResults() {
-        let result = GameResultVC(results: finalResults)
-        Navigation.main.viewControllers = [result]
+        DispatchQueue.main.async {
+            let result = GameResultVC(results: self.finalResults)
+            Navigation.main.viewControllers = [result]
+        }
     }
     
     
