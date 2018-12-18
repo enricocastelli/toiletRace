@@ -75,9 +75,9 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         sceneView = SCNView(frame: view.frame)
         view.addSubview(sceneView)
-        prepare()
         contactManager = ContactManager(gameVC: self)
         controllerView = ControllerView(frame: view.frame, gameVC: self)
+        prepare()
         view.addSubview(controllerView)
     }
     
