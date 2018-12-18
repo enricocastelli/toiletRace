@@ -128,18 +128,6 @@ class PipeViewController: GameViewController {
         slowSplash()
     }
     
-    override func shouldAvoidBlock(hitResult: PoopHitResult, opponent: Poo) {
-        let opp = opponent.node!
-        let hit = hitResult.hitResult
-        let direction = hitResult.direction ?? opponent.direction
-        if hit.node.name == "trash"  {
-            opp.moveStrong(direction: direction)
-        } else if hit.node.name == "rat" || hit.node.name == "Plane007" {
-            opp.moveStrong(direction: direction)
-        } else if hit.node.name == "rock" {
-            opp.moveStrong(direction: direction)
-        }
-    }
     
     func slowSplash() {
         if ballNode.presentation.position.x > -0.01 && ballNode.presentation.position.x < 0.01 {

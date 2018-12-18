@@ -24,13 +24,6 @@ public extension UIImage {
     }
 }
 
-enum Direction: Int {
-    
-    case left
-    case right
-    case straight
-//    case back
-}
 
 public extension SCNNode {
     
@@ -98,14 +91,19 @@ public extension Float {
     }
 }
 
-class PoopHitResult {
+extension UIView {
     
-    var direction: Direction?
-    var hitResult: SCNHitTestResult
-    
-    init(hitResult: SCNHitTestResult, direction: Direction) {
-        self.hitResult = hitResult
+    func setConstraint(constraint: NSLayoutConstraint.Attribute, constant: CGFloat) {
+        guard let superview = superview else { return }
+        if translatesAutoresizingMaskIntoConstraints == true {
+            translatesAutoresizingMaskIntoConstraints = false
+        }
+        NSLayoutConstraint.init(item: self,
+                                attribute: constraint,
+                                relatedBy: .equal,
+                                toItem: superview,
+                                attribute: constraint,
+                                multiplier: 1,
+                                constant: constant).isActive = true
     }
-    
-    
 }

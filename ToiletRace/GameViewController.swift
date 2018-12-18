@@ -77,7 +77,8 @@ class GameViewController: UIViewController {
         view.addSubview(sceneView)
         prepare()
         contactManager = ContactManager(gameVC: self)
-        controllerView = ControllerView(gameVC: self)
+        controllerView = ControllerView(frame: view.frame, gameVC: self)
+        view.addSubview(controllerView)
     }
     
     func prepare() {
@@ -159,9 +160,6 @@ class GameViewController: UIViewController {
         sceneView.isPlaying = true
         controllerView.start()
         perform(#selector(startOppTimer), with: nil, afterDelay: 1)
-        UIView.animate(withDuration: 0.3) {
-            self.controllerView.alpha = 1
-        }
     }
     
     // MARK:- BONUS RELATED STUFF
@@ -359,10 +357,7 @@ class GameViewController: UIViewController {
         }
         return leftList.count > rightList.count ? .right : .left
     }
-    
-    func shouldAvoidBlock(hitResult: PoopHitResult, opponent: Poo) {
-        // TO BE OVERRIDDEN
-    }
+
     
     @objc func checkFinish() {
         if !winners.contains(ballNode) {

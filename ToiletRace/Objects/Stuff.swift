@@ -59,6 +59,14 @@ enum Keys : String {
     case Level
 }
 
+enum Direction: Int {
+    
+    case left
+    case right
+    case straight
+    //    case back
+}
+
 class Data {
     
     static let shared = Data()

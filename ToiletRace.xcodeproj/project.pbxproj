@@ -126,7 +126,6 @@
 		1C7C1C2F21C7FBE800D47FC8 /* Worlds */ = {
 			isa = PBXGroup;
 			children = (
-				1CB8D780217615C000B38BA2 /* GameViewController.swift */,
 				1CB8A5962193171E00084496 /* ToiletViewController.swift */,
 				1CB8A59A21932A6E00084496 /* PipeViewController.swift */,
 				1C657EC9219CB44800783BD9 /* WaterViewController.swift */,
@@ -208,6 +207,7 @@
 				1CB8D77C217615C000B38BA2 /* AppDelegate.swift */,
 				1C657EC82199D5CF00783BD9 /* Particles */,
 				1CB8D77E217615C000B38BA2 /* art.scnassets */,
+				1CB8D780217615C000B38BA2 /* GameViewController.swift */,
 				1C7C1C2F21C7FBE800D47FC8 /* Worlds */,
 				1C7C1C3221C7FC3300D47FC8 /* Views */,
 				1C7C1C3021C7FBFD00D47FC8 /* Managers */,

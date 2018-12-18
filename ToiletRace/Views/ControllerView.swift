@@ -30,9 +30,10 @@ class ControllerView: UIView {
     var isPlaying = false
 
     
-    init(gameVC: GameViewController) {
+    init(frame: CGRect, gameVC: GameViewController) {
         self.gameVC = gameVC
-        super.init(frame: CGRect())
+        super.init(frame: frame)
+        setup()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -44,6 +45,7 @@ class ControllerView: UIView {
         setupLabel()
         setupBonusButton()
         setupStopButton()
+        alpha = 0
     }
     
     func setupTable() {
@@ -54,7 +56,6 @@ class ControllerView: UIView {
         resultTable.separatorStyle = .none
         resultTable.rowHeight = 34
         resultTable.isUserInteractionEnabled = false
-        resultTable.alpha = 0
         self.addSubview(resultTable)
     }
     
@@ -84,6 +85,11 @@ class ControllerView: UIView {
         isPlaying = true
         startUpdateTimer()
         updateLabel()
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0.3) {
+                self.alpha = 1
+            }
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -98,9 +104,11 @@ class ControllerView: UIView {
     }
     
     func updateLabel() {
-        startLabel.text = "GO!!!"
-        startLabel.textColor = UIColor.green
-        perform(#selector(removeLabel), with: nil, afterDelay: 1)
+        DispatchQueue.main.async {
+            self.startLabel.text = "GO!!!"
+            self.startLabel.textColor = UIColor.green
+            self.perform(#selector(self.removeLabel), with: nil, afterDelay: 1)
+        }
     }
     
     @objc func updateTable() {
@@ -113,10 +121,12 @@ class ControllerView: UIView {
     }
     
     @objc func removeLabel() {
-        UIView.animate(withDuration: 1, animations: {
-            self.startLabel.alpha = 0
-        }) { (done) in
-            self.startLabel.removeFromSuperview()
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 1, animations: {
+                self.startLabel.alpha = 0
+            }) { (done) in
+                self.startLabel.removeFromSuperview()
+            }
         }
     }
     
