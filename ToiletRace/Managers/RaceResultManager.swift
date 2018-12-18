@@ -28,10 +28,14 @@ class RaceResultManager: NSObject {
     
     func start() {
         startDate = Date()
+        finalResults = []
     }
     
     func didFinish(poo: PooName, penalty: Bool) {
-        let time : Float =  calculateTime(firstDate: startDate!)
+        let time : Float = {
+            let totalTime = calculateTime(firstDate: startDate!)
+            return totalTime + (penalty ? 3 : 0)
+        }()
         //            let total = Data.shared.scores[node.name!] ?? 0
         let total : Float = 0
         let timeToWinner : Float = {

@@ -29,8 +29,8 @@ class ResultCell: UITableViewCell {
     }
     var result : Result? {
         didSet {
-            if result?.timeToWinner == nil {
-                timeLabel.text = "NA"
+            if result?.penalty == true {
+                timeLabel.text = "\(result?.time.string() ?? "") + 3"
             } else {
                 timeLabel.text = result?.time.string()
             }
