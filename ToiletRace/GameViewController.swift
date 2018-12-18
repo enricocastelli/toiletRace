@@ -50,18 +50,18 @@ class GameViewController: UIViewController {
     var finalResults: [Result] = []
     
     /// Array of currentPlayers, generally copied from global var players. Order SHOULD NOT change
-    var currentPlayers = players
+//    var currentPlayers = players
     //test
-//    var currentPlayers = [Poo(name: PooName.IndianSurprise)]
+    var currentPlayers = [Poo(name: PooName.GuanoStar)]
     
     /// Array of current opponents
     var opponents:[Poo] = []
 
     
     /// Array of players, generally copied from global var players. It SHOULD CHANGE depending on players position
-    var ranking = players
+//    var ranking = players
     //test
-//    var ranking = [Poo(name: PooName.IndianSurprise)]
+    var ranking = [Poo(name: PooName.GuanoStar)]
 
     /// if is bonus from slower activated
     var slowerActivated = false
@@ -139,13 +139,13 @@ class GameViewController: UIViewController {
     
     func newGame() {
         //time to stop waiting
-        perform(#selector(moveCamera), with: nil, afterDelay: 1)
+        moveCamera()
     }
     
     /// initial animation of camera moving from end off track to beginning. Scope of this action is also to load the nodes so that the rendering is less bumpy during the race.
     @objc func moveCamera() {
         Navigation.stopLoading()
-        let cameraPosition = getCameraPosition()
+        let cameraPosition = SCNVector3(Values.xTot, Values.yTot, Values.zTot)
         let action = SCNAction.move(to: cameraPosition, duration: 3)
         selfieStickNode.runAction(action) {
             self.start()
@@ -331,16 +331,25 @@ class GameViewController: UIViewController {
     
     @objc func blockAvoider() {
         for opponent in currentPlayers {
-            if opponent.name == .GuanoStar {
-                opponent.turn(direction: getBestDirection(pos: opponent.node.presentation.position))
-            }
+            let pos = opponent.node.presentation.position
+            opponent.turn(direction: getBestDirection(pos: pos))
         }
     }
     
     func getBestDirection(pos: SCNVector3) -> Direction {
         var rightList = [SCNHitTestResult]()
         var leftList = [SCNHitTestResult]()
-        let straightList = scene.physicsWorld.rayTestWithSegment(from: pos, to: SCNVector3(pos.x, 0.5, pos.z - 5), options: nil)
+        let straightList =
+            scene.physicsWorld.rayTestWithSegment(from: pos, to: SCNVector3(pos.x, 0.5, pos.z - 5), options: nil) +
+            scene.physicsWorld.rayTestWithSegment(from: pos, to: SCNVector3(pos.x + 0.3, 0.5, pos.z - 5), options: nil) +
+            scene.physicsWorld.rayTestWithSegment(from: pos, to: SCNVector3(pos.x - 0.3, 0.5, pos.z - 5), options: nil)
+        let isLimit = (pos.x > 6.5 || pos.x < -6.5)
+        if straightList.count == 0 {
+            return .straight
+        }
+        if isLimit {
+            return pos.x > 6.5 ? .left : .right
+        }
         for ind in 1...10 {
             let x = 12/2 - Float(ind)/2
             let z = -Float(ind)/3
@@ -349,15 +358,12 @@ class GameViewController: UIViewController {
             rightList = rightList + scene.physicsWorld.rayTestWithSegment(from: pos, to: pointR, options: nil)
             leftList = leftList + scene.physicsWorld.rayTestWithSegment(from: pos, to: pointL, options: nil)
         }
-        if straightList.count == 0 {
-            return .straight
-        }
+
         if leftList.count == rightList.count {
             if pos.x == 0 { return arc4random_uniform(2) == 1 ? .left : .right }
         }
         return leftList.count > rightList.count ? .right : .left
     }
-
     
     @objc func checkFinish() {
         if !winners.contains(ballNode) {

@@ -80,7 +80,7 @@ class ToiletViewController: GameViewController {
     }
     
     // MARK:- BONUS ACTIVATION AND MOVING
-    
+
     override func showBonus(bonus: Bonus, node: SCNNode) {
         super.showBonus(bonus: bonus, node: node)
         if bonus == .Sprint && node == ballNode {

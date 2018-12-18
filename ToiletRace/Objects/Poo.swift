@@ -53,20 +53,19 @@ class Poo {
     }
     
     func turn(direction: Direction) {
-        //        guard direction != self.direction else { return }
-        guard let force = forcePerDirection(direction: direction) else { return }
+        guard let force = forcePerDirection(direction: direction, isAtLimit: isAtLimit) else { return }
         actualTurning -= force
         self.direction = direction
         self.node.physicsBody?.applyForce(SCNVector3(force, 0, 0), asImpulse: true)
     }
     
-    func forcePerDirection(direction: Direction) -> CGFloat? {
+    func forcePerDirection(direction: Direction, isAtLimit: Bool) -> CGFloat? {
         switch direction {
         case .straight:
             if self.direction == .straight { return actualTurning/10 }
             else { return actualTurning/5 }
         case .left:
-            if self.direction == .left { return 0.2 }
+            if self.direction == .left { return -0.2 }
             else if self.direction == .straight { return -1 }
             else { return -2 }
         case .right:

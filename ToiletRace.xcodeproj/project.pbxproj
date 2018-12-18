@@ -146,10 +146,10 @@
 		1C7C1C3121C7FC2600D47FC8 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
+				1CB8D7972176168200B38BA2 /* Poo.swift */,
 				1CB8D7922176168200B38BA2 /* Extension.swift */,
 				1CB8D79C2176168200B38BA2 /* Stuff.swift */,
 				1C7C1C2D21C7F7D700D47FC8 /* Values.swift */,
-				1CB8D7972176168200B38BA2 /* Poo.swift */,
 				1CFE97072191D942007F837A /* Bonus.swift */,
 			);
 			path = Objects;

@@ -139,6 +139,7 @@ class NodeCreator {
         return spongeNode
     }
     
+    
     static var testImp : [Float] = [-6.7, -6.7, -5.7, -5.7, 5.3, 0.3000002, -1.6999998, 6.3, -3.6999998, -3.6999998, -4.7, -5.7, 2.3000002, 4.3, 0.3000002, 4.3, 3.3000002, -1.6999998, -6.7, -4.7, -3.6999998, -0.6999998, -4.7, -1.6999998, 3.3000002, 6.3, 1.3000002, 5.3, -5.7, -2.6999998, -1.6999998, 2.3000002, 4.3, -0.6999998, -1.6999998, -5.7, -1.6999998, -1.6999998, -3.6999998, -1.6999998, 0.3000002, 6.3, 3.3000002, 3.3000002, 5.3, 0.3000002, 3.3000002, 4.3, 4.3, 1.3000002, 0.3000002, -4.7, 5.3, 3.3000002, -6.7, -3.6999998, -3.6999998, -2.6999998, 4.3, -0.6999998, -4.7, -5.7, -6.7, 0.3000002, -6.7, 4.3, 5.3, -3.6999998, 2.3000002, 2.3000002, -4.7, -5.7, -0.6999998, 2.3000002, 2.3000002, -5.7, -5.7, 5.3, 2.3000002, 0.3000002, -6.7, -0.6999998, -3.6999998, 0.3000002]
     static var index = 0
     
@@ -146,10 +147,16 @@ class NodeCreator {
     static func createPaper(zed : Float) -> SCNNode {
         let paperScene = SCNScene(named: "art.scnassets/Nodes/ToiletPaper.scn")
         let paperNode = paperScene!.rootNode.childNodes.first!
-        let randomX = 5 - Float(arc4random_uniform(+10))
+        let randomX = 6.5 - Float(arc4random_uniform(14))
         paperNode.position = SCNVector3(randomX, 0, Float(zed))
         paperNode.physicsBody = SCNPhysicsBody(type: SCNPhysicsBodyType.kinematic, shape: nil)
         paperNode.physicsBody?.categoryBitMask = Collider.obstacle
+        //if paper is at limit track, i want a to move it slightly so poo doesn't get stuck
+        if randomX == 6.5 {
+            paperNode.position.x = 7.5
+        }  else if randomX == -6.5 {
+            paperNode.position.x = -7.5
+        }
         paperNode.name = "paper"
         return paperNode
     }
