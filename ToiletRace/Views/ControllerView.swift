@@ -166,11 +166,10 @@ extension ControllerView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
         cell.textLabel?.layer.cornerRadius = 10
-        if gameVC.finalResults.count > indexPath.row {
-            cell.textLabel?.text = "\(indexPath.row + 1)) \(gameVC.finalResults[indexPath.row].player.name.rawValue)"
-            cell.imageView?.image = UIImage(color: gameVC.finalResults[indexPath.row].player.color())
-            
-            let ball = gameVC.finalResults[indexPath.row]
+        if RaceResultManager.shared.finalResults.count > indexPath.row {
+            cell.textLabel?.text = "\(indexPath.row + 1)) \(RaceResultManager.shared.finalResults[indexPath.row].player.name.rawValue)"
+            cell.imageView?.image = UIImage(color: RaceResultManager.shared.finalResults[indexPath.row].player.color())
+            let ball = RaceResultManager.shared.finalResults[indexPath.row]
             if indexPath.row != 0 {
                 cell.detailTextLabel?.text = "\((ball.timeToWinner ?? 0).string())"
                 cell.detailTextLabel?.textColor = UIColor.red

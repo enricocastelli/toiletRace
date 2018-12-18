@@ -34,15 +34,6 @@ class Collider {
 }
 
 
-struct Result {
-    var player: Poo
-    var time: Float
-    var timeToWinner: Float?
-    var points: Float
-    var totalPoints: Float
-    
-}
-
 enum World: Int {
     
     case house = 0

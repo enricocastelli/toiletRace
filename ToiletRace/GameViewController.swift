@@ -25,6 +25,7 @@ class GameViewController: UIViewController {
     var floor : SCNNode!
     var contactManager: ContactManager!
     var controllerView: ControllerView!
+    var raceResultManager = RaceResultManager.shared
     /// length of track
     var length: Float = -250
     
@@ -40,14 +41,8 @@ class GameViewController: UIViewController {
     /// bool triggered at the right time at beginning so that camera moves nicely from the end to the beginning of the track
     var shouldMoveCamera = false
     
-    /// startDate is saved when game start (calculate the timing off players when they finish the track -> totalTime = startDate - arrivalDate
-    var startDate : Date?
-    
     /// array of nodes that finished the track
     var winners : [SCNNode] = []
-    
-    ///final results created when players finish the track and passed to GameResultVC for showing time and positions
-    var finalResults: [Result] = []
     
     /// Array of currentPlayers, generally copied from global var players. Order SHOULD NOT change
     var currentPlayers = players
@@ -156,9 +151,9 @@ class GameViewController: UIViewController {
         shouldMoveCamera = true
         started = true
         scene.isPaused = false
-        startDate = Date()
         sceneView.isPlaying = true
         controllerView.start()
+        raceResultManager.start()
         perform(#selector(startOppTimer), with: nil, afterDelay: 1)
     }
     
@@ -365,24 +360,10 @@ class GameViewController: UIViewController {
         return leftList.count > rightList.count ? .right : .left
     }
     
-    @objc func checkFinish() {
-        if !winners.contains(ballNode) {
-            let time : Float =  (calculateTime(firstDate: startDate!) + 3)
-            winners.append(ballNode)
-            //            let total = Data.shared.scores[node.name!] ?? 0
-            let total : Float = 0
-            let result = Result(player: Poo(name: PooName(rawValue: ballNode.name!)!), time: time, timeToWinner: nil, points: 0, totalPoints: total)
-            finalResults.append(result)
-            gameOver = true
-            gameIsOver()
-        }
-    }
-    
     func jump(node: SCNNode) {
         // TO BE OVERRIDDEN
     }
     
-
     // MARK:- END OF RACE
     
     func handleFinish(ball: SCNNode) {
@@ -397,60 +378,29 @@ class GameViewController: UIViewController {
     
     func didFinish(node: SCNNode) {
         if !winners.contains(node) {
-            let time : Float =  calculateTime(firstDate: startDate!)
             winners.append(node)
-            //            let total = Data.shared.scores[node.name!] ?? 0
-            let total : Float = 0
-            let timeToWinner : Float = {
-                if let winner = finalResults.first?.time {
-                    return winner - time
-                }
-                return 0
-            }()
-            let result = Result(player: Poo(name: PooName(rawValue: node.name!)!), time: time, timeToWinner: timeToWinner, points: 0, totalPoints: total)
-            finalResults.append(result)
+            raceResultManager.didFinish(poo: PooName(rawValue: node.name!)!, penalty: false)
         }
     }
     
-    @objc func gameIsOver() {
-        oppTimer.invalidate()
-        DispatchQueue.main.async {
-            self.perform(#selector(self.showResults), with: nil, afterDelay: 2)
+    @objc func checkFinish() {
+        if !winners.contains(ballNode) {
+            winners.append(ballNode)
+            raceResultManager.didFinish(poo: PooName(rawValue: ballNode.name!)!, penalty: true)
+            gameOver = true
+            gameIsOver()
         }
+    }
+    
+    func gameIsOver() {
+        oppTimer.invalidate()
+        controllerView.stop()
+        raceResultManager.getResults(opponents: opponents, length: length)
     }
     
     func stopped() {
         oppTimer.invalidate()
         Navigation.main.popToRootViewController(animated: true)
-    }
-    
-    func calculateTime(firstDate: Date) -> Float {
-        return Float(Date().timeIntervalSince(firstDate))
-    }
-    
-    @objc func showResults() {
-        controllerView.stop()
-        if finalResults.count != currentPlayers.count {
-            for opponent in opponents {
-                if finalResults.contains(where: { $0.player.name.rawValue == opponent.name.rawValue}) {
-                } else {
-                    let distance = abs(length) + opponent.node!.presentation.position.z
-                    var time = calculateTime(firstDate: startDate!)
-                    time += distance/10
-                    let timeToWinner : Float = {
-                        if let winner = finalResults.first?.time {
-                            return winner - time
-                        }
-                        return 0
-                    }()
-                    let total = (Data.shared.scores[opponent.name.rawValue] ?? 0)
-                    let res = Result(player: Poo(name: PooName(rawValue: opponent.name.rawValue)!), time: time, timeToWinner: timeToWinner, points: 0, totalPoints: total)
-                    finalResults.append(res)
-                }
-            }
-        }
-        let result = GameResultVC(results: finalResults)
-        self.navigationController?.viewControllers = [result]
     }
     
     func addFinalAnimation() {
