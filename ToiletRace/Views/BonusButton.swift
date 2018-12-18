@@ -31,7 +31,10 @@ class BonusButton : UIButton {
     }
     
     private func setup() {
-        guard bonus != .NoBonus else { return }
+        guard bonus != .NoBonus else {
+            isHidden = true
+            return }
+        isHidden = false
         layer.cornerRadius = frame.height/2
         backgroundColor = UIColor.white
         setImage(bonus?.image(), for: .normal)
@@ -55,16 +58,13 @@ class BonusButton : UIButton {
         // ENABLE POWER UP
         if let bonus = Data.shared.selectedPlayer.bonus() {
             guard Data.shared.selectedPlayer.canUseBonus == true else { return }
-            Data.shared.selectedPlayer.bonusEnabled = true
-            perform(#selector(stopped), with: nil, afterDelay: TimeInterval(bonus.duration()))
+            isEnabled = false
+            perform(#selector(recharge), with: nil, afterDelay: TimeInterval(bonus.duration()))
             delegate?.didTapButton(bonus: bonus)
         }
     }
     
-    @objc func stopped() {
-        if Data.shared.selectedPlayer.bonus() != nil {
-            Data.shared.selectedPlayer.bonusEnabled = false
-        }
+    @objc func recharge() {
         alpha = 0.2
         let animation = CABasicAnimation(keyPath: "strokeEnd")
         animation.duration = CFTimeInterval((bonus?.rechargeDuration()) ?? 10)
@@ -72,10 +72,11 @@ class BonusButton : UIButton {
         animation.toValue = 1
         circleLayer.add(animation, forKey: "strokeCircle")
         // recharge
-        perform(#selector(ready), with: nil, afterDelay: TimeInterval(bonus?.rechargeDuration() ?? 0))
+        perform(#selector(ready), with: nil, afterDelay: TimeInterval(bonus?.rechargeDuration() ?? 10))
     }
     
     @objc func ready() {
+        isEnabled = true
         alpha = 0.6
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: [], animations: {
             self.transform = CGAffineTransform(scaleX: 1, y: 1)

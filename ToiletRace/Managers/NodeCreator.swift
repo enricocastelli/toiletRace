@@ -45,7 +45,7 @@ class NodeCreator {
     }
     
     static func createBound(zed: Float) -> [SCNNode] {
-        let geoOb = SCNBox(width: 1, height: CGFloat((zed - 1)*2), length: 10, chamferRadius: 0)
+        let geoOb = SCNBox(width: 1, height: CGFloat((zed - 1)*2), length: 5, chamferRadius: 0)
         geoOb.materials.first?.lightingModel = .physicallyBased
         geoOb.materials.first?.diffuse.contents = UIImage(named: "cement")
         geoOb.materials.first?.selfIllumination.contents = UIColor.white
@@ -58,7 +58,7 @@ class NodeCreator {
         leftNode.pivot = SCNMatrix4MakeRotation(Float.pi/2, 1, 0, 0)
         leftNode.physicsBody = SCNPhysicsBody.kinematic()
         leftNode.physicsBody!.categoryBitMask = Collider.bounds
-        leftNode.physicsBody?.restitution = 0
+        leftNode.physicsBody?.restitution = 0.2
         leftNode.name = "bound"
         let rightNode = SCNNode(geometry: geoOb)
         rightNode.position = SCNVector3(x: 8, y: 0, z: 0)
@@ -67,7 +67,7 @@ class NodeCreator {
         rightNode.pivot = SCNMatrix4MakeRotation(Float.pi/2, 1, 0, 0)
         rightNode.physicsBody = SCNPhysicsBody.kinematic()
         rightNode.physicsBody?.categoryBitMask = Collider.bounds
-        rightNode.physicsBody?.restitution = -1
+        rightNode.physicsBody?.restitution = 0.2
         rightNode.name = "bound"
         return [leftNode, rightNode,createCylinder(zed: -140, radius: 0.4), createCylinder(zed: -18, radius:  0.2)]
     }
@@ -151,11 +151,10 @@ class NodeCreator {
         paperNode.position = SCNVector3(randomX, 0, Float(zed))
         paperNode.physicsBody = SCNPhysicsBody(type: SCNPhysicsBodyType.kinematic, shape: nil)
         paperNode.physicsBody?.categoryBitMask = Collider.obstacle
-        //if paper is at limit track, i want a to move it slightly so poo doesn't get stuck
-        if randomX == 6.5 {
-            paperNode.position.x = 7.5
-        }  else if randomX == -6.5 {
-            paperNode.position.x = -7.5
+        // i want put more papers at limit
+        if arc4random_uniform(10) == 5 {
+            let xPos: Float = arc4random_uniform(2) == 1 ? -6.5 : 6.5
+            paperNode.position = SCNVector3(xPos, 0, Float(zed))
         }
         paperNode.name = "paper"
         return paperNode
@@ -179,7 +178,7 @@ class NodeCreator {
     
     static func createTunnel(zed: Float) -> SCNNode {
 //        let zed = -45.0
-        let geoTunnel = SCNTube(innerRadius: 0.97, outerRadius: 1, height: 8)
+        let geoTunnel = SCNTube(innerRadius: 1.2, outerRadius: 1.3, height: 8)
         geoTunnel.materials.first?.diffuse.contents = UIColor.init(red: 185/255, green: 140/255, blue: 61/255, alpha: 1)
         geoTunnel.materials.first?.roughness.contents = 0.4
         geoTunnel.materials.first?.metalness.contents = 0

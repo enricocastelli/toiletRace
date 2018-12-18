@@ -37,15 +37,6 @@ class Poo {
     var bonusEnabled = false
     var canUseBonus = true
     var direction: Direction = .straight
-    var isMoving = false {
-        didSet {
-            if isMoving {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.05, execute: {
-                    self.isMoving = false
-                })
-            }
-        }
-    }
     var actualTurning: CGFloat = 0
     
     init(name: PooName) {
@@ -53,13 +44,13 @@ class Poo {
     }
     
     func turn(direction: Direction) {
-        guard let force = forcePerDirection(direction: direction, isAtLimit: isAtLimit) else { return }
+        guard let force = forcePerDirection(direction: direction) else { return }
         actualTurning -= force
         self.direction = direction
-        self.node.physicsBody?.applyForce(SCNVector3(force, 0, 0), asImpulse: true)
+        self.node.physicsBody?.applyForce(SCNVector3(force, 0, 0.002), asImpulse: true)
     }
     
-    func forcePerDirection(direction: Direction, isAtLimit: Bool) -> CGFloat? {
+    func forcePerDirection(direction: Direction) -> CGFloat? {
         switch direction {
         case .straight:
             if self.direction == .straight { return actualTurning/10 }
@@ -74,6 +65,7 @@ class Poo {
             else { return 2 }
         }
     }
+    
     
     /// z speed. Renderer is applying this force at z.
     func velocity() -> Float {
@@ -313,9 +305,12 @@ class Poo {
     }
     
     func reset() {
+        actualTurning = 0
+        bonusEnabled = false
+        canUseBonus = true
+        direction = .straight
         canUseBonus = true
         bonusEnabled = false
-        isMoving = false
     }
 }
 

@@ -50,18 +50,18 @@ class GameViewController: UIViewController {
     var finalResults: [Result] = []
     
     /// Array of currentPlayers, generally copied from global var players. Order SHOULD NOT change
-//    var currentPlayers = players
+    var currentPlayers = players
     //test
-    var currentPlayers = [Poo(name: PooName.GuanoStar)]
+//    var currentPlayers = [Poo(name: PooName.GuanoStar)]
     
     /// Array of current opponents
     var opponents:[Poo] = []
 
     
     /// Array of players, generally copied from global var players. It SHOULD CHANGE depending on players position
-//    var ranking = players
+    var ranking = players
     //test
-    var ranking = [Poo(name: PooName.GuanoStar)]
+//    var ranking = [Poo(name: PooName.GuanoStar)]
 
     /// if is bonus from slower activated
     var slowerActivated = false
@@ -208,7 +208,7 @@ class GameViewController: UIViewController {
     func shouldTurn(right: Bool) {
         let turningForce = Data.shared.selectedPlayer.turningForce()
         let rightLeftForce = right ? turningForce : -turningForce
-        let force = SCNVector3(rightLeftForce, 0, 0.01)
+        let force = SCNVector3(rightLeftForce, 0, 0)
         ballNode.physicsBody?.applyForce(force, asImpulse: true)
         if shouldRotateCamera {
             let rotation: CGFloat = right ? 0.05 : -0.05
@@ -330,7 +330,7 @@ class GameViewController: UIViewController {
     }
     
     @objc func blockAvoider() {
-        for opponent in currentPlayers {
+        for opponent in opponents {
             let pos = opponent.node.presentation.position
             opponent.turn(direction: getBestDirection(pos: pos))
         }

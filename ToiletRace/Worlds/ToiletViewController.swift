@@ -26,7 +26,7 @@ class ToiletViewController: GameViewController {
         world = .toilet
         Values.yTot = 2.5
         Values.zTot = 4.0
-        length = -250
+        length = -400
     }
     
     override func setupScene() {
@@ -56,27 +56,27 @@ class ToiletViewController: GameViewController {
     }
     
     func addObstacle() {
-        let safeLength = abs(length) - 20
-        let supersafefeLength = abs(length) - 30
+        let safeEnd = abs(length) - 20
+        let supersafeEnd = abs(length) - 40
         let safeStart = UInt32(abs(length) - 40)
         let supersafeStart = UInt32(abs(length) - 70)
         for index in 0...Int(abs(length)/3) {
-            let random = Float(index) * 2.5
-            let zedRand = safeLength - random
+            let random = Float(index) * 2.7
+            let zedRand = safeEnd - random
             scene.rootNode.addChildNode(NodeCreator.createPaper(zed: ((0 - zedRand))))
         }
-        for _ in 0...4 {
+        for _ in 0...5 {
             let random = Float(arc4random_uniform(safeStart))
-            let zedRand = safeLength - random
+            let zedRand = safeEnd - random
             scene.rootNode.addChildNode(NodeCreator.createSponge(zed: (0 - zedRand)))
         }
         
         let randomPill = Float(arc4random_uniform(supersafeStart))
-        let zedRandPill = supersafefeLength - randomPill
+        let zedRandPill = supersafeEnd - randomPill
         scene.rootNode.addChildNode(NodeCreator.createPill(zed: 0 - zedRandPill))
-//        let random = Float(arc4random_uniform(supersafeStart))
-//        let zedRand = supersafefeLength - random
-//        scene.rootNode.addChildNode(NodeCreator.createTunnel(zed: 0 - zedRand))
+        let random = Float(arc4random_uniform(supersafeStart))
+        let zedRand = supersafeEnd - random
+        scene.rootNode.addChildNode(NodeCreator.createTunnel(zed: 0 - zedRand))
     }
     
     // MARK:- BONUS ACTIVATION AND MOVING
@@ -112,6 +112,7 @@ class ToiletViewController: GameViewController {
         node.physicsBody?.clearAllForces()
         if node == ballNode {
             eulerYes = true
+            node.physicsBody?.clearAllForces()
             scene.physicsWorld.gravity = SCNVector3(0, -0.5, 0)
             node.physicsBody?.applyForce(SCNVector3(0, 3.7, -0.12), asImpulse: true)
             node.physicsBody?.applyTorque(SCNVector4(0.5, 0.5, 0.5, 0.5), asImpulse: true)
