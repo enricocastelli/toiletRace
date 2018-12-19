@@ -64,42 +64,13 @@ class Data {
     
     var scores : [String: Float] = [:]
     var games = 0
-    var selectedPlayer = Poo(name: .ApolloPoo)
+    var selectedPlayer = Poo(name: .GuanoStar)
     
     func reset() {
         games = 0
         scores = [:]
-        selectedPlayer = Poo(name: .ApolloPoo)
+        selectedPlayer = Poo(name: .GuanoStar)
     }
-}
-
-
-class Storage : NSObject {
-//
-    class func storeScore(res: Result, index: Int) {
-        if let total = Storage.getScore(name: res.player.name.rawValue) {
-            UserDefaults.standard.set(index + total, forKey: res.player.name.rawValue)
-        } else {
-            UserDefaults.standard.set(index, forKey: res.player.name.rawValue)
-        }
-    }
-    
-    class func getScore(name: String) -> Int? {
-        return UserDefaults.standard.getPoints(key: name)
-    }
-    
-    class func reset(name: String) {
-        UserDefaults.standard.removeObject(forKey: name)
-    }
-}
-
-extension UserDefaults {
-
-    func getPoints(key : String) -> Int? {
-        let value = self.value(forKey: key)
-        return value as? Int
-    }
-
 }
 
 

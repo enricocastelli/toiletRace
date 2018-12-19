@@ -41,49 +41,10 @@ class GameResultVC: UIViewController {
         finalResults = finalResults.sorted { (obj1, obj2) -> Bool in
             return obj1.time < obj2.time
         }
-        setData()
-    }
-    
-    func setData() {
-        for index in 0...finalResults.count - 1 {
-//            var racePoints = Float(((finalResults.count - 1) - index) * 2) + (finalResults[index].timeToWinner/4)
-            var racePoints = Float(((finalResults.count - 1) - index) * 2)
-            if racePoints < 0 { racePoints = 0 }
-            if let value = Data.shared.scores[finalResults[index].player.name.rawValue] {
-                let newValue = value + racePoints
-                Data.shared.scores[finalResults[index].player.name.rawValue] = newValue
-                finalResults[index].totalPoints = newValue
-                finalResults[index].points = racePoints
-            } else {
-                finalResults[index].points = racePoints
-                finalResults[index].totalPoints = racePoints
-                Data.shared.scores[finalResults[index].player.name.rawValue] = racePoints
-            }
-        }
-        finalResults = finalResults.sorted { (obj1, obj2) -> Bool in
-            return obj1.totalPoints > obj2.totalPoints
-        }
-        totalScores = Data.shared.scores
-    }
-    
-    func setDefaultData() {
-        for index in 0...finalResults.count - 1 {
-            Storage.storeScore(res: finalResults[index], index: (finalResults.count - (index + 1)))
-        }
     }
 
     
     @IBAction func playTapped(_ sender: UIButton) {
-//        if Data.shared.games == 10 {
-//            setDefaultData()
-//            Data.shared.reset()
-//            let chart = ChartVC()
-//            Navigation.main.viewControllers = [chart]
-//        } else {
-//            let gameVC = GameViewController.instantiate(with: Circuit.ApolloPoo)
-//            Navigation.main.viewControllers = [gameVC]
-//            Navigation.startLoading()
-//        }
         Data.shared.reset()
         let first = FirstVC()
         Navigation.main.viewControllers = [first]
