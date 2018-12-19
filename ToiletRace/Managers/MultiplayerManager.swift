@@ -14,6 +14,7 @@ import MultipeerConnectivity
 
 protocol MultiplayerDelegate {
     func didReceivePosition(pos: PlayerPosition)
+    func didReceivePooName(_ name: PooName)
 }
 
 struct PlayerPosition: Codable {
@@ -43,6 +44,10 @@ class MultiplayerManager: NSObject {
     init(delegate: MultiplayerDelegate) {
         self.delegate = delegate
         super.init()
+    }
+    
+    func updateDelegate(delegate: MultiplayerDelegate) {
+        self.delegate = delegate
     }
     
     func start() {

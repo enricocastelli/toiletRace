@@ -23,13 +23,24 @@
                     <rect key="frame" x="16" y="16" width="635" height="343"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jbc-ik-bKQ">
-                            <rect key="frame" x="279.5" y="0.0" width="76" height="343"/>
+                            <rect key="frame" x="279.5" y="0.0" width="76" height="171.5"/>
                             <fontDescription key="fontDescription" name="Noteworthy-Bold" family="Noteworthy" pointSize="34"/>
                             <state key="normal" title="Start">
                                 <color key="titleColor" red="0.43507543103448276" green="0.26145150080212015" blue="0.069900472204474096" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             </state>
                             <connections>
                                 <action selector="start:" destination="-1" eventType="touchUpInside" id="KSN-XY-Nqt"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oWi-y0-wgM">
+                            <rect key="frame" x="237" y="171.5" width="161" height="171.5"/>
+                            <fontDescription key="fontDescription" name="Noteworthy-Bold" family="Noteworthy" pointSize="34"/>
+                            <state key="normal" title="Multiplayer">
+                                <color key="titleColor" red="0.43507543100000001" green="0.26145150080000001" blue="0.069900472199999994" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            </state>
+                            <connections>
+                                <action selector="multiplayerTapped:" destination="-1" eventType="touchUpInside" id="u4V-Kq-VSX"/>
+                                <action selector="start:" destination="-1" eventType="touchUpInside" id="SUt-Lt-y9K"/>
                             </connections>
                         </button>
                     </subviews>

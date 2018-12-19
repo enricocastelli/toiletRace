@@ -13,6 +13,7 @@
 		1C0EEBC5217F56DE008EE331 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C0EEBC3217F56DE008EE331 /* spark.png */; };
 		1C27D24921CA899E00E3C322 /* MultiplayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C27D24821CA899E00E3C322 /* MultiplayerManager.swift */; };
 		1C27D34521CA91F200E3C322 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C27D34421CA91F200E3C322 /* Logger.swift */; };
+		1C27D34721CA992200E3C322 /* MultiplayerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C27D34621CA992200E3C322 /* MultiplayerVC.swift */; };
 		1C657ECA219CB44800783BD9 /* WaterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C657EC9219CB44800783BD9 /* WaterViewController.swift */; };
 		1C76170221C998290085FCB8 /* RaceResultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C76170121C998290085FCB8 /* RaceResultManager.swift */; };
 		1C76170621CA3D7B0085FCB8 /* WelcomeVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C76170421CA3D7B0085FCB8 /* WelcomeVC.xib */; };
@@ -52,6 +53,7 @@
 		1C0EEBC3217F56DE008EE331 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		1C27D24821CA899E00E3C322 /* MultiplayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplayerManager.swift; sourceTree = "<group>"; };
 		1C27D34421CA91F200E3C322 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		1C27D34621CA992200E3C322 /* MultiplayerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplayerVC.swift; sourceTree = "<group>"; };
 		1C657EC9219CB44800783BD9 /* WaterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterViewController.swift; sourceTree = "<group>"; };
 		1C76170121C998290085FCB8 /* RaceResultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceResultManager.swift; sourceTree = "<group>"; };
 		1C76170421CA3D7B0085FCB8 /* WelcomeVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WelcomeVC.xib; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 				1C76170521CA3D7B0085FCB8 /* WelcomeVC.swift */,
 				1C76170421CA3D7B0085FCB8 /* WelcomeVC.xib */,
 				1CB8D7912176168200B38BA2 /* GameResultVC.swift */,
+				1C27D34621CA992200E3C322 /* MultiplayerVC.swift */,
 				1CB8D79E2176168200B38BA2 /* GameResultVC.xib */,
 				1C815D2D21806496006557D4 /* ShowroomVC.swift */,
 				1C815D2E21806496006557D4 /* ShowroomVC.xib */,
@@ -293,6 +296,7 @@
 				1CB8D7B22176168300B38BA2 /* ResultCell.swift in Sources */,
 				1CB8D7A92176168300B38BA2 /* Poo.swift in Sources */,
 				1C7C1C1B21C7B79200D47FC8 /* Navigation.swift in Sources */,
+				1C27D34721CA992200E3C322 /* MultiplayerVC.swift in Sources */,
 				1CBD9E692178A29900109DC3 /* NodeCreator.swift in Sources */,
 				1C034D00218CA06E001C5694 /* BonusButton.swift in Sources */,
 				1C27D34521CA91F200E3C322 /* Logger.swift in Sources */,

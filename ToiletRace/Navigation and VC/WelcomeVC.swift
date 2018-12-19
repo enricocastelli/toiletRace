@@ -19,4 +19,8 @@ class WelcomeVC: UIViewController {
         let show = ShowroomVC()
         Navigation.main.pushViewController(show, animated: true)
     }
+    
+    @IBAction func multiplayerTapped(_ sender: UIButton) {
+        
+    }
 }

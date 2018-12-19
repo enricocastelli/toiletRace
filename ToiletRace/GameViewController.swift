@@ -444,8 +444,8 @@ extension GameViewController : SCNSceneRendererDelegate {
 
 extension GameViewController : MultiplayerDelegate {
     
-    func createVSOpponentNode() {
-        vsOpponent = NodeCreator.createOpponent(index: 1, postion: nil)
+    func createVSOpponentNode(name: PooName) {
+        vsOpponent = NodeCreator.createVSOpponent(name: name, position: SCNVector3(1, 0.5, 0))
     }
     
     func sendMultiplayerData() {
@@ -456,6 +456,11 @@ extension GameViewController : MultiplayerDelegate {
     func didReceivePosition(pos: PlayerPosition) {
         vsOpponent?.position = SCNVector3(pos.xPos, pos.yPos, pos.xPos)
     }
+    
+    func didReceivePooName(_ name: PooName) {
+        createVSOpponentNode(name: name)
+    }
+    
     
 
 }

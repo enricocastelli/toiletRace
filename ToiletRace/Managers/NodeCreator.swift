@@ -44,6 +44,16 @@ class NodeCreator {
         return oppNode
     }
     
+    static func createVSOpponent(name: PooName, position: SCNVector3) -> SCNNode {
+        let selected = Poo(name: name)
+        let geo = SCNSphere(radius: selected.radius())
+        geo.materials.insert(selected.createMaterial(), at: 0)
+        geo.materials.removeLast()
+        let oppNode = SCNNode(geometry: geo)
+        oppNode.position = position
+        return oppNode
+    }
+    
     static func createBound(zed: Float) -> [SCNNode] {
         let geoOb = SCNBox(width: 1, height: CGFloat((zed - 1)*2), length: 5, chamferRadius: 0)
         geoOb.materials.first?.lightingModel = .physicallyBased
