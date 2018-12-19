@@ -11,7 +11,6 @@ struct Result {
     var time: Float
     var timeToWinner: Float?
     var points: Float
-    var totalPoints: Float
     var penalty: Bool?
 }
 
@@ -37,22 +36,24 @@ class RaceResultManager: NSObject {
             return totalTime + (penalty ? 3 : 0)
         }()
         //            let total = Data.shared.scores[node.name!] ?? 0
-        let total : Float = 0
         let timeToWinner : Float = {
             if let winner = finalResults.first?.time {
                 return winner - time
             }
             return 0
         }()
-        let result = Result(player: Poo(name: poo), time: time, timeToWinner: timeToWinner, points: 0, totalPoints: total, penalty: penalty)
+        let result = Result(player: Poo(name: poo), time: time, timeToWinner: timeToWinner, points: 0, penalty: penalty)
         finalResults.append(result)
     }
     
     func getResults(opponents: [Poo], length: Float) {
-        if finalResults.count != players.count {
+        // checking final result contains all the results
+        if finalResults.count != opponents.count + 1 {
             for opponent in opponents {
                 if finalResults.contains(where: { $0.player.name.rawValue == opponent.name.rawValue}) {
+                    // opponent's result is already in final results
                 } else {
+                    // opponent's result is not in final results, so didn't finish yet, i have to calculate a simulated time
                     let distance = abs(length) + opponent.node!.presentation.position.z
                     var time = calculateTime(firstDate: startDate!)
                     time += distance/10
@@ -62,8 +63,7 @@ class RaceResultManager: NSObject {
                         }
                         return 0
                     }()
-                    let total = (Data.shared.scores[opponent.name.rawValue] ?? 0)
-                    let res = Result(player: Poo(name: PooName(rawValue: opponent.name.rawValue)!), time: time, timeToWinner: timeToWinner, points: 0, totalPoints: total, penalty: false)
+                    let res = Result(player: Poo(name: PooName(rawValue: opponent.name.rawValue)!), time: time, timeToWinner: timeToWinner, points: 0, penalty: false)
                     finalResults.append(res)
                 }
             }

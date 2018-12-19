@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FirstVC: UIViewController {
+class WelcomeVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,5 +19,4 @@ class FirstVC: UIViewController {
         let show = ShowroomVC()
         Navigation.main.pushViewController(show, animated: true)
     }
-    
 }

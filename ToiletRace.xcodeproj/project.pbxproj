@@ -13,15 +13,14 @@
 		1C0EEBC5217F56DE008EE331 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C0EEBC3217F56DE008EE331 /* spark.png */; };
 		1C657ECA219CB44800783BD9 /* WaterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C657EC9219CB44800783BD9 /* WaterViewController.swift */; };
 		1C76170221C998290085FCB8 /* RaceResultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C76170121C998290085FCB8 /* RaceResultManager.swift */; };
-		1C76170621CA3D7B0085FCB8 /* FirstVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C76170421CA3D7B0085FCB8 /* FirstVC.xib */; };
-		1C76170721CA3D7B0085FCB8 /* FirstVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C76170521CA3D7B0085FCB8 /* FirstVC.swift */; };
+		1C76170621CA3D7B0085FCB8 /* WelcomeVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C76170421CA3D7B0085FCB8 /* WelcomeVC.xib */; };
+		1C76170721CA3D7B0085FCB8 /* WelcomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C76170521CA3D7B0085FCB8 /* WelcomeVC.swift */; };
 		1C7C1C1921C7B2E400D47FC8 /* ContactManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7C1C1821C7B2E400D47FC8 /* ContactManager.swift */; };
 		1C7C1C1B21C7B79200D47FC8 /* Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7C1C1A21C7B79200D47FC8 /* Navigation.swift */; };
 		1C7C1C1D21C7B85A00D47FC8 /* ControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7C1C1C21C7B85A00D47FC8 /* ControllerView.swift */; };
 		1C7C1C2E21C7F7D700D47FC8 /* Values.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7C1C2D21C7F7D700D47FC8 /* Values.swift */; };
 		1C815D2F21806496006557D4 /* ShowroomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C815D2D21806496006557D4 /* ShowroomVC.swift */; };
 		1C815D3021806496006557D4 /* ShowroomVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C815D2E21806496006557D4 /* ShowroomVC.xib */; };
-		1CAD18412194847900A310A7 /* mud.scnp in Resources */ = {isa = PBXBuildFile; fileRef = 1CAD18402194847900A310A7 /* mud.scnp */; };
 		1CB8A5972193171E00084496 /* ToiletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8A5962193171E00084496 /* ToiletViewController.swift */; };
 		1CB8A59B21932A6E00084496 /* PipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8A59A21932A6E00084496 /* PipeViewController.swift */; };
 		1CB8D77D217615C000B38BA2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8D77C217615C000B38BA2 /* AppDelegate.swift */; };
@@ -41,8 +40,6 @@
 		1CBD9E692178A29900109DC3 /* NodeCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CBD9E682178A29900109DC3 /* NodeCreator.swift */; };
 		1CE3CB32219CBF48007DB899 /* bokeh.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CE3CB30219CBF48007DB899 /* bokeh.png */; };
 		1CE3CB33219CBF48007DB899 /* bubble.scnp in Resources */ = {isa = PBXBuildFile; fileRef = 1CE3CB31219CBF48007DB899 /* bubble.scnp */; };
-		1CE60625219485E5003BE0BF /* drop.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CE60624219485E4003BE0BF /* drop.png */; };
-		1CE93202218F04900054F83D /* Bonus.scnp in Resources */ = {isa = PBXBuildFile; fileRef = 1CE93201218F04900054F83D /* Bonus.scnp */; };
 		1CFE97082191D942007F837A /* Bonus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CFE97072191D942007F837A /* Bonus.swift */; };
 /* End PBXBuildFile section */
 
@@ -53,15 +50,14 @@
 		1C0EEBC3217F56DE008EE331 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		1C657EC9219CB44800783BD9 /* WaterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterViewController.swift; sourceTree = "<group>"; };
 		1C76170121C998290085FCB8 /* RaceResultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceResultManager.swift; sourceTree = "<group>"; };
-		1C76170421CA3D7B0085FCB8 /* FirstVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FirstVC.xib; sourceTree = "<group>"; };
-		1C76170521CA3D7B0085FCB8 /* FirstVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstVC.swift; sourceTree = "<group>"; };
+		1C76170421CA3D7B0085FCB8 /* WelcomeVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WelcomeVC.xib; sourceTree = "<group>"; };
+		1C76170521CA3D7B0085FCB8 /* WelcomeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeVC.swift; sourceTree = "<group>"; };
 		1C7C1C1821C7B2E400D47FC8 /* ContactManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactManager.swift; sourceTree = "<group>"; };
 		1C7C1C1A21C7B79200D47FC8 /* Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigation.swift; sourceTree = "<group>"; };
 		1C7C1C1C21C7B85A00D47FC8 /* ControllerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerView.swift; sourceTree = "<group>"; };
 		1C7C1C2D21C7F7D700D47FC8 /* Values.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Values.swift; sourceTree = "<group>"; };
 		1C815D2D21806496006557D4 /* ShowroomVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowroomVC.swift; sourceTree = "<group>"; };
 		1C815D2E21806496006557D4 /* ShowroomVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShowroomVC.xib; sourceTree = "<group>"; };
-		1CAD18402194847900A310A7 /* mud.scnp */ = {isa = PBXFileReference; lastKnownFileType = file.scp; path = mud.scnp; sourceTree = "<group>"; };
 		1CB8A5962193171E00084496 /* ToiletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToiletViewController.swift; sourceTree = "<group>"; };
 		1CB8A59A21932A6E00084496 /* PipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipeViewController.swift; sourceTree = "<group>"; };
 		1CB8D779217615C000B38BA2 /* ToiletRace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToiletRace.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -83,8 +79,6 @@
 		1CBD9E682178A29900109DC3 /* NodeCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeCreator.swift; sourceTree = "<group>"; };
 		1CE3CB30219CBF48007DB899 /* bokeh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bokeh.png; sourceTree = "<group>"; };
 		1CE3CB31219CBF48007DB899 /* bubble.scnp */ = {isa = PBXFileReference; lastKnownFileType = file.scp; path = bubble.scnp; sourceTree = "<group>"; };
-		1CE60624219485E4003BE0BF /* drop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = drop.png; sourceTree = "<group>"; };
-		1CE93201218F04900054F83D /* Bonus.scnp */ = {isa = PBXFileReference; lastKnownFileType = file.scp; path = Bonus.scnp; sourceTree = "<group>"; };
 		1CFE97072191D942007F837A /* Bonus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bonus.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -104,13 +98,10 @@
 			children = (
 				1CBD9E6421775A7000109DC3 /* smoke.png */,
 				1CBD9E6521775A7000109DC3 /* smoke.scnp */,
-				1CE60624219485E4003BE0BF /* drop.png */,
 				1C0EEBC3217F56DE008EE331 /* spark.png */,
 				1CE3CB30219CBF48007DB899 /* bokeh.png */,
 				1CE3CB31219CBF48007DB899 /* bubble.scnp */,
-				1CE93201218F04900054F83D /* Bonus.scnp */,
 				1C0EEBC2217F56DE008EE331 /* spluff.scnp */,
-				1CAD18402194847900A310A7 /* mud.scnp */,
 			);
 			path = Particles;
 			sourceTree = "<group>";
@@ -161,8 +152,8 @@
 		1C7C1C3321C7FC4100D47FC8 /* Navigation and VC */ = {
 			isa = PBXGroup;
 			children = (
-				1C76170521CA3D7B0085FCB8 /* FirstVC.swift */,
-				1C76170421CA3D7B0085FCB8 /* FirstVC.xib */,
+				1C76170521CA3D7B0085FCB8 /* WelcomeVC.swift */,
+				1C76170421CA3D7B0085FCB8 /* WelcomeVC.xib */,
 				1CB8D7912176168200B38BA2 /* GameResultVC.swift */,
 				1CB8D79E2176168200B38BA2 /* GameResultVC.xib */,
 				1C815D2D21806496006557D4 /* ShowroomVC.swift */,
@@ -269,18 +260,15 @@
 				1CBD9E6721775A7000109DC3 /* smoke.scnp in Resources */,
 				1CB8D77F217615C000B38BA2 /* art.scnassets in Resources */,
 				1CB8D789217615C100B38BA2 /* LaunchScreen.storyboard in Resources */,
-				1CE93202218F04900054F83D /* Bonus.scnp in Resources */,
 				1C0EEBC5217F56DE008EE331 /* spark.png in Resources */,
-				1CAD18412194847900A310A7 /* mud.scnp in Resources */,
 				1C0EEBC4217F56DE008EE331 /* spluff.scnp in Resources */,
 				1CB8D786217615C100B38BA2 /* Assets.xcassets in Resources */,
-				1CE60625219485E5003BE0BF /* drop.png in Resources */,
 				1C815D3021806496006557D4 /* ShowroomVC.xib in Resources */,
 				1CBD9E6621775A7000109DC3 /* smoke.png in Resources */,
 				1CE3CB33219CBF48007DB899 /* bubble.scnp in Resources */,
 				1CE3CB32219CBF48007DB899 /* bokeh.png in Resources */,
 				1CB8D7B02176168300B38BA2 /* GameResultVC.xib in Resources */,
-				1C76170621CA3D7B0085FCB8 /* FirstVC.xib in Resources */,
+				1C76170621CA3D7B0085FCB8 /* WelcomeVC.xib in Resources */,
 				1CB8D7B12176168300B38BA2 /* ResultCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -302,7 +290,7 @@
 				1C034D00218CA06E001C5694 /* BonusButton.swift in Sources */,
 				1CB8D77D217615C000B38BA2 /* AppDelegate.swift in Sources */,
 				1C7C1C1921C7B2E400D47FC8 /* ContactManager.swift in Sources */,
-				1C76170721CA3D7B0085FCB8 /* FirstVC.swift in Sources */,
+				1C76170721CA3D7B0085FCB8 /* WelcomeVC.swift in Sources */,
 				1CB8D7AE2176168300B38BA2 /* Stuff.swift in Sources */,
 				1C76170221C998290085FCB8 /* RaceResultManager.swift in Sources */,
 				1CB8D7A32176168300B38BA2 /* GameResultVC.swift in Sources */,

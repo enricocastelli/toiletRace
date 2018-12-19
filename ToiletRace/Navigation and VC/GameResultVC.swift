@@ -29,15 +29,7 @@ class GameResultVC: UIViewController {
         tableView.register(UINib(nibName: String(describing: ResultCell.self), bundle: nil), forCellReuseIdentifier: "cell")
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
-        Data.shared.games += 1
         titleLabel.text = "RACE RESULTS"
-        if Data.shared.games == 9 {
-            view.backgroundColor = UIColor.green.withAlphaComponent(0.4)
-        }
-        if Data.shared.games == 10 {
-            titleLabel.text = "LAST RACE \(Data.shared.games)"
-            view.backgroundColor = UIColor.red.withAlphaComponent(0.4)
-        }
         finalResults = finalResults.sorted { (obj1, obj2) -> Bool in
             return obj1.time < obj2.time
         }
@@ -46,7 +38,7 @@ class GameResultVC: UIViewController {
     
     @IBAction func playTapped(_ sender: UIButton) {
         Data.shared.reset()
-        let first = FirstVC()
+        let first = WelcomeVC()
         Navigation.main.viewControllers = [first]
     }
 }

@@ -11,17 +11,18 @@ import UIKit
 
 protocol BonusButtonDelegate {
     func didTapButton(bonus: Bonus)
+    func didFinishBonus(bonus: Bonus)
 }
 
 class BonusButton : UIButton {
     
     var circleLayer = CAShapeLayer()
-    var bonus: Bonus?
+    var bonus: Bonus
     var delegate: BonusButtonDelegate?
     
     init(frame: CGRect, bonus: Bonus, delegate: BonusButtonDelegate?) {
-        super.init(frame: frame)
         self.bonus = bonus
+        super.init(frame: frame)
         self.delegate = delegate
         setup()
     }
@@ -37,7 +38,7 @@ class BonusButton : UIButton {
         isHidden = false
         layer.cornerRadius = frame.height/2
         backgroundColor = UIColor.white
-        setImage(bonus?.image(), for: .normal)
+        setImage(bonus.image(), for: .normal)
         imageEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
         self.addTarget(self, action: #selector(activateBonus), for: .touchUpInside)
         alpha = 0.6
@@ -54,6 +55,11 @@ class BonusButton : UIButton {
         }
     }
     
+    func updateBonus(bonus: Bonus) {
+        self.bonus = bonus
+        setup()
+    }
+    
     @objc func activateBonus() {
         // ENABLE POWER UP
         if let bonus = Data.shared.selectedPlayer.bonus() {
@@ -65,14 +71,15 @@ class BonusButton : UIButton {
     }
     
     @objc func recharge() {
+        delegate?.didFinishBonus(bonus: bonus)
         alpha = 0.2
         let animation = CABasicAnimation(keyPath: "strokeEnd")
-        animation.duration = CFTimeInterval((bonus?.rechargeDuration()) ?? 10)
+        animation.duration = CFTimeInterval(bonus.rechargeDuration())
         animation.fromValue = 0
         animation.toValue = 1
         circleLayer.add(animation, forKey: "strokeCircle")
         // recharge
-        perform(#selector(ready), with: nil, afterDelay: TimeInterval(bonus?.rechargeDuration() ?? 10))
+        perform(#selector(ready), with: nil, afterDelay: TimeInterval(bonus.rechargeDuration()))
     }
     
     @objc func ready() {

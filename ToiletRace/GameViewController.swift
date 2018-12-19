@@ -215,8 +215,10 @@ class GameViewController: UIViewController {
     }
     
     func showBonus(bonus: Bonus, node: SCNNode) {
-        let bonusTrail = SCNParticleSystem(named: "smoke", inDirectory: nil)
-        node.addParticleSystem(bonusTrail!)
+        if let bonusTrail = SCNParticleSystem(named: "smoke", inDirectory: nil) {
+            bonusTrail.loops = true
+            node.addParticleSystem(bonusTrail)
+        }
         switch bonus {
         case .NoBonus:
             break
@@ -418,6 +420,9 @@ extension GameViewController : BonusButtonDelegate {
         showBonus(bonus: bonus, node: ballNode)
     }
     
+    func didFinishBonus(bonus: Bonus) {
+        stopShowBonus(bonus: bonus, node: ballNode)
+    }
 }
 
 extension GameViewController : SCNSceneRendererDelegate {

@@ -40,19 +40,6 @@ class ResultCell: UITableViewCell {
             } else {
                 titleLabel.font = UIFont.systemFont(ofSize: 16)
             }
-//            lastPointLabel.text = "+ \(result!.points.string())"
-//            if result!.points > 6 {
-//                lastPointLabel.textColor = UIColor.blue
-//            } else {
-//                lastPointLabel.textColor = UIColor.red
-//            }
-            let points = Int(result!.totalPoints)
-            totalLabel.text = "\(points)"
-//            layoutIfNeeded()
-//            colorView.layer.cornerRadius = colorView.frame.height/2
-//            colorView.layer.borderColor = UIColor.black.cgColor
-//            colorView.layer.borderWidth = 1
-//            colorView.backgroundColor = result?.player.color()
         }
     }
 

@@ -29,10 +29,7 @@ class ShowroomVC: UIViewController {
             nameLabel.frame.size.height = nameLabel.intrinsicContentSize.height + 2
             nameLabel.center.x = view.center.x
             if let bonus = players[selectedItem].bonus() {
-                bonusView = BonusButton(frame: bonusView.frame, bonus: bonus, delegate: nil)
-                if bonus == .NoBonus {
-                    bonusView.alpha = 0 } else
-                { bonusView.alpha = 1 }
+                bonusView.updateBonus(bonus: bonus)
             }
         }
     }
@@ -40,6 +37,7 @@ class ShowroomVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.alpha = 0
         sceneView = self.view as? SCNView
         let scene = SCNScene()
         sceneView.scene = scene
@@ -53,6 +51,15 @@ class ShowroomVC: UIViewController {
         // Do any additional setup after loading the view.
         addButtons()
         addBonus()
+        prepare {
+            self.view.alpha = 1
+        }
+    }
+    
+    func prepare(completion: @escaping () -> ()) {
+        sceneView.prepare([sceneView.scene as Any]) { (done) in
+           completion()
+        }
     }
     
     func addBalls() {

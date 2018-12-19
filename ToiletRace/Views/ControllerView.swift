@@ -167,27 +167,30 @@ extension ControllerView: UITableViewDataSource {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
         cell.textLabel?.layer.cornerRadius = 10
         if RaceResultManager.shared.finalResults.count > indexPath.row {
-            cell.textLabel?.text = "\(indexPath.row + 1)) \(RaceResultManager.shared.finalResults[indexPath.row].player.name.rawValue)"
-            cell.imageView?.image = UIImage(color: RaceResultManager.shared.finalResults[indexPath.row].player.color())
-            let ball = RaceResultManager.shared.finalResults[indexPath.row]
+            // this poo finished the race
+            let poo = RaceResultManager.shared.finalResults[indexPath.row]
+            cell.textLabel?.text = "\(indexPath.row + 1)) \(poo.player.name.rawValue)"
             if indexPath.row != 0 {
-                cell.detailTextLabel?.text = "\((ball.timeToWinner ?? 0).string())"
+                // poo is not first. Detail text show's time to Winner in red
+                cell.detailTextLabel?.text = "\((poo.timeToWinner ?? 0).string())"
                 cell.detailTextLabel?.textColor = UIColor.red
             } else {
-                cell.detailTextLabel?.text = "\(ball.time.string())"
+                // poo is first. Detail text show's time
+                cell.detailTextLabel?.text = "\(poo.time.string())"
                 cell.detailTextLabel?.textColor = cellTextColor
             }
         } else {
-            cell.textLabel?.text = " \(indexPath.row + 1)) \(gameVC.ranking[indexPath.row].name.rawValue) "
-            cell.imageView?.image = UIImage(color: gameVC.ranking[indexPath.row].color())
-            if gameVC.ranking[indexPath.row].bonusEnabled == true {
+            // this poo is in the race.
+            let poo = gameVC.ranking[indexPath.row]
+            cell.textLabel?.text = " \(indexPath.row + 1)) \(poo.name.rawValue) "
+            if poo.bonusEnabled == true {
                 cell.textLabel?.layer.backgroundColor = backgroundCellColor.cgColor
             } else {
                 cell.textLabel?.layer.backgroundColor = UIColor.clear.cgColor
             }
         }
         
-        // common config
+        // common config not depending on player or finishing race.
         cell.textLabel?.textColor = cellTextColor
         cell.backgroundColor = UIColor.clear
         cell.imageView?.layer.masksToBounds = true
