@@ -36,15 +36,18 @@ class MultiplayerVC: UIViewController {
 extension MultiplayerVC: MultiplayerConnectionDelegate {
     
     func didFoundPeer(_ peer: MCPeerID) {
-        
+        if !players.contains(peer) {
+            players.append(peer)
+            tableView.reloadData()
+        }
     }
     
     func didReceiveInvitation(peerID: MCPeerID, invitationHandler: @escaping (Bool) -> Void) {
-        let alert = UIAlertController(title: "Hoi!", message: "You just received an invitation game from: \(peerID.displayName).", preferredStyle: UIAlertController.Style.alert)
-        let action1 = UIAlertAction(title: "Not now", style: UIAlertAction.Style.cancel) { (action) in
+        let alert = UIAlertController(title: "Oh 💩", message: "You just received an invitation game from this poo: \(peerID.displayName).", preferredStyle: UIAlertController.Style.alert)
+        let action1 = UIAlertAction(title: "Nope", style: UIAlertAction.Style.cancel) { (action) in
             invitationHandler(false)
         }
-        let action2 = UIAlertAction(title: "Accept", style: UIAlertAction.Style.default) { (action) in
+        let action2 = UIAlertAction(title: "Race", style: UIAlertAction.Style.default) { (action) in
             invitationHandler(true)
         }
         alert.addAction(action1)
