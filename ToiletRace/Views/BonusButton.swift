@@ -62,8 +62,8 @@ class BonusButton : UIButton {
     
     @objc func activateBonus() {
         // ENABLE POWER UP
-        if let bonus = Data.shared.selectedPlayer.bonus() {
-            guard Data.shared.selectedPlayer.canUseBonus == true else { return }
+        if let bonus = SessionData.shared.selectedPlayer.bonus() {
+            guard SessionData.shared.selectedPlayer.canUseBonus == true else { return }
             isEnabled = false
             perform(#selector(recharge), with: nil, afterDelay: TimeInterval(bonus.duration()))
             delegate?.didTapButton(bonus: bonus)

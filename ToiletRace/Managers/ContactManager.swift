@@ -40,56 +40,46 @@ class ContactManager: NSObject, SCNPhysicsContactDelegate {
         let nodeB = contact.nodeB
         if nodeA.name == "bath" {
             if nodeB.name == "paper" || nodeB.name == "sponge" || nodeB.name == "pill" {
-                Logger(ms: "removing \(nodeB.name!)")
                 nodeB.removeFromParentNode()
             }
         } else if nodeB.name == "bath" {
             if nodeA.name == "paper" || nodeA.name == "sponge" || nodeA.name == "pill"  {
-                Logger(ms: "removing \(nodeA.name!)")
                 nodeA.removeFromParentNode()
             }
         }
         if nodeA.name == "pill" {
             if nodeB.name == "paper" || nodeB.name == "sponge" {
-                Logger(ms: "removing \(nodeB.name!)")
                 nodeB.removeFromParentNode()
             }
         } else if nodeB.name == "pill" {
             if nodeA.name == "paper" || nodeA.name == "sponge" {
-                Logger(ms: "removing \(nodeA.name!)")
                 nodeA.removeFromParentNode()
             }
         }
         if nodeA.name == "sponge" {
             if nodeB.name == "paper" {
-                Logger(ms: "removing \(nodeB.name!)")
                 nodeB.removeFromParentNode()
             }
         } else if nodeB.name == "sponge" {
             if nodeA.name == "paper" {
-                Logger(ms: "removing \(nodeA.name!)")
                 nodeA.removeFromParentNode()
             }
         }
         if nodeA.name == "rat" {
             if nodeB.name == "trash" || nodeB.name == "rock" {
-                Logger(ms: "removing \(nodeB.name!)")
                 nodeB.removeFromParentNode()
             }
         } else if nodeB.name == "rat" {
             if nodeA.name == "trash" || nodeA.name == "rock" {
-                Logger(ms: "removing \(nodeA.name!)")
                 nodeA.removeFromParentNode()
             }
         }
         if nodeA.name == "rock" {
             if nodeB.name == "trash" {
-                Logger(ms: "removing \(nodeB.name!)")
                 nodeB.removeFromParentNode()
             }
         } else if nodeB.name == "rock" {
             if nodeA.name == "trash" {
-                Logger(ms: "removing \(nodeA.name!)")
                 nodeA.removeFromParentNode()
             }
         }

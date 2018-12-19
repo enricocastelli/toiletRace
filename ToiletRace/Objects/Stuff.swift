@@ -35,7 +35,6 @@ class Collider {
 
 
 enum World: Int {
-    
     case house = 0
     case toilet = 1
     case pipe = 2
@@ -58,9 +57,9 @@ enum Direction: Int {
     //    case back
 }
 
-class Data {
+class SessionData {
     
-    static let shared = Data()
+    static let shared = SessionData()
     
     var scores : [String: Float] = [:]
     var games = 0
@@ -71,11 +70,6 @@ class Data {
         scores = [:]
         selectedPlayer = Poo(name: .GuanoStar)
     }
-}
-
-
-func Logger(ms: String) {
-//    print("💩⚠️ \(ms)")
 }
 
 // BEWARE OF THE ALMIGHTYYY POOOOPPPP

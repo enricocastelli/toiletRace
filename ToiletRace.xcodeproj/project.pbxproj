@@ -11,6 +11,8 @@
 		1C03B3A4217E658F003CD652 /* Loading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C03B3A3217E658F003CD652 /* Loading.swift */; };
 		1C0EEBC4217F56DE008EE331 /* spluff.scnp in Resources */ = {isa = PBXBuildFile; fileRef = 1C0EEBC2217F56DE008EE331 /* spluff.scnp */; };
 		1C0EEBC5217F56DE008EE331 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C0EEBC3217F56DE008EE331 /* spark.png */; };
+		1C27D24921CA899E00E3C322 /* MultiplayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C27D24821CA899E00E3C322 /* MultiplayerManager.swift */; };
+		1C27D34521CA91F200E3C322 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C27D34421CA91F200E3C322 /* Logger.swift */; };
 		1C657ECA219CB44800783BD9 /* WaterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C657EC9219CB44800783BD9 /* WaterViewController.swift */; };
 		1C76170221C998290085FCB8 /* RaceResultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C76170121C998290085FCB8 /* RaceResultManager.swift */; };
 		1C76170621CA3D7B0085FCB8 /* WelcomeVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C76170421CA3D7B0085FCB8 /* WelcomeVC.xib */; };
@@ -48,6 +50,8 @@
 		1C03B3A3217E658F003CD652 /* Loading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loading.swift; sourceTree = "<group>"; };
 		1C0EEBC2217F56DE008EE331 /* spluff.scnp */ = {isa = PBXFileReference; lastKnownFileType = file.scp; path = spluff.scnp; sourceTree = "<group>"; };
 		1C0EEBC3217F56DE008EE331 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
+		1C27D24821CA899E00E3C322 /* MultiplayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplayerManager.swift; sourceTree = "<group>"; };
+		1C27D34421CA91F200E3C322 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		1C657EC9219CB44800783BD9 /* WaterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterViewController.swift; sourceTree = "<group>"; };
 		1C76170121C998290085FCB8 /* RaceResultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceResultManager.swift; sourceTree = "<group>"; };
 		1C76170421CA3D7B0085FCB8 /* WelcomeVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WelcomeVC.xib; sourceTree = "<group>"; };
@@ -122,6 +126,7 @@
 				1CBD9E682178A29900109DC3 /* NodeCreator.swift */,
 				1C76170121C998290085FCB8 /* RaceResultManager.swift */,
 				1C7C1C1A21C7B79200D47FC8 /* Navigation.swift */,
+				1C27D24821CA899E00E3C322 /* MultiplayerManager.swift */,
 				1C7C1C1821C7B2E400D47FC8 /* ContactManager.swift */,
 			);
 			path = Managers;
@@ -133,6 +138,7 @@
 				1CB8D7972176168200B38BA2 /* Poo.swift */,
 				1CB8D7922176168200B38BA2 /* Extension.swift */,
 				1CB8D79C2176168200B38BA2 /* Stuff.swift */,
+				1C27D34421CA91F200E3C322 /* Logger.swift */,
 				1C7C1C2D21C7F7D700D47FC8 /* Values.swift */,
 				1CFE97072191D942007F837A /* Bonus.swift */,
 			);
@@ -281,6 +287,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1C815D2F21806496006557D4 /* ShowroomVC.swift in Sources */,
+				1C27D24921CA899E00E3C322 /* MultiplayerManager.swift in Sources */,
 				1CB8D781217615C000B38BA2 /* GameViewController.swift in Sources */,
 				1CB8A5972193171E00084496 /* ToiletViewController.swift in Sources */,
 				1CB8D7B22176168300B38BA2 /* ResultCell.swift in Sources */,
@@ -288,6 +295,7 @@
 				1C7C1C1B21C7B79200D47FC8 /* Navigation.swift in Sources */,
 				1CBD9E692178A29900109DC3 /* NodeCreator.swift in Sources */,
 				1C034D00218CA06E001C5694 /* BonusButton.swift in Sources */,
+				1C27D34521CA91F200E3C322 /* Logger.swift in Sources */,
 				1CB8D77D217615C000B38BA2 /* AppDelegate.swift in Sources */,
 				1C7C1C1921C7B2E400D47FC8 /* ContactManager.swift in Sources */,
 				1C76170721CA3D7B0085FCB8 /* WelcomeVC.swift in Sources */,

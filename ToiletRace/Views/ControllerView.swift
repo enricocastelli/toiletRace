@@ -68,7 +68,7 @@ class ControllerView: UIView {
     }
     
     func setupBonusButton() {
-        guard let bonus = Data.shared.selectedPlayer.bonus() else { return }
+        guard let bonus = SessionData.shared.selectedPlayer.bonus() else { return }
         bonusButton = BonusButton(frame: CGRect(x: frame.width - 100, y: frame.height - 100, width: 64, height: 64), bonus: bonus, delegate: gameVC)
         addSubview(bonusButton!)
     }
@@ -195,7 +195,7 @@ extension ControllerView: UITableViewDataSource {
         cell.backgroundColor = UIColor.clear
         cell.imageView?.layer.masksToBounds = true
         cell.imageView?.layer.cornerRadius = 10
-        if cell.textLabel?.text?.contains(Data.shared.selectedPlayer.name.rawValue) ?? false {
+        if cell.textLabel?.text?.contains(SessionData.shared.selectedPlayer.name.rawValue) ?? false {
             cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 16)
             cell.contentView.alpha = 0.8
         } else {

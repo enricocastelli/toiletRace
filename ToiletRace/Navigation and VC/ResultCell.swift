@@ -35,7 +35,7 @@ class ResultCell: UITableViewCell {
                 timeLabel.text = result?.time.string()
             }
             titleLabel.text = result?.player.name.rawValue
-            if result?.player.name.rawValue == Data.shared.selectedPlayer.name.rawValue {
+            if result?.player.name.rawValue == SessionData.shared.selectedPlayer.name.rawValue {
                 titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
             } else {
                 titleLabel.font = UIFont.systemFont(ofSize: 16)

@@ -191,7 +191,7 @@ class ShowroomVC: UIViewController {
         nodes[selectedItem].addParticleSystem(trail)
         let action = SCNAction.move(to: SCNVector3(selectedItem*10, 0, -1), duration: 2)
         nodes[selectedItem].runAction(action)
-        Data.shared.selectedPlayer = Poo.init(name: PooName(rawValue: nodes[selectedItem].name!)!)
+        SessionData.shared.selectedPlayer = Poo.init(name: PooName(rawValue: nodes[selectedItem].name!)!)
         perform(#selector(goToRace), with: nil, afterDelay: 2)
     }
     

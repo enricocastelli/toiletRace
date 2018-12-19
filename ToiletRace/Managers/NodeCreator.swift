@@ -7,17 +7,17 @@ import UIKit
 class NodeCreator {
     
     static func createBall(postion: SCNVector3?) -> SCNNode {
-        let selected = Data.shared.selectedPlayer
+        let selected = SessionData.shared.selectedPlayer
         let geo = SCNSphere(radius: selected.radius())
         geo.materials.insert(selected.createMaterial(), at: 0)
         geo.materials.removeLast()
         let ballNode = SCNNode(geometry: geo)
         ballNode.position = postion ?? SCNVector3(0.0, 0.0, 0.0)
         ballNode.physicsBody = SCNPhysicsBody.dynamic()
-        ballNode.physicsBody?.restitution = Data.shared.selectedPlayer.restitution()
+        ballNode.physicsBody?.restitution = SessionData.shared.selectedPlayer.restitution()
         ballNode.physicsBody?.contactTestBitMask = Collider.ball | Collider.obstacle | Collider.bounds
         ballNode.physicsBody?.categoryBitMask = Collider.ball
-        ballNode.name = Data.shared.selectedPlayer.name.rawValue
+        ballNode.name = SessionData.shared.selectedPlayer.name.rawValue
         return ballNode
     }
     

@@ -37,7 +37,7 @@ class GameResultVC: UIViewController {
 
     
     @IBAction func playTapped(_ sender: UIButton) {
-        Data.shared.reset()
+        SessionData.shared.reset()
         let first = WelcomeVC()
         Navigation.main.viewControllers = [first]
     }

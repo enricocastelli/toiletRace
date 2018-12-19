@@ -117,7 +117,7 @@ class GameViewController: UIViewController {
     
     func addOpponents() {
         for index in 0...currentPlayers.count - 1 {
-            if currentPlayers[index].name != Data.shared.selectedPlayer.name {
+            if currentPlayers[index].name != SessionData.shared.selectedPlayer.name {
                 let oppNode = NodeCreator.createOpponent(index: index, postion: position)
                 currentPlayers[index].reset()
                 scene.rootNode.addChildNode(oppNode)
@@ -125,8 +125,8 @@ class GameViewController: UIViewController {
                 currentPlayers[index].node = oppNode
                 oppNode.name = currentPlayers[index].name.rawValue
             } else {
-                Data.shared.selectedPlayer.node = ballNode
-                self.currentPlayers[index] = Data.shared.selectedPlayer
+                SessionData.shared.selectedPlayer.node = ballNode
+                self.currentPlayers[index] = SessionData.shared.selectedPlayer
                 self.currentPlayers[index].reset()
             }
         }
@@ -201,7 +201,7 @@ class GameViewController: UIViewController {
     // MARK:- MOVING POOPS, CAMERA AND TURNING
     
     func shouldTurn(right: Bool) {
-        let turningForce = Data.shared.selectedPlayer.turningForce()
+        let turningForce = SessionData.shared.selectedPlayer.turningForce()
         let rightLeftForce = right ? turningForce : -turningForce
         let force = SCNVector3(rightLeftForce, 0, 0)
         ballNode.physicsBody?.applyForce(force, asImpulse: true)
