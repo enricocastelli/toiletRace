@@ -17,6 +17,11 @@ protocol MultiplayerDelegate {
     func didReceivePooName(_ name: PooName)
 }
 
+protocol MultiplayerConnectionDelegate {
+    func didFoundPeer(_ peer: MCPeerID)
+    func didReceiveInvitation(peerID: MCPeerID, invitationHandler: @escaping (Bool) -> Void)
+}
+
 struct PlayerPosition: Codable {
     var xPos: Float
     var zPos: Float
@@ -38,16 +43,19 @@ class MultiplayerManager: NSObject {
     }()
     
     var players : Array<MCPeerID> = []
-    var delegate: MultiplayerDelegate
+    var delegate: MultiplayerDelegate?
+    var connectionDelegate: MultiplayerConnectionDelegate?
     var connected = false
     
-    init(delegate: MultiplayerDelegate) {
+    init(delegate: MultiplayerDelegate?, connectionDelegate: MultiplayerConnectionDelegate?) {
         self.delegate = delegate
+        self.connectionDelegate = connectionDelegate
         super.init()
     }
     
-    func updateDelegate(delegate: MultiplayerDelegate) {
+    func updateDelegate(delegate: MultiplayerDelegate?, connectionDelegate: MultiplayerConnectionDelegate?) {
         self.delegate = delegate
+        self.connectionDelegate = connectionDelegate
     }
     
     func start() {
@@ -91,11 +99,14 @@ extension MultiplayerManager: MCNearbyServiceAdvertiserDelegate {
     }
     
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
-        invitationHandler(true, self.session)
+        connectionDelegate?.didReceiveInvitation(peerID: peerID, invitationHandler: { (accepted) in
+            invitationHandler(accepted, self.session)
+        })
     }
 }
 
 extension MultiplayerManager: MCSessionDelegate {
+    
     func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
         switch state.rawValue {
         case 0:
@@ -116,7 +127,7 @@ extension MultiplayerManager: MCSessionDelegate {
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
         do {
             let value = try JSONDecoder().decode(PlayerPosition.self, from: data)
-            delegate.didReceivePosition(pos: value)
+            delegate?.didReceivePosition(pos: value)
         } catch {
             Logger("error decoding data")
         }
@@ -139,6 +150,7 @@ extension MultiplayerManager: MCNearbyServiceBrowserDelegate {
     
     func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
         Logger("Found peer \(peerID)")
+        connectionDelegate?.didFoundPeer(peerID)
         connect(peerID)
     }
     
