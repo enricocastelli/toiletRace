@@ -22,9 +22,9 @@ class ContactManager: NSObject, SCNPhysicsContactDelegate {
             detectObstacleCollision(contact: contact)
         }
         if contact.nodeB.name == "finish" {
-            gameVC.handleFinish(ball: contact.nodeA)
+            gameVC.handleFinish(contact.nodeA)
         } else if contact.nodeA.name == "finish" {
-            gameVC.handleFinish(ball: contact.nodeB)
+            gameVC.handleFinish(contact.nodeB)
         }
         if contact.nodeB.name == "carpet" {
             guard contact.nodeB.name != "floor" else { return }

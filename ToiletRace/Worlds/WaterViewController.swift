@@ -55,16 +55,16 @@ class WaterViewController: GameViewController {
     
     @objc func addBubble() {
         let trail = SCNParticleSystem(named: "bubble", inDirectory: nil)
-        self.ballNode.addParticleSystem(trail!)
+        self.pooNode.addParticleSystem(trail!)
     }
     
     
     @objc func moveY() {
         let randomY = -0.2 - Float(arc4random_uniform(10))/90
-        self.ballNode.physicsBody?.applyForce(SCNVector3(0, randomY, 0), asImpulse: false)
+        self.pooNode.physicsBody?.applyForce(SCNVector3(0, randomY, 0), asImpulse: false)
         let randomTorque = 0.02 - Float(arc4random_uniform(10))/100
         let torque = SCNVector4(0, 0, randomTorque, randomTorque)
-        ballNode.physicsBody?.applyTorque(torque, asImpulse: true)
+        pooNode.physicsBody?.applyTorque(torque, asImpulse: true)
     }
     
     func addObstacles() {

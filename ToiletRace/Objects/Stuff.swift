@@ -27,7 +27,7 @@ import UIKit
 //asteroid.physicsBody.collisionBitMask = CollisionCategoryAsteroid;
 
 class Collider {
-    static let ball: Int = 4
+    static let poo: Int = 4
     static let bounds : Int = 8
     static let obstacle: Int = 16
     static let floor: Int = 32

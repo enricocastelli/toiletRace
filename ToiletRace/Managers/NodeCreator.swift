@@ -6,19 +6,19 @@ import UIKit
 
 class NodeCreator {
     
-    static func createBall(postion: SCNVector3?) -> SCNNode {
+    static func createPoo(postion: SCNVector3?) -> SCNNode {
         let selected = SessionData.shared.selectedPlayer
         let geo = SCNSphere(radius: selected.radius())
         geo.materials.insert(selected.createMaterial(), at: 0)
         geo.materials.removeLast()
-        let ballNode = SCNNode(geometry: geo)
-        ballNode.position = postion ?? SCNVector3(0.0, 0.0, 0.0)
-        ballNode.physicsBody = SCNPhysicsBody.dynamic()
-        ballNode.physicsBody?.restitution = SessionData.shared.selectedPlayer.restitution()
-        ballNode.physicsBody?.contactTestBitMask = Collider.ball | Collider.obstacle | Collider.bounds
-        ballNode.physicsBody?.categoryBitMask = Collider.ball
-        ballNode.name = SessionData.shared.selectedPlayer.name.rawValue
-        return ballNode
+        let pooNode = SCNNode(geometry: geo)
+        pooNode.position = postion ?? SCNVector3(0.0, 0.0, 0.0)
+        pooNode.physicsBody = SCNPhysicsBody.dynamic()
+        pooNode.physicsBody?.restitution = SessionData.shared.selectedPlayer.restitution()
+        pooNode.physicsBody?.contactTestBitMask = Collider.poo | Collider.obstacle | Collider.bounds
+        pooNode.physicsBody?.categoryBitMask = Collider.poo
+        pooNode.name = SessionData.shared.selectedPlayer.name.rawValue
+        return pooNode
     }
     
     static func createOpponent(index: Int, postion: SCNVector3?) -> SCNNode {
@@ -39,8 +39,8 @@ class NodeCreator {
         oppNode.position = actualPosition
         oppNode.physicsBody = SCNPhysicsBody(type: SCNPhysicsBodyType.dynamic, shape: nil)
         oppNode.physicsBody?.restitution = players[index].restitution()
-        oppNode.physicsBody?.contactTestBitMask = Collider.ball | Collider.bounds | Collider.obstacle
-        oppNode.physicsBody?.categoryBitMask = Collider.ball
+        oppNode.physicsBody?.contactTestBitMask = Collider.poo | Collider.bounds | Collider.obstacle
+        oppNode.physicsBody?.categoryBitMask = Collider.poo
         return oppNode
     }
     
@@ -275,7 +275,7 @@ class NodeCreator {
         trashNode.physicsBody?.isAffectedByGravity = false
         trashNode.physicsBody?.restitution = 2
         trashNode.physicsBody?.categoryBitMask = Collider.obstacle
-        trashNode.physicsBody?.collisionBitMask = Collider.ball
+        trashNode.physicsBody?.collisionBitMask = Collider.poo
         trashNode.name = "trash"
         return trashNode
     }

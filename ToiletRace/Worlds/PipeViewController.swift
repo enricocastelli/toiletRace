@@ -107,9 +107,9 @@ class PipeViewController: GameViewController {
     }
     
     
-    override func handleFinish(ball: SCNNode) {
-        super.handleFinish(ball: ball)
-        if ball == ballNode {
+    override func handleFinish(_ poo: SCNNode) {
+        super.handleFinish(poo)
+        if poo == pooNode {
             rockTimer?.invalidate()
         }
     }
@@ -130,8 +130,8 @@ class PipeViewController: GameViewController {
     
     
     func slowSplash() {
-        if ballNode.presentation.position.x > -0.01 && ballNode.presentation.position.x < 0.01 {
-            ballNode.physicsBody?.applyForce(SCNVector3(0, 0, -0.02), asImpulse: true)
+        if pooNode.presentation.position.x > -0.01 && pooNode.presentation.position.x < 0.01 {
+            pooNode.physicsBody?.applyForce(SCNVector3(0, 0, -0.02), asImpulse: true)
         }
     }
     

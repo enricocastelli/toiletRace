@@ -64,25 +64,25 @@ class ShowroomVC: UIViewController {
     
     func addBalls() {
         for index in 0...players.count - 1 {
-            let ballNode = NodeCreator.createOpponent(index: index, postion: nil)
-            ballNode.position = SCNVector3(index*10, 0, -2)
-            ballNode.physicsBody?.isAffectedByGravity = false
-            sceneView.scene!.rootNode.addChildNode(ballNode)
-            ballNode.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 2, z: 0, duration: 1)))
-            ballNode.name = players[index].name.rawValue
-            nodes.append(ballNode)
+            let pooNode = NodeCreator.createOpponent(index: index, postion: nil)
+            pooNode.position = SCNVector3(index*10, 0, -2)
+            pooNode.physicsBody?.isAffectedByGravity = false
+            sceneView.scene!.rootNode.addChildNode(pooNode)
+            pooNode.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 2, z: 0, duration: 1)))
+            pooNode.name = players[index].name.rawValue
+            nodes.append(pooNode)
         }
         if shouldShowMighty {
             shouldShowMighty = false
             players.append(Poo(name: PooName.MightyPoop))
             let index = players.count - 1
-            let ballNode = NodeCreator.createOpponent(index: index, postion: nil)
-            ballNode.position = SCNVector3(index*10, 0, -2)
-            ballNode.physicsBody?.isAffectedByGravity = false
-            sceneView.scene!.rootNode.addChildNode(ballNode)
-            ballNode.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 2, z: 0, duration: 1)))
-            ballNode.name = players[index].name.rawValue
-            nodes.append(ballNode)
+            let pooNode = NodeCreator.createOpponent(index: index, postion: nil)
+            pooNode.position = SCNVector3(index*10, 0, -2)
+            pooNode.physicsBody?.isAffectedByGravity = false
+            sceneView.scene!.rootNode.addChildNode(pooNode)
+            pooNode.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 2, z: 0, duration: 1)))
+            pooNode.name = players[index].name.rawValue
+            nodes.append(pooNode)
         }
     }
     

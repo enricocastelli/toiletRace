@@ -20,22 +20,26 @@ class GameViewController: UIViewController {
     var scene:SCNScene!
     
     // nodes in the game
-    var ballNode:SCNNode!
-    var selfieStickNode:SCNNode!
-    var floor : SCNNode!
+    var pooNode: SCNNode!
+    // optional vsOpponent
+    var vsOpponent: SCNNode?
+    var selfieStickNode: SCNNode!
+    var floor: SCNNode!
+    
     var contactManager: ContactManager!
     var controllerView: ControllerView!
     var raceResultManager = RaceResultManager.shared
+    var multiplayer: MultiplayerManager?
     /// length of track
     var length: Float = -250
     
     /// timer that triggers specific opponents actions (bonus usage)
     var oppTimer = Timer()
 
-    /// started is true when game is playing, so balls are moved
+    /// started is true when game is playing, so poos are moved
     var started = false
     
-    /// game is over when ballNode has completed the track
+    /// game is over when pooNode has completed the track
     var gameOver = false
     
     /// bool triggered at the right time at beginning so that camera moves nicely from the end to the beginning of the track
@@ -51,7 +55,6 @@ class GameViewController: UIViewController {
     
     /// Array of current opponents
     var opponents:[Poo] = []
-
     
     /// Array of players, generally copied from global var players. It SHOULD CHANGE depending on players position
     var ranking = players
@@ -78,8 +81,8 @@ class GameViewController: UIViewController {
     
     func prepare() {
         self.setupScene()
-        self.ballNode = (NodeCreator.createBall(postion: position))
-        self.scene.rootNode.addChildNode(self.ballNode)
+        self.pooNode = (NodeCreator.createPoo(postion: position))
+        self.scene.rootNode.addChildNode(self.pooNode)
         self.addOpponents()
         self.setupFloor()
     }
@@ -97,7 +100,7 @@ class GameViewController: UIViewController {
     func setupFloor() {
         floor = scene.rootNode.childNode(withName: "floor", recursively: true)!
         floor.physicsBody?.categoryBitMask = Collider.floor
-        floor.physicsBody?.collisionBitMask = Collider.obstacle | Collider.ball
+        floor.physicsBody?.collisionBitMask = Collider.obstacle | Collider.poo
     }
     
     func sceneForWorld() -> SCNScene {
@@ -125,7 +128,7 @@ class GameViewController: UIViewController {
                 currentPlayers[index].node = oppNode
                 oppNode.name = currentPlayers[index].name.rawValue
             } else {
-                SessionData.shared.selectedPlayer.node = ballNode
+                SessionData.shared.selectedPlayer.node = pooNode
                 self.currentPlayers[index] = SessionData.shared.selectedPlayer
                 self.currentPlayers[index].reset()
             }
@@ -171,7 +174,7 @@ class GameViewController: UIViewController {
     func activateOpponentBonus(index: Int) {
         if let bonus = currentPlayers[index].bonus() {
             let bonusNode = currentPlayers[index].node
-            guard bonusNode != ballNode else { return }
+            guard bonusNode != pooNode else { return }
             let bonusPoo = currentPlayers[index]
             guard bonusPoo.canUseBonus == true && bonusPoo.bonusEnabled == false else { return }
             currentPlayers[index].bonusEnabled = true
@@ -204,7 +207,7 @@ class GameViewController: UIViewController {
         let turningForce = SessionData.shared.selectedPlayer.turningForce()
         let rightLeftForce = right ? turningForce : -turningForce
         let force = SCNVector3(rightLeftForce, 0, 0)
-        ballNode.physicsBody?.applyForce(force, asImpulse: true)
+        pooNode.physicsBody?.applyForce(force, asImpulse: true)
         if shouldRotateCamera {
             let rotation: CGFloat = right ? 0.05 : -0.05
             let rotateAction = SCNAction.rotateBy(x: 0, y: 0, z: rotation, duration: 0.4)
@@ -232,7 +235,7 @@ class GameViewController: UIViewController {
             node.physicsBody?.collisionBitMask = Collider.floor | Collider.bounds
             break
         case .Teleport:
-            node.runAction(SCNAction.move(to: SCNVector3(ballNode.presentation.position.x, ballNode.presentation.position.y, ballNode.presentation.position.z - 15), duration: 0.05))
+            node.runAction(SCNAction.move(to: SCNVector3(pooNode.presentation.position.x, pooNode.presentation.position.y, pooNode.presentation.position.z - 15), duration: 0.05))
             break
         case .MiniPoo:
             let geo = SCNSphere(radius: 0.2)
@@ -280,33 +283,33 @@ class GameViewController: UIViewController {
     
     func movePoops() {
         for n in 0...currentPlayers.count - 1 {
-            let ball = currentPlayers[n]
-            let bonusOffset = calculateBonusOffset(ball: ball)
-            if ball.node!.presentation.position.z < length + 50 && ball.canUseBonus == true {
-                if ball.node == ballNode {
-                    ball.canUseBonus = false
+            let poo = currentPlayers[n]
+            let bonusOffset = calculateBonusOffset(poo)
+            if poo.node!.presentation.position.z < length + 50 && poo.canUseBonus == true {
+                if poo.node == pooNode {
+                    poo.canUseBonus = false
                     DispatchQueue.main.async {
                         self.controllerView.removeBonus()
                     }
                 } else {
-                    ball.canUseBonus = false
+                    poo.canUseBonus = false
                 }
-                currentPlayers[n] = ball
+                currentPlayers[n] = poo
             }
-            ball.node?.physicsBody?.applyForce(SCNVector3(0, 0, ball.velocity() + bonusOffset), asImpulse: true)
+            poo.node?.physicsBody?.applyForce(SCNVector3(0, 0, poo.velocity() + bonusOffset), asImpulse: true)
         }
     }
     
-    func calculateBonusOffset(ball: Poo) -> Float {
+    func calculateBonusOffset(_ poo: Poo) -> Float {
         let offset : Float  = {
-            if slowerActivated && ball.bonus() != .Slower && ball.bonus() != .Almighty {
+            if slowerActivated && poo.bonus() != .Slower && poo.bonus() != .Almighty {
                 return 0.015
             } else { return 0 }
         }()
-        guard ball.bonusEnabled else { return offset }
-        if let bonus = ball.bonus() {
+        guard poo.bonusEnabled else { return offset }
+        if let bonus = poo.bonus() {
             if bonus == .Sprint {
-                if ball.bonusEnabled {
+                if poo.bonusEnabled {
                     return -0.07 + offset
                 }
             }
@@ -315,8 +318,8 @@ class GameViewController: UIViewController {
     }
     
     func getCameraPosition() -> SCNVector3 {
-        let ballPosition = ballNode.presentation.position
-        let targetPosition = SCNVector3(x: ballPosition.x + Values.xTot, y: ballPosition.y + Values.yTot, z:ballPosition.z + Values.zTot)
+        let pooPosition = pooNode.presentation.position
+        let targetPosition = SCNVector3(x: pooPosition.x + Values.xTot, y: pooPosition.y + Values.yTot, z:pooPosition.z + Values.zTot)
         var cameraPosition = selfieStickNode.position
         let camDamping:Float = 0.3
         let xComponent = cameraPosition.x * (1 - camDamping) + targetPosition.x * camDamping
@@ -368,14 +371,14 @@ class GameViewController: UIViewController {
     
     // MARK:- END OF RACE
     
-    func handleFinish(ball: SCNNode) {
-        if ball == ballNode {
+    func handleFinish(_ poo: SCNNode) {
+        if poo == pooNode {
             gameOver = true
             gameIsOver()
             addFinalAnimation()
             let _ = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(addFinishView), userInfo: nil, repeats: false)
         }
-        didFinish(node: ball)
+        didFinish(node: poo)
     }
     
     func didFinish(node: SCNNode) {
@@ -386,9 +389,9 @@ class GameViewController: UIViewController {
     }
     
     @objc func checkFinish() {
-        if !winners.contains(ballNode) {
-            winners.append(ballNode)
-            raceResultManager.didFinish(poo: PooName(rawValue: ballNode.name!)!, penalty: true)
+        if !winners.contains(pooNode) {
+            winners.append(pooNode)
+            raceResultManager.didFinish(poo: PooName(rawValue: pooNode.name!)!, penalty: true)
             gameOver = true
             gameIsOver()
         }
@@ -417,11 +420,11 @@ class GameViewController: UIViewController {
 extension GameViewController : BonusButtonDelegate {
     
     func didTapButton(bonus: Bonus) {
-        showBonus(bonus: bonus, node: ballNode)
+        showBonus(bonus: bonus, node: pooNode)
     }
     
     func didFinishBonus(bonus: Bonus) {
-        stopShowBonus(bonus: bonus, node: ballNode)
+        stopShowBonus(bonus: bonus, node: pooNode)
     }
 }
 
@@ -435,6 +438,24 @@ extension GameViewController : SCNSceneRendererDelegate {
         guard started == true else { return }
         movePoops()
         blockAvoider()
+        sendMultiplayerData()
     }
 }
+
+extension GameViewController : MultiplayerDelegate {
     
+    func createVSOpponentNode() {
+        vsOpponent = NodeCreator.createOpponent(index: 1, postion: nil)
+    }
+    
+    func sendMultiplayerData() {
+        let pooPosition = pooNode.presentation.position
+        multiplayer?.send(x: pooPosition.x, y: pooPosition.y, z: pooPosition.z)
+    }
+    
+    func didReceivePosition(pos: PlayerPosition) {
+        vsOpponent?.position = SCNVector3(pos.xPos, pos.yPos, pos.xPos)
+    }
+    
+
+}

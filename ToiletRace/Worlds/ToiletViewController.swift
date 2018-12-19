@@ -83,7 +83,7 @@ class ToiletViewController: GameViewController {
 
     override func showBonus(bonus: Bonus, node: SCNNode) {
         super.showBonus(bonus: bonus, node: node)
-        if bonus == .Sprint && node == ballNode {
+        if bonus == .Sprint && node == pooNode {
             Values.zTot = 2.5
         }
     }
@@ -110,7 +110,7 @@ class ToiletViewController: GameViewController {
     
     override func jump(node: SCNNode) {
         node.physicsBody?.clearAllForces()
-        if node == ballNode {
+        if node == pooNode {
             eulerYes = true
             node.physicsBody?.clearAllForces()
             scene.physicsWorld.gravity = SCNVector3(0, -0.5, 0)
@@ -128,9 +128,9 @@ class ToiletViewController: GameViewController {
         }
     }
     
-    override func handleFinish(ball: SCNNode) {
-        guard ball.name != nil && ball.name != "" && ball.name != "C_Low" && ball.name != "carpet" else { return }
-        super.handleFinish(ball: ball)
+    override func handleFinish(_ poo: SCNNode) {
+        guard poo.name != nil && poo.name != "" && poo.name != "C_Low" && poo.name != "carpet" else { return }
+        super.handleFinish(poo)
     }
     
     override func didFinish(node: SCNNode) {

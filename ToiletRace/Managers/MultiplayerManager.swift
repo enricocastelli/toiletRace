@@ -12,15 +12,15 @@ import UIKit
 import MultipeerConnectivity
 
 
-protocol MultiDelegate {
+protocol MultiplayerDelegate {
     func didReceivePosition(pos: PlayerPosition)
 }
 
 struct PlayerPosition: Codable {
     var xPos: Float
     var zPos: Float
+    var yPos: Float
 }
-
 
 class MultiplayerManager: NSObject {
     
@@ -37,10 +37,10 @@ class MultiplayerManager: NSObject {
     }()
     
     var players : Array<MCPeerID> = []
-    var delegate: MultiDelegate
+    var delegate: MultiplayerDelegate
     var connected = false
     
-    init(delegate: MultiDelegate) {
+    init(delegate: MultiplayerDelegate) {
         self.delegate = delegate
         super.init()
     }
@@ -61,19 +61,19 @@ class MultiplayerManager: NSObject {
         serviceBrowser.invitePeer(peerID, to: self.session, withContext: nil, timeout: 10)
     }
     
-    func send(x: Float, z: Float) {
+    public func send(x: Float, y: Float, z: Float) {
         if session.connectedPeers.count > 0 {
-            let params = ["xPos": x, "zPos": z]
+            let params = ["xPos": x, "yPos": y, "zPos": z]
             do {
                 let data = try JSONEncoder().encode(params)
                 do {
                     try session.send(data, toPeers: session.connectedPeers, with: .reliable)
                 }
                 catch let error {
-                    Logger("\(error)💩 error Connecting 💩")
+                    Logger("\(error) error sending Data")
                 }
             } catch {
-                Logger("\(error)💩 error Connecting 💩")
+                Logger("\(error) error sending Data")
             }
         }
     }
@@ -94,13 +94,13 @@ extension MultiplayerManager: MCSessionDelegate {
     func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
         switch state.rawValue {
         case 0:
-            Logger("💩NNNNNNNNNNN")
+            Logger("Players Disconnected 🛑")
             connected = false
         case 1:
-            Logger("💩CONNECTING")
+            Logger("Connecting...🔶")
             connected = false
         case 2:
-            Logger("💩YYYYYYYYYYY")
+            Logger("Players Connected ✅")
             connected = true
         default:
             break
@@ -113,7 +113,7 @@ extension MultiplayerManager: MCSessionDelegate {
             let value = try JSONDecoder().decode(PlayerPosition.self, from: data)
             delegate.didReceivePosition(pos: value)
         } catch {
-            Logger("💩 error decoding data")
+            Logger("error decoding data")
         }
     }
     
@@ -132,9 +132,8 @@ extension MultiplayerManager: MCNearbyServiceBrowserDelegate {
     func browser(_ browser: MCNearbyServiceBrowser, didNotStartBrowsingForPeers error: Error) {
     }
     
-    
-    
     func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
+        Logger("Found peer \(peerID)")
         connect(peerID)
     }
     
