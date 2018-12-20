@@ -171,7 +171,6 @@ extension MultiplayerManager: MCSessionDelegate {
         do {
             let value = try JSONDecoder().decode(PlayerName.self, from: data)
             guard let pooName = PooName(rawValue: value.name) else { return }
-            Logger(pooName.rawValue)
             delegate?.didReceivePooName(pooName)
             completion(true)
             return

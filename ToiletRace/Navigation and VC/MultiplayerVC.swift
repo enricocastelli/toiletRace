@@ -31,6 +31,7 @@ class MultiplayerVC: UIViewController {
     }
     
     @IBAction func backTapped(_ sender: UIButton) {
+        multiplayer.stop()
         Navigation.main.popToRootViewController(animated: true)
     }
     
@@ -65,21 +66,21 @@ extension MultiplayerVC: MultiplayerConnectionDelegate {
     }
     
     func didConnect() {
-        multiplayer.sendName(PooName(rawValue: "Guano Star")!)
-//        DispatchQueue.main.async {
-//            let gameVC : GameViewController = {
-//                return ToiletViewController()
-//            }()
-//            gameVC.multiplayer = self.multiplayer
-//            Navigation.main.pushViewController(gameVC, animated: true)
-//            Navigation.startLoading()
-//        }
+        DispatchQueue.main.async {
+            let gameVC : GameViewController = {
+                return ToiletViewController()
+            }()
+            gameVC.multiplayer = self.multiplayer
+            Navigation.main.pushViewController(gameVC, animated: true)
+            Navigation.startLoading()
+        }
     }
 }
 
 extension MultiplayerVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        SessionData.shared.selectedPlayer = Poo(name: PooName.ApolloPoo)
         let peerID = players[indexPath.row]
         multiplayer.connect(peerID)
     }
