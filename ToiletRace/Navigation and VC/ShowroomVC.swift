@@ -64,7 +64,7 @@ class ShowroomVC: UIViewController {
     
     func addBalls() {
         for index in 0...players.count - 1 {
-            let pooNode = NodeCreator.createOpponent(index: index, postion: nil)
+            let pooNode = PooNodeCreator.createOpponent(index: index, postion: nil)
             pooNode.position = SCNVector3(index*10, 0, -2)
             pooNode.physicsBody?.isAffectedByGravity = false
             sceneView.scene!.rootNode.addChildNode(pooNode)
@@ -76,7 +76,7 @@ class ShowroomVC: UIViewController {
             shouldShowMighty = false
             players.append(Poo(name: PooName.MightyPoop))
             let index = players.count - 1
-            let pooNode = NodeCreator.createOpponent(index: index, postion: nil)
+            let pooNode = PooNodeCreator.createOpponent(index: index, postion: nil)
             pooNode.position = SCNVector3(index*10, 0, -2)
             pooNode.physicsBody?.isAffectedByGravity = false
             sceneView.scene!.rootNode.addChildNode(pooNode)

@@ -6,54 +6,6 @@ import UIKit
 
 class NodeCreator {
     
-    static func createPoo(postion: SCNVector3?) -> SCNNode {
-        let selected = SessionData.shared.selectedPlayer
-        let geo = SCNSphere(radius: selected.radius())
-        geo.materials.insert(selected.createMaterial(), at: 0)
-        geo.materials.removeLast()
-        let pooNode = SCNNode(geometry: geo)
-        pooNode.position = postion ?? SCNVector3(0.0, 0.0, 0.0)
-        pooNode.physicsBody = SCNPhysicsBody.dynamic()
-        pooNode.physicsBody?.restitution = SessionData.shared.selectedPlayer.restitution()
-        pooNode.physicsBody?.contactTestBitMask = Collider.poo | Collider.obstacle | Collider.bounds
-        pooNode.physicsBody?.categoryBitMask = Collider.poo
-        pooNode.name = SessionData.shared.selectedPlayer.name.rawValue
-        return pooNode
-    }
-    
-    static func createOpponent(index: Int, postion: SCNVector3?) -> SCNNode {
-        let selected = players[index]
-        let geo = SCNSphere(radius: selected.radius())
-        geo.materials.insert(selected.createMaterial(), at: 0)
-        geo.materials.removeLast()
-        let oppNode = SCNNode(geometry: geo)
-        var pos = Double(-3 + index)
-        if pos == 0 { pos = -3 }
-        let actualPosition : SCNVector3 = {
-            if postion == nil {
-                return SCNVector3(pos, 2, 0)
-            } else {
-                return SCNVector3(Float(pos), postion!.y, postion!.z)
-            }
-        }()
-        oppNode.position = actualPosition
-        oppNode.physicsBody = SCNPhysicsBody(type: SCNPhysicsBodyType.dynamic, shape: nil)
-        oppNode.physicsBody?.restitution = players[index].restitution()
-        oppNode.physicsBody?.contactTestBitMask = Collider.poo | Collider.bounds | Collider.obstacle
-        oppNode.physicsBody?.categoryBitMask = Collider.poo
-        return oppNode
-    }
-    
-    static func createVSOpponent(name: PooName, position: SCNVector3) -> SCNNode {
-        let selected = Poo(name: name)
-        let geo = SCNSphere(radius: selected.radius())
-        geo.materials.insert(selected.createMaterial(), at: 0)
-        geo.materials.removeLast()
-        let oppNode = SCNNode(geometry: geo)
-        oppNode.position = position
-        return oppNode
-    }
-    
     static func createBound(zed: Float) -> [SCNNode] {
         let geoOb = SCNBox(width: 1, height: CGFloat((zed - 1)*2), length: 5, chamferRadius: 0)
         geoOb.materials.first?.lightingModel = .physicallyBased

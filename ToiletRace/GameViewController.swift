@@ -85,7 +85,7 @@ class GameViewController: UIViewController {
     
     func prepare() {
         self.setupScene()
-        self.pooNode = (NodeCreator.createPoo(postion: position))
+        self.pooNode = (PooNodeCreator.createPoo(postion: position))
         self.scene.rootNode.addChildNode(self.pooNode)
         self.addOpponents()
         self.setupFloor()
@@ -126,7 +126,7 @@ class GameViewController: UIViewController {
     func addOpponents() {
         for index in 0...currentPlayers.count - 1 {
             if currentPlayers[index].name != SessionData.shared.selectedPlayer.name {
-                let oppNode = NodeCreator.createOpponent(index: index, postion: position)
+                let oppNode = PooNodeCreator.createOpponent(index: index, postion: position)
                 currentPlayers[index].reset()
                 scene.rootNode.addChildNode(oppNode)
                 opponents.append( currentPlayers[index])
@@ -450,7 +450,7 @@ extension GameViewController : SCNSceneRendererDelegate {
 extension GameViewController : MultiplayerDelegate {
     
     func createVSOpponentNode(name: PooName) {
-        vsOpponent = NodeCreator.createVSOpponent(name: name, position: SCNVector3(1, 0.5, 0))
+        vsOpponent = PooNodeCreator.createVSOpponent(name: name, position: SCNVector3(1, 0.5, 0))
     }
     
     func sendMultiplayerData() {

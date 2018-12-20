@@ -106,4 +106,11 @@ extension UIView {
                                 multiplier: 1,
                                 constant: constant).isActive = true
     }
+    
+    func setAdaptingConstraint() {
+        self.setConstraint(constraint: .bottom, constant: 0)
+        self.setConstraint(constraint: .leading, constant: 0)
+        self.setConstraint(constraint: .trailing, constant: 0)
+        self.setConstraint(constraint: .top, constant: 0)
+    }
 }
