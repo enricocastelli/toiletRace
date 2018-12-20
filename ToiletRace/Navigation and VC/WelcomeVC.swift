@@ -21,6 +21,7 @@ class WelcomeVC: UIViewController {
     }
     
     @IBAction func multiplayerTapped(_ sender: UIButton) {
-        
+        let show = MultiplayerVC()
+        Navigation.main.pushViewController(show, animated: true)
     }
 }

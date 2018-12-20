@@ -29,7 +29,11 @@ class GameViewController: UIViewController {
     var contactManager: ContactManager!
     var controllerView: ControllerView!
     var raceResultManager = RaceResultManager.shared
-    var multiplayer: MultiplayerManager?
+    var multiplayer: MultiplayerManager? {
+        didSet {
+            multiplayer?.delegate = self
+        }
+    }
     /// length of track
     var length: Float = -250
     
@@ -85,6 +89,7 @@ class GameViewController: UIViewController {
         self.scene.rootNode.addChildNode(self.pooNode)
         self.addOpponents()
         self.setupFloor()
+        multiplayer?.sendName(SessionData.shared.selectedPlayer.name)
     }
     
     func setupScene(){
@@ -450,7 +455,7 @@ extension GameViewController : MultiplayerDelegate {
     
     func sendMultiplayerData() {
         let pooPosition = pooNode.presentation.position
-        multiplayer?.send(x: pooPosition.x, y: pooPosition.y, z: pooPosition.z)
+        multiplayer?.sendPosition(x: pooPosition.x, y: pooPosition.y, z: pooPosition.z)
     }
     
     func didReceivePosition(pos: PlayerPosition) {

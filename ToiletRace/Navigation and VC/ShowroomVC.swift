@@ -192,7 +192,7 @@ class ShowroomVC: UIViewController {
         let action = SCNAction.move(to: SCNVector3(selectedItem*10, 0, -1), duration: 2)
         nodes[selectedItem].runAction(action)
         SessionData.shared.selectedPlayer = Poo.init(name: PooName(rawValue: nodes[selectedItem].name!)!)
-        perform(#selector(goToRace), with: nil, afterDelay: 2)
+        perform(#selector(goToRace), with: nil, afterDelay: 1.5)
     }
     
 }

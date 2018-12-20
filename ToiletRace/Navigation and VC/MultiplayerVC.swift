@@ -11,7 +11,8 @@ import MultipeerConnectivity
 
 class MultiplayerVC: UIViewController {
 
-    var tableView: UITableView!
+
+    @IBOutlet weak var tableView: UITableView!
     var multiplayer: MultiplayerManager!
     var players : Array<MCPeerID> = []
     
@@ -22,15 +23,17 @@ class MultiplayerVC: UIViewController {
     }
     
     func setupTable() {
-        tableView = UITableView(frame: view.frame)
-        tableView.delegate = self
-        tableView.dataSource = self
+        
     }
     
     func setupMultiplayer() {
         multiplayer = MultiplayerManager(delegate: nil, connectionDelegate: self)
     }
-
+    
+    @IBAction func backTapped(_ sender: UIButton) {
+        Navigation.main.popToRootViewController(animated: true)
+    }
+    
 }
 
 extension MultiplayerVC: MultiplayerConnectionDelegate {
@@ -57,12 +60,28 @@ extension MultiplayerVC: MultiplayerConnectionDelegate {
         }
     }
     
+    func didDisconnect() {
+        
+    }
+    
+    func didConnect() {
+        multiplayer.sendName(PooName(rawValue: "Guano Star")!)
+//        DispatchQueue.main.async {
+//            let gameVC : GameViewController = {
+//                return ToiletViewController()
+//            }()
+//            gameVC.multiplayer = self.multiplayer
+//            Navigation.main.pushViewController(gameVC, animated: true)
+//            Navigation.startLoading()
+//        }
+    }
 }
 
 extension MultiplayerVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        let peerID = players[indexPath.row]
+        multiplayer.connect(peerID)
     }
 }
 
@@ -73,8 +92,11 @@ extension MultiplayerVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let cell = UITableViewCell()
+        cell.backgroundColor = UIColor.clear
+        cell.textLabel?.text = players[indexPath.row].displayName
+        cell.selectionStyle = .none
+        return cell
     }
-    
     
 }

@@ -40,7 +40,6 @@
                             </state>
                             <connections>
                                 <action selector="multiplayerTapped:" destination="-1" eventType="touchUpInside" id="u4V-Kq-VSX"/>
-                                <action selector="start:" destination="-1" eventType="touchUpInside" id="SUt-Lt-y9K"/>
                             </connections>
                         </button>
                     </subviews>

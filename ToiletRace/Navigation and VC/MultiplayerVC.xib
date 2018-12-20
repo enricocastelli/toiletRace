@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="landscape">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MultiplayerVC" customModule="ToiletRace" customModuleProvider="target">
+            <connections>
+                <outlet property="tableView" destination="WbS-7B-pEw" id="eX7-m5-BFC"/>
+                <outlet property="view" destination="iN0-l3-epB" id="NPo-js-TGa"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="WbS-7B-pEw">
+                    <rect key="frame" x="0.0" y="64" width="667" height="247"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="odc-ob-FuV"/>
+                        <outlet property="delegate" destination="-1" id="J69-Xb-AY0"/>
+                    </connections>
+                </tableView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jDb-aU-u6a">
+                    <rect key="frame" x="16" y="16" width="30" height="30"/>
+                    <state key="normal" title="◀️"/>
+                    <connections>
+                        <action selector="backTapped:" destination="-1" eventType="touchUpInside" id="G1w-6z-wbt"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="WbS-7B-pEw" secondAttribute="bottom" constant="64" id="ZBo-3k-Gj5"/>
+                <constraint firstItem="jDb-aU-u6a" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="16" id="cQJ-qC-dIL"/>
+                <constraint firstItem="WbS-7B-pEw" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="64" id="fMS-Y6-xdN"/>
+                <constraint firstItem="WbS-7B-pEw" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="tXA-2V-q3u"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="WbS-7B-pEw" secondAttribute="trailing" id="tnl-CI-83C"/>
+                <constraint firstItem="jDb-aU-u6a" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="vXp-Ed-TzW"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="-168" y="86"/>
+        </view>
+    </objects>
+</document>

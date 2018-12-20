@@ -20,12 +20,21 @@ protocol MultiplayerDelegate {
 protocol MultiplayerConnectionDelegate {
     func didFoundPeer(_ peer: MCPeerID)
     func didReceiveInvitation(peerID: MCPeerID, invitationHandler: @escaping (Bool) -> Void)
+    func didDisconnect()
+    func didConnect()
 }
 
 struct PlayerPosition: Codable {
-    var xPos: Float
-    var zPos: Float
-    var yPos: Float
+    var xPos: Float { get { return Float(xPosition) ?? 0 }}
+    var yPos: Float { get { return Float(yPosition) ?? 0 }}
+    var zPos: Float { get { return Float(zPosition) ?? 0 }}
+    private var xPosition: String
+    private var zPosition: String
+    private var yPosition: String
+}
+
+struct PlayerName: Codable {
+    var name: String
 }
 
 class MultiplayerManager: NSObject {
@@ -51,6 +60,7 @@ class MultiplayerManager: NSObject {
         self.delegate = delegate
         self.connectionDelegate = connectionDelegate
         super.init()
+        start()
     }
     
     func updateDelegate(delegate: MultiplayerDelegate?, connectionDelegate: MultiplayerConnectionDelegate?) {
@@ -68,15 +78,31 @@ class MultiplayerManager: NSObject {
         self.players = []
     }
     
+    func stop() {
+        self.serviceAdvertiser.stopAdvertisingPeer()
+        self.serviceBrowser.stopBrowsingForPeers()
+        self.session.disconnect()
+        self.players = []
+    }
+    
     //MARK:- TABLEVIEW STUFF
     
     func connect(_ peerID: MCPeerID) {
         serviceBrowser.invitePeer(peerID, to: self.session, withContext: nil, timeout: 10)
     }
     
-    public func send(x: Float, y: Float, z: Float) {
+    public func sendPosition(x: Float, y: Float, z: Float) {
+        let params = ["xPosition": x.string(), "yPosition": y.string(), "zPosition": z.string()]
+        sendData(params)
+    }
+    
+    public func sendName(_ pooName: PooName) {
+        let params = ["name": pooName.rawValue]
+        self.sendData(params)
+    }
+    
+    private func sendData(_ params: [String: String]) {
         if session.connectedPeers.count > 0 {
-            let params = ["xPos": x, "yPos": y, "zPos": z]
             do {
                 let data = try JSONEncoder().encode(params)
                 do {
@@ -112,12 +138,14 @@ extension MultiplayerManager: MCSessionDelegate {
         case 0:
             Logger("Players Disconnected 🛑")
             connected = false
+            connectionDelegate?.didDisconnect()
         case 1:
             Logger("Connecting...🔶")
             connected = false
         case 2:
             Logger("Players Connected ✅")
             connected = true
+            connectionDelegate?.didConnect()
         default:
             break
         }
@@ -128,8 +156,16 @@ extension MultiplayerManager: MCSessionDelegate {
         do {
             let value = try JSONDecoder().decode(PlayerPosition.self, from: data)
             delegate?.didReceivePosition(pos: value)
+            return
         } catch {
-            Logger("error decoding data")
+            Logger("error decoding position data")
+        }
+        do {
+            let value = try JSONDecoder().decode(PlayerName.self, from: data)
+            guard let pooName = PooName(rawValue: value.name) else { return }
+            delegate?.didReceivePooName(pooName)
+        } catch {
+            Logger("error decoding name data")
         }
     }
     
@@ -151,7 +187,6 @@ extension MultiplayerManager: MCNearbyServiceBrowserDelegate {
     func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
         Logger("Found peer \(peerID)")
         connectionDelegate?.didFoundPeer(peerID)
-        connect(peerID)
     }
     
     func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
