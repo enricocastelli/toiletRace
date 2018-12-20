@@ -153,20 +153,31 @@ extension MultiplayerManager: MCSessionDelegate {
     
     
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
+        processData(data: data) { (success) in
+            if !success {
+               Logger("Error decoding data received.")
+            }
+        }
+    }
+    
+    func processData(data: Data, completion: @escaping(Bool) -> ()) {
         do {
             let value = try JSONDecoder().decode(PlayerPosition.self, from: data)
             delegate?.didReceivePosition(pos: value)
+            completion(true)
             return
         } catch {
-            Logger("error decoding position data")
         }
         do {
             let value = try JSONDecoder().decode(PlayerName.self, from: data)
             guard let pooName = PooName(rawValue: value.name) else { return }
+            Logger(pooName.rawValue)
             delegate?.didReceivePooName(pooName)
+            completion(true)
+            return
         } catch {
-            Logger("error decoding name data")
         }
+        completion(false)
     }
     
     func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
