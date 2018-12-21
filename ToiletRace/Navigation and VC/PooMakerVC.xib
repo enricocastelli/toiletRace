@@ -44,8 +44,11 @@
                         <outlet property="dropDelegate" destination="-1" id="mQm-Dg-Yzs"/>
                     </connections>
                 </collectionView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="poo5" translatesAutoresizingMaskIntoConstraints="NO" id="OX2-MC-CM0">
-                    <rect key="frame" x="471" y="16" width="180" height="343"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="guts" translatesAutoresizingMaskIntoConstraints="NO" id="OX2-MC-CM0">
+                    <rect key="frame" x="394" y="16" width="257" height="343"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="OX2-MC-CM0" secondAttribute="height" multiplier="300:400" id="2Ho-YE-3Ee"/>
+                    </constraints>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RCj-jV-049">
                     <rect key="frame" x="621" y="16" width="30" height="30"/>
@@ -73,6 +76,6 @@
         </view>
     </objects>
     <resources>
-        <image name="poo5" width="180" height="180"/>
+        <image name="guts" width="717" height="898"/>
     </resources>
 </document>

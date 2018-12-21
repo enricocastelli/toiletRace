@@ -15,10 +15,10 @@ struct FoodItem {
     var colorR: Float
     var colorG: Float
     var colorB: Float
-    var size: CGFloat // from 0 to 1
-    var liquidity: CGFloat // from 0 to 1
-    var displacement: CGFloat // from 0 to 1
-    var mass: CGFloat // from 0 to 1
+    var size: Float // from 0 to 1
+    var liquidity: Float // from 0 to 1
+    var displacement: Float // from 0 to 1
+    var mass: Float // from 0 to 1
 }
 
 
@@ -26,10 +26,10 @@ struct BolusItem {
     var colorR: Float
     var colorG: Float
     var colorB: Float
-    var radius: CGFloat
-    var restitution: CGFloat
-    var displacement: CGFloat
-    var mass: CGFloat
+    var radius: Float
+    var restitution: Float
+    var displacement: Float
+    var mass: Float
 }
 
 
@@ -57,7 +57,7 @@ class PooMaker {
             if bolus.radius <= 0.5 {
                 bolus.radius += item.size/2
             }
-            if bolus.displacement <= 0.5 {
+            if bolus.displacement <= 0.2 {
                 bolus.displacement += item.displacement
             }
             bolus.mass += item.mass

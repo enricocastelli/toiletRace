@@ -10,10 +10,18 @@ import Foundation
 import UIKit
 import SceneKit
 
-var players : [Poo] = [Poo(name: .GuanoStar), Poo(name: .HoleRunner), Poo(name: .IndianSurprise), Poo(name: .BrownTornado), Poo(name: .GarganTurd), Poo(name: .FecalRaider), Poo(name: .ApolloPoo)]
+var players : [Poo] = [
+    Poo(name: .GuanoStar),
+    Poo(name: .HoleRunner),
+    Poo(name: .IndianSurprise),
+    Poo(name: .BrownTornado),
+    Poo(name: .GarganTurd),
+    Poo(name: .FecalRaider),
+    Poo(name: .ApolloPoo)
+]
 
 enum PooName : String {
-    
+
     case GuanoStar = "Guano Star"  // Soft Basic
     case HoleRunner = "Hole Runner" // Softclear
     case IndianSurprise = "Indian Surprise" // IndianSurprise
@@ -21,6 +29,8 @@ enum PooName : String {
     case GarganTurd = "Garganturd" // GarganTurd
     case FecalRaider = "Fecal Raider" //  FecalRaider
     case ApolloPoo = "Apollo Poo" // Hard raisins
+    // Customized
+//    case UserPoo = "My Poo"
     // BEWARE OF THE ALMIGHTYYY POOOOPPPP
     case MightyPoop = "The Mighty Poop"
 }

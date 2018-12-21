@@ -13,7 +13,7 @@ class PooMakerVC: UIViewController {
 
     @IBOutlet weak var pooImage: UIImageView!
     @IBOutlet weak var collectionView: UICollectionView!
-    fileprivate let sectionInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 200)
+    fileprivate let sectionInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 300)
     fileprivate let itemsPerRow: CGFloat = 4
 
     var items = PooMaker.items
@@ -36,11 +36,14 @@ class PooMakerVC: UIViewController {
     }
 
     func animateImage() {
-        UIView.animate(withDuration: 0.5, delay: 0, options: [.autoreverse, .beginFromCurrentState], animations: {
-            self.pooImage.transform = CGAffineTransform(scaleX: 1.4, y: 1.4)
-        }) { (done) in
-            self.pooImage.transform = CGAffineTransform(scaleX: 1, y: 1)
-        }
+        let scale = CABasicAnimation(keyPath: "transform.scale")
+        scale.fromValue = 1
+        scale.toValue = 1.05
+        scale.repeatCount = 2
+        scale.duration = 0.25
+        scale.autoreverses = true
+        scale.isRemovedOnCompletion = false
+        pooImage.layer.add(scale, forKey: "scale")
     }
 
     @IBAction func backTapped(_ sender: UIButton) {

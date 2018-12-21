@@ -13,7 +13,7 @@ class PooMakerShowroomVC: ShowroomVC {
     
     var items : [FoodItem]
     var pooNode: SCNNode!
-//    var items : [FoodItem]
+    var bolusItem : BolusItem?
     
     init(items: [FoodItem]) {
         self.items = items
@@ -26,13 +26,14 @@ class PooMakerShowroomVC: ShowroomVC {
     
     
     override func addBalls() {
-        pooNode = PooNodeCreator.createCustomizedBall(postion: SCNVector3(0, 3, 0), item: PooMaker.createBolus(items))
+        bolusItem = PooMaker.createBolus(items)
+        pooNode = PooNodeCreator.createCustomizedBall(postion: SCNVector3(0, 3, 0), item: bolusItem!)
         sceneView.scene?.rootNode.addChildNode(pooNode)
         addFloor()
     }
     
     func addFloor() {
-        let geo = SCNPlane(width: 3, height: 3)
+        let geo = SCNPlane(width: 5, height: 5)
         geo.materials.first?.diffuse.contents = UIColor.clear
         let node = SCNNode(geometry: geo)
         node.position = SCNVector3(0, -0.5, 0)
@@ -72,12 +73,19 @@ class PooMakerShowroomVC: ShowroomVC {
             self.selectButton.alpha = 0
             self.nameLabel.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
         }
+        savePoo()
         view.isUserInteractionEnabled = false
         selectButton.isEnabled = false
         guard let trail = SCNParticleSystem(named: "smoke", inDirectory: nil) else { return }
         pooNode.addParticleSystem(trail)
         let action = SCNAction.move(to: SCNVector3(0, 0, -1), duration: 3)
         pooNode.runAction(action)
+        perform(#selector(goBack), with: nil, afterDelay: 1)
     }
-
+    
+    func savePoo() {
+        guard let bolusItem = bolusItem else { return }
+        StorageManager.saveBolus(bolusItem)
+    }
+    
 }

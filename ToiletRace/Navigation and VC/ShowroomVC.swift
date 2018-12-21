@@ -173,8 +173,11 @@ class ShowroomVC: UIViewController {
     }
     
     @objc func backTap(_ sender: UIButton) {
+        goBack()
+    }
+    
+    @objc func goBack() {
         Navigation.main.popViewController(animated: true)
-        shouldShowMighty = true 
     }
     
     @objc func selectTap(_ sender: UIButton) {

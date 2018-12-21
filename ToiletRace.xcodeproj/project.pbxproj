@@ -22,6 +22,7 @@
 		1C27D35721CBD38300E3C322 /* PooMakerShowroomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C27D35521CBD38300E3C322 /* PooMakerShowroomVC.swift */; };
 		1C27D35A21CBDB8300E3C322 /* PooNodeCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C27D35921CBDB8300E3C322 /* PooNodeCreator.swift */; };
 		1C27D35C21CBF07F00E3C322 /* PooMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C27D35B21CBF07F00E3C322 /* PooMaker.swift */; };
+		1C27D35E21CCF6C000E3C322 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C27D35D21CCF6C000E3C322 /* StorageManager.swift */; };
 		1C657ECA219CB44800783BD9 /* WaterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C657EC9219CB44800783BD9 /* WaterViewController.swift */; };
 		1C76170221C998290085FCB8 /* RaceResultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C76170121C998290085FCB8 /* RaceResultManager.swift */; };
 		1C76170621CA3D7B0085FCB8 /* WelcomeVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C76170421CA3D7B0085FCB8 /* WelcomeVC.xib */; };
@@ -70,6 +71,7 @@
 		1C27D35521CBD38300E3C322 /* PooMakerShowroomVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PooMakerShowroomVC.swift; sourceTree = "<group>"; };
 		1C27D35921CBDB8300E3C322 /* PooNodeCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PooNodeCreator.swift; sourceTree = "<group>"; };
 		1C27D35B21CBF07F00E3C322 /* PooMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PooMaker.swift; sourceTree = "<group>"; };
+		1C27D35D21CCF6C000E3C322 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		1C657EC9219CB44800783BD9 /* WaterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterViewController.swift; sourceTree = "<group>"; };
 		1C76170121C998290085FCB8 /* RaceResultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceResultManager.swift; sourceTree = "<group>"; };
 		1C76170421CA3D7B0085FCB8 /* WelcomeVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WelcomeVC.xib; sourceTree = "<group>"; };
@@ -144,10 +146,11 @@
 				1C27D35921CBDB8300E3C322 /* PooNodeCreator.swift */,
 				1C27D35B21CBF07F00E3C322 /* PooMaker.swift */,
 				1CBD9E682178A29900109DC3 /* NodeCreator.swift */,
-				1C76170121C998290085FCB8 /* RaceResultManager.swift */,
 				1C7C1C1A21C7B79200D47FC8 /* Navigation.swift */,
+				1C76170121C998290085FCB8 /* RaceResultManager.swift */,
 				1C27D24821CA899E00E3C322 /* MultiplayerManager.swift */,
 				1C7C1C1821C7B2E400D47FC8 /* ContactManager.swift */,
+				1C27D35D21CCF6C000E3C322 /* StorageManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -343,6 +346,7 @@
 				1CFE97082191D942007F837A /* Bonus.swift in Sources */,
 				1C03B3A4217E658F003CD652 /* Loading.swift in Sources */,
 				1C27D35C21CBF07F00E3C322 /* PooMaker.swift in Sources */,
+				1C27D35E21CCF6C000E3C322 /* StorageManager.swift in Sources */,
 				1CB8D7A42176168300B38BA2 /* Extension.swift in Sources */,
 				1C7C1C2E21C7F7D700D47FC8 /* Values.swift in Sources */,
 			);
