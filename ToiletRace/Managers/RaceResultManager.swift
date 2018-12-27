@@ -68,14 +68,37 @@ class RaceResultManager: NSObject {
                 }
             }
         }
-        perform(#selector(showResults), with: nil, afterDelay: 2)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+            self.showResults()
+        })
+    }
+    
+    func didFinishMultiplayer(poos: [Poo]) {
+        for poo in poos {
+            let time : Float = {
+                let totalTime = calculateTime(firstDate: startDate!)
+                return totalTime
+            }()
+            //            let total = Data.shared.scores[node.name!] ?? 0
+            let timeToWinner : Float = {
+                if let winner = finalResults.first?.time {
+                    return winner - time
+                }
+                return 0
+            }()
+            let result = Result(player: poo, time: time, timeToWinner: timeToWinner, points: 0, penalty: nil)
+            finalResults.append(result)
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+            self.showResults()
+        })
     }
     
     func calculateTime(firstDate: Date) -> Float {
         return Float(Date().timeIntervalSince(firstDate))
     }
     
-    @objc func showResults() {
+    func showResults() {
         DispatchQueue.main.async {
             let result = GameResultVC(results: self.finalResults)
             Navigation.main.viewControllers = [result]

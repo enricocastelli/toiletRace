@@ -48,9 +48,12 @@ class Poo {
     var canUseBonus = true
     var direction: Direction = .straight
     var actualTurning: CGFloat = 0
+    // in case of multiplayer or customized poo, should display a different name
+    var displayName: String?
     
-    init(name: PooName) {
+    init(name: PooName, userPoo: Bool? = nil) {
         self.name = name
+        displayName = self.name.rawValue
     }
     
     func turn(direction: Direction) {
@@ -75,7 +78,6 @@ class Poo {
             else { return 2 }
         }
     }
-    
     
     /// z speed. Renderer is applying this force at z.
     func velocity() -> Float {

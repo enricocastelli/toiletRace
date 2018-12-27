@@ -185,8 +185,6 @@
 				1C76170421CA3D7B0085FCB8 /* WelcomeVC.xib */,
 				1C27D34621CA992200E3C322 /* MultiplayerVC.swift */,
 				1C27D34821CB947A00E3C322 /* MultiplayerVC.xib */,
-				1CB8D7912176168200B38BA2 /* GameResultVC.swift */,
-				1CB8D79E2176168200B38BA2 /* GameResultVC.xib */,
 				1C27D34D21CBB95000E3C322 /* PooMakerVC.swift */,
 				1C27D34E21CBB95000E3C322 /* PooMakerVC.xib */,
 				1C27D35221CBC79A00E3C322 /* MakerCell.xib */,
@@ -194,6 +192,8 @@
 				1C27D35521CBD38300E3C322 /* PooMakerShowroomVC.swift */,
 				1C815D2D21806496006557D4 /* ShowroomVC.swift */,
 				1C815D2E21806496006557D4 /* ShowroomVC.xib */,
+				1CB8D7912176168200B38BA2 /* GameResultVC.swift */,
+				1CB8D79E2176168200B38BA2 /* GameResultVC.xib */,
 				1CB8D7A02176168200B38BA2 /* ResultCell.swift */,
 				1CB8D79F2176168200B38BA2 /* ResultCell.xib */,
 			);

@@ -34,11 +34,19 @@ class ResultCell: UITableViewCell {
             } else {
                 timeLabel.text = result?.time.string()
             }
-            titleLabel.text = result?.player.name.rawValue
-            if result?.player.name.rawValue == SessionData.shared.selectedPlayer.name.rawValue {
-                titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
+            titleLabel.text = result?.player.displayName ?? result?.player.name.rawValue
+            if let displayName = SessionData.shared.selectedPlayer.displayName {
+                if result?.player.displayName == displayName {
+                    titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
+                } else {
+                    titleLabel.font = UIFont.systemFont(ofSize: 16)
+                }
             } else {
-                titleLabel.font = UIFont.systemFont(ofSize: 16)
+                if result?.player.name.rawValue == SessionData.shared.selectedPlayer.name.rawValue {
+                    titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
+                } else {
+                    titleLabel.font = UIFont.systemFont(ofSize: 16)
+                }
             }
         }
     }

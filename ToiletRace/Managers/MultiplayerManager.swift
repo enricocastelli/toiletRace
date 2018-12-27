@@ -14,7 +14,9 @@ import MultipeerConnectivity
 
 protocol MultiplayerDelegate {
     func didReceivePosition(pos: PlayerPosition)
-    func didReceivePooName(_ name: PooName)
+    func didReceivePooName(_ name: PooName, displayName: String)
+    func didReceiveStart()
+    func didReceiveEnd()
 }
 
 protocol MultiplayerConnectionDelegate {
@@ -34,7 +36,18 @@ struct PlayerPosition: Codable {
 }
 
 struct PlayerName: Codable {
-    var name: String
+    var pooName: String
+    var displayName: String
+}
+
+struct PlayerReady: Codable {
+    private var ready: String
+    var isReady: Bool { get { return ready == "true" }}
+}
+
+struct PlayerFinish: Codable {
+    private var finish: String
+    var didFinish: Bool { get { return finish == "true" }}
 }
 
 class MultiplayerManager: NSObject {
@@ -45,21 +58,21 @@ class MultiplayerManager: NSObject {
     private var serviceAdvertiser : MCNearbyServiceAdvertiser!
     private var serviceBrowser : MCNearbyServiceBrowser!
     
-    lazy var session : MCSession = {
-        let session = MCSession(peer: self.myPeerId, securityIdentity: nil, encryptionPreference: .none)
-        session.delegate = self
-        return session
-    }()
+    var session : MCSession
     
     var players : Array<MCPeerID> = []
     var delegate: MultiplayerDelegate?
     var connectionDelegate: MultiplayerConnectionDelegate?
     var connected = false
+    // exact date when connection got established
+    var connectionDate: Date?
     
     init(delegate: MultiplayerDelegate?, connectionDelegate: MultiplayerConnectionDelegate?) {
         self.delegate = delegate
         self.connectionDelegate = connectionDelegate
+        session = MCSession(peer: self.myPeerId, securityIdentity: nil, encryptionPreference: .none)
         super.init()
+        session.delegate = self
         start()
     }
     
@@ -97,7 +110,19 @@ class MultiplayerManager: NSObject {
     }
     
     public func sendName(_ pooName: PooName) {
-        let params = ["name": pooName.rawValue]
+        let playerName = nameForDevice() ?? pooName.rawValue
+        let params = ["pooName": pooName.rawValue, "displayName": playerName]
+        SessionData.shared.selectedPlayer.displayName = playerName
+        self.sendData(params)
+    }
+    
+    public func sendReady() {
+        let params = ["ready": "true"]
+        self.sendData(params)
+    }
+    
+    public func sendFinish() {
+        let params = ["finish": "true"]
         self.sendData(params)
     }
     
@@ -115,6 +140,17 @@ class MultiplayerManager: NSObject {
                 Logger("\(error) error sending Data")
             }
         }
+    }
+    
+    /// transform device name into poo name
+    func nameForDevice() -> String? {
+        let device = UIDevice.current.name.lowercased()
+        var name = ""
+        if device.contains("iphone") {
+            name = device.replacingOccurrences(of: "iphone", with: "poo")
+            return name
+        }
+        return nil
     }
 }
 
@@ -146,6 +182,7 @@ extension MultiplayerManager: MCSessionDelegate {
             Logger("Players Connected ✅")
             connected = true
             connectionDelegate?.didConnect()
+            self.connectionDate = Date()
         default:
             break
         }
@@ -162,16 +199,30 @@ extension MultiplayerManager: MCSessionDelegate {
     
     func processData(data: Data, completion: @escaping(Bool) -> ()) {
         do {
-            let value = try JSONDecoder().decode(PlayerPosition.self, from: data)
-            delegate?.didReceivePosition(pos: value)
+            let value = try JSONDecoder().decode(PlayerName.self, from: data)
+            guard let pooName = PooName(rawValue: value.pooName) else { return }
+            delegate?.didReceivePooName(pooName, displayName: value.displayName)
             completion(true)
             return
         } catch {
         }
         do {
-            let value = try JSONDecoder().decode(PlayerName.self, from: data)
-            guard let pooName = PooName(rawValue: value.name) else { return }
-            delegate?.didReceivePooName(pooName)
+            let _ = try JSONDecoder().decode(PlayerReady.self, from: data)
+            delegate?.didReceiveStart()
+            completion(true)
+            return
+        } catch {
+        }
+        do {
+            let _ = try JSONDecoder().decode(PlayerFinish.self, from: data)
+            delegate?.didReceiveEnd()
+            completion(true)
+            return
+        } catch {
+        }
+        do {
+            let value = try JSONDecoder().decode(PlayerPosition.self, from: data)
+            delegate?.didReceivePosition(pos: value)
             completion(true)
             return
         } catch {

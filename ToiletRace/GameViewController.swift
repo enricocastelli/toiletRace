@@ -22,7 +22,7 @@ class GameViewController: UIViewController {
     // nodes in the game
     var pooNode: SCNNode!
     // optional vsOpponent
-    var vsOpponent: SCNNode?
+    var vsOpponentNode: SCNNode?
     var selfieStickNode: SCNNode!
     var floor: SCNNode!
     
@@ -49,6 +49,9 @@ class GameViewController: UIViewController {
     /// bool triggered at the right time at beginning so that camera moves nicely from the end to the beginning of the track
     var shouldMoveCamera = false
     
+    /// bool returning if game is in multiplayer mode
+    var isMultiplayer: Bool { return multiplayer != nil }
+    
     /// array of nodes that finished the track
     var winners : [SCNNode] = []
     
@@ -59,6 +62,9 @@ class GameViewController: UIViewController {
     
     /// Array of current opponents
     var opponents:[Poo] = []
+    
+    // vsPoo
+    var vsPoo: Poo?
     
     /// Array of players, generally copied from global var players. It SHOULD CHANGE depending on players position
     var ranking = players
@@ -86,10 +92,11 @@ class GameViewController: UIViewController {
     func prepare() {
         self.setupScene()
         self.pooNode = (PooNodeCreator.createPoo(postion: position))
+        multiplayer?.sendName(SessionData.shared.selectedPlayer.name)
         self.scene.rootNode.addChildNode(self.pooNode)
         self.addOpponents()
+        self.addVSOpponent()
         self.setupFloor()
-        multiplayer?.sendName(SessionData.shared.selectedPlayer.name)
     }
     
     func setupScene(){
@@ -124,6 +131,7 @@ class GameViewController: UIViewController {
     }
     
     func addOpponents() {
+        guard !isMultiplayer else { return }
         for index in 0...currentPlayers.count - 1 {
             if currentPlayers[index].name != SessionData.shared.selectedPlayer.name {
                 let oppNode = PooNodeCreator.createOpponent(index: index, postion: position)
@@ -138,6 +146,17 @@ class GameViewController: UIViewController {
                 self.currentPlayers[index].reset()
             }
         }
+    }
+    
+    func addVSOpponent() {
+        guard let vsPoo = vsPoo, vsOpponentNode == nil else { return }
+        vsOpponentNode = PooNodeCreator.createVSOpponent(name: vsPoo.name, position: SCNVector3(1, 0, 0))
+        scene.rootNode.addChildNode(vsOpponentNode!)
+        vsPoo.node = vsOpponentNode
+        vsOpponentNode?.name = vsPoo.name.rawValue
+        SessionData.shared.selectedPlayer.node = pooNode
+        SessionData.shared.selectedPlayer.reset()
+        currentPlayers = [SessionData.shared.selectedPlayer, vsPoo]
     }
     
     func newGame() {
@@ -156,18 +175,45 @@ class GameViewController: UIViewController {
     }
         
     @objc func start() {
+        if isMultiplayer {
+            multiplayer?.sendReady()
+        } else {
+            shouldMoveCamera = true
+            started = true
+            scene.isPaused = false
+            sceneView.isPlaying = true
+            controllerView.start()
+            raceResultManager.start()
+            perform(#selector(startOppTimer), with: nil, afterDelay: 1)
+        }
+    }
+    
+    func prepareMultiplayer() {
+        guard let startDate = multiplayer?.connectionDate else { return }
+        let calendar = Calendar.current
+        let date = calendar.date(byAdding: .second, value: 15, to: startDate)
+        if let time = date?.timeIntervalSince(Date()) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + time, execute: {
+                self.startMultiplayer()
+            })
+        }
+    }
+    
+    @objc func startMultiplayer() {
+        ranking = currentPlayers
+        guard vsOpponentNode != nil else { return }
         shouldMoveCamera = true
         started = true
         scene.isPaused = false
         sceneView.isPlaying = true
         controllerView.start()
         raceResultManager.start()
-        perform(#selector(startOppTimer), with: nil, afterDelay: 1)
     }
     
     // MARK:- BONUS RELATED STUFF
         
     @objc func startOppTimer() {
+        guard !isMultiplayer else { return }
         oppTimer = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(createRandomBonusOpponent), userInfo: nil, repeats: true)
     }
     
@@ -290,8 +336,9 @@ class GameViewController: UIViewController {
         for n in 0...currentPlayers.count - 1 {
             let poo = currentPlayers[n]
             let bonusOffset = calculateBonusOffset(poo)
-            if poo.node!.presentation.position.z < length + 50 && poo.canUseBonus == true {
-                if poo.node == pooNode {
+            guard let node = poo.node, node != vsOpponentNode else { return }
+            if node.presentation.position.z < length + 50 && poo.canUseBonus == true {
+                if node == pooNode {
                     poo.canUseBonus = false
                     DispatchQueue.main.async {
                         self.controllerView.removeBonus()
@@ -301,7 +348,7 @@ class GameViewController: UIViewController {
                 }
                 currentPlayers[n] = poo
             }
-            poo.node?.physicsBody?.applyForce(SCNVector3(0, 0, poo.velocity() + bonusOffset), asImpulse: true)
+            node.physicsBody?.applyForce(SCNVector3(0, 0, poo.velocity() + bonusOffset), asImpulse: true)
         }
     }
     
@@ -335,6 +382,7 @@ class GameViewController: UIViewController {
     }
     
     @objc func blockAvoider() {
+        guard !isMultiplayer else { return }
         for opponent in opponents {
             let pos = opponent.node.presentation.position
             opponent.turn(direction: getBestDirection(pos: pos))
@@ -389,10 +437,15 @@ class GameViewController: UIViewController {
     func didFinish(node: SCNNode) {
         if !winners.contains(node) {
             winners.append(node)
+            if !isMultiplayer {
             raceResultManager.didFinish(poo: PooName(rawValue: node.name!)!, penalty: false)
+            } else {
+                raceResultManager.didFinishMultiplayer(poos: currentPlayers)
+            }
         }
+        multiplayer?.sendFinish()
     }
-    
+     
     @objc func checkFinish() {
         if !winners.contains(pooNode) {
             winners.append(pooNode)
@@ -405,11 +458,16 @@ class GameViewController: UIViewController {
     func gameIsOver() {
         oppTimer.invalidate()
         controllerView.stop()
-        raceResultManager.getResults(opponents: opponents, length: length)
+        if !isMultiplayer {
+            raceResultManager.getResults(opponents: opponents, length: length)
+        } else {
+            raceResultManager.didFinishMultiplayer(poos: currentPlayers)
+        }
     }
     
     func stopped() {
         oppTimer.invalidate()
+        controllerView.stop()
         Navigation.main.popToRootViewController(animated: true)
     }
     
@@ -448,9 +506,15 @@ extension GameViewController : SCNSceneRendererDelegate {
 }
 
 extension GameViewController : MultiplayerDelegate {
+   
+    func didReceiveStart() {
+        prepareMultiplayer()
+    }
     
-    func createVSOpponentNode(name: PooName) {
-        vsOpponent = PooNodeCreator.createVSOpponent(name: name, position: SCNVector3(1, 0.5, 0))
+    func didReceiveEnd() {
+        gameOver = true
+        gameIsOver()
+        let _ = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(addFinishView), userInfo: nil, repeats: false)
     }
     
     func sendMultiplayerData() {
@@ -459,13 +523,15 @@ extension GameViewController : MultiplayerDelegate {
     }
     
     func didReceivePosition(pos: PlayerPosition) {
-        vsOpponent?.position = SCNVector3(pos.xPos, pos.yPos, pos.xPos)
+        vsOpponentNode?.position = SCNVector3(pos.xPos, pos.yPos, pos.zPos)
     }
     
-    func didReceivePooName(_ name: PooName) {
-        createVSOpponentNode(name: name)
+    func didReceivePooName(_ name: PooName, displayName: String) {
+        vsPoo = Poo(name: name)
+        vsPoo?.displayName = displayName
+        opponents.append(vsPoo!)
+        if scene != nil && vsOpponentNode == nil {
+            addVSOpponent()
+        }
     }
-    
-    
-
 }

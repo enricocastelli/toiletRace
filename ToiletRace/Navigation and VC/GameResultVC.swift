@@ -34,7 +34,6 @@ class GameResultVC: UIViewController {
             return obj1.time < obj2.time
         }
     }
-
     
     @IBAction func playTapped(_ sender: UIButton) {
         SessionData.shared.reset()

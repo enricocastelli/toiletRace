@@ -30,4 +30,12 @@ class StorageManager {
                                           ]
         defaults.setValue(dictionary, forKey: StorageKeys.savedBolus.rawValue)
     }
+    
+    static func retrieveBolus() -> BolusItem? {
+        if let value = defaults.value(forKey: StorageKeys.savedBolus.rawValue) as? [String:Float] {
+            guard let colorR = value["colorR"], let colorG = value["colorG"], let colorB = value["colorB"], let radius = value["radius"], let restitution = value["restitution"], let displacement = value["displacement"], let mass = value["mass"] else { return nil }
+            return BolusItem(colorR: colorR, colorG: colorG, colorB: colorB, radius: radius, restitution: restitution, displacement: displacement, mass: mass)
+        }
+        return nil
+    }
 }

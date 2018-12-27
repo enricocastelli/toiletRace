@@ -25,6 +25,7 @@ class ControllerView: UIView {
     var tableTimer = Timer()
     // UI: Label ready/Go, bonus button
     var startLabel = UILabel()
+    var testLabel = UILabel()
     var bonusButton : BonusButton?
     var touchLocation = CGPoint()
     var isPlaying = false
@@ -45,7 +46,8 @@ class ControllerView: UIView {
         setupLabel()
         setupBonusButton()
         setupStopButton()
-        alpha = 0
+        resultTable.alpha = 0
+        bonusButton?.alpha = 0
     }
     
     func setupTable() {
@@ -87,7 +89,8 @@ class ControllerView: UIView {
         updateLabel()
         DispatchQueue.main.async {
             UIView.animate(withDuration: 0.3) {
-                self.alpha = 1
+                self.resultTable.alpha = 1
+                self.bonusButton?.alpha = 1
             }
         }
     }
@@ -169,7 +172,7 @@ extension ControllerView: UITableViewDataSource {
         if RaceResultManager.shared.finalResults.count > indexPath.row {
             // this poo finished the race
             let poo = RaceResultManager.shared.finalResults[indexPath.row]
-            cell.textLabel?.text = "\(indexPath.row + 1)) \(poo.player.name.rawValue)"
+            cell.textLabel?.text = "\(indexPath.row + 1)) \(poo.player.displayName ?? poo.player.name.rawValue)"
             if indexPath.row != 0 {
                 // poo is not first. Detail text show's time to Winner in red
                 cell.detailTextLabel?.text = "\((poo.timeToWinner ?? 0).string())"
@@ -182,7 +185,7 @@ extension ControllerView: UITableViewDataSource {
         } else {
             // this poo is in the race.
             let poo = gameVC.ranking[indexPath.row]
-            cell.textLabel?.text = " \(indexPath.row + 1)) \(poo.name.rawValue) "
+            cell.textLabel?.text = " \(indexPath.row + 1)) \(poo.displayName ?? poo.name.rawValue) "
             if poo.bonusEnabled == true {
                 cell.textLabel?.layer.backgroundColor = backgroundCellColor.cgColor
             } else {
@@ -195,7 +198,7 @@ extension ControllerView: UITableViewDataSource {
         cell.backgroundColor = UIColor.clear
         cell.imageView?.layer.masksToBounds = true
         cell.imageView?.layer.cornerRadius = 10
-        if cell.textLabel?.text?.contains(SessionData.shared.selectedPlayer.name.rawValue) ?? false {
+        if cell.textLabel?.text?.contains(SessionData.shared.selectedPlayer.displayName ?? SessionData.shared.selectedPlayer.name.rawValue) ?? false {
             cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 16)
             cell.contentView.alpha = 0.8
         } else {
