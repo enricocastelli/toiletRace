@@ -116,7 +116,7 @@ class ToiletViewController: GameViewController {
             scene.physicsWorld.gravity = SCNVector3(0, -0.5, 0)
             node.physicsBody?.applyForce(SCNVector3(0, 3.7, -0.12), asImpulse: true)
             node.physicsBody?.applyTorque(SCNVector4(0.5, 0.5, 0.5, 0.5), asImpulse: true)
-            perform(#selector(checkFinish), with: nil, afterDelay: 4)
+            perform(#selector(forceFinish), with: nil, afterDelay: 4)
         } else {
             let byFinish = SCNVector3(0, 14, length + 8)
             let finish = SCNVector3(0, 4, length)

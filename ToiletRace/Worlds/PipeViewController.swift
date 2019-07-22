@@ -26,8 +26,6 @@ class PipeViewController: GameViewController {
         Values.yTot = 2.0
         Values.zTot = 3.5
         length = -290
-        controllerView.cellTextColor = UIColor.white
-        controllerView.backgroundCellColor = UIColor.darkGray
     }
     
     override func setupScene() {
@@ -46,6 +44,8 @@ class PipeViewController: GameViewController {
         addObstacle()
         setFinish()
         addSmoke()
+        controllerView.cellTextColor = UIColor.white
+        controllerView.backgroundCellColor = UIColor.darkGray
     }
     
     override func setupFloor() {

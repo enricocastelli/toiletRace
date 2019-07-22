@@ -24,13 +24,22 @@ class RaceResultManager: NSObject {
     var startDate : Date?
     ///final results created when players finish the track and passed to GameResultVC for showing time and positions
     var finalResults: [Result] = []
+    ///property to detect if game is finished and asking for results
+    var isGameOver = false
     
     func start() {
+        isGameOver = false
         startDate = Date()
         finalResults = []
     }
     
     func didFinish(poo: PooName, penalty: Bool) {
+        guard isGameOver == false else { return }
+        let result = createResult(poo: poo, penalty: penalty)
+        finalResults.append(result)
+    }
+    
+    func  createResult(poo: PooName, penalty: Bool) -> Result {
         let time : Float = {
             let totalTime = calculateTime(firstDate: startDate!)
             return totalTime + (penalty ? 3 : 0)
@@ -43,11 +52,12 @@ class RaceResultManager: NSObject {
             return 0
         }()
         let result = Result(player: Poo(name: poo), time: time, timeToWinner: timeToWinner, points: 0, penalty: penalty)
-        finalResults.append(result)
+        return result
     }
     
     func getResults(opponents: [Poo], length: Float) {
         // checking final result contains all the results
+        isGameOver = true
         if finalResults.count != opponents.count + 1 {
             for opponent in opponents {
                 if finalResults.contains(where: { $0.player.name.rawValue == opponent.name.rawValue}) {
@@ -73,25 +83,24 @@ class RaceResultManager: NSObject {
         })
     }
     
-    func didFinishMultiplayer(poos: [Poo]) {
-        for poo in poos {
-            let time : Float = {
-                let totalTime = calculateTime(firstDate: startDate!)
-                return totalTime
-            }()
-            //            let total = Data.shared.scores[node.name!] ?? 0
-            let timeToWinner : Float = {
-                if let winner = finalResults.first?.time {
-                    return winner - time
-                }
-                return 0
-            }()
-            let result = Result(player: poo, time: time, timeToWinner: timeToWinner, points: 0, penalty: nil)
-            finalResults.append(result)
+    func didFinishMultiplayer(poo: Poo, gameOver: Bool) {
+        let time : Float = {
+            let totalTime = calculateTime(firstDate: startDate!)
+            return totalTime
+        }()
+        let timeToWinner : Float = {
+            if let winner = finalResults.first?.time {
+                return winner - time
+            }
+            return 0
+        }()
+        let result = Result(player: poo, time: time, timeToWinner: timeToWinner, points: 0, penalty: nil)
+        finalResults.append(result)
+        if gameOver {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+                self.showResults()
+            })
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-            self.showResults()
-        })
     }
     
     func calculateTime(firstDate: Date) -> Float {

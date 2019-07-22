@@ -69,7 +69,7 @@ enum Bonus {
         case .NoBonus:
             return 0
         case .Sprint:
-            return 11
+            return 14
         case .Ghost:
             return 10
         case .Slower:

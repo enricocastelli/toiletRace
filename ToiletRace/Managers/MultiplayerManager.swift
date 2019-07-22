@@ -60,7 +60,6 @@ class MultiplayerManager: NSObject {
     
     var session : MCSession
     
-    var players : Array<MCPeerID> = []
     var delegate: MultiplayerDelegate?
     var connectionDelegate: MultiplayerConnectionDelegate?
     var connected = false
@@ -84,18 +83,17 @@ class MultiplayerManager: NSObject {
     func start() {
         self.serviceAdvertiser = MCNearbyServiceAdvertiser(peer: myPeerId, discoveryInfo: nil, serviceType: SessionName)
         self.serviceBrowser = MCNearbyServiceBrowser(peer: myPeerId, serviceType: SessionName)
+        stop()
         self.serviceAdvertiser.delegate = self
         self.serviceAdvertiser.startAdvertisingPeer()
         self.serviceBrowser.delegate = self
         self.serviceBrowser.startBrowsingForPeers()
-        self.players = []
     }
     
     func stop() {
         self.serviceAdvertiser.stopAdvertisingPeer()
         self.serviceBrowser.stopBrowsingForPeers()
         self.session.disconnect()
-        self.players = []
     }
     
     //MARK:- TABLEVIEW STUFF

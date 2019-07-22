@@ -44,7 +44,7 @@ class Poo {
         }
     }
     var node: SCNNode!
-    var bonusEnabled = false
+    var bonusEnabled = true
     var canUseBonus = true
     var direction: Direction = .straight
     var actualTurning: CGFloat = 0
