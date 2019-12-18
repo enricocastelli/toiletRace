@@ -19,6 +19,8 @@ class WaterViewController: GameViewController {
     override func viewDidLoad() {
         basicSetup()
         super.viewDidLoad()
+        controllerView.cellTextColor = UIColor.white
+        controllerView.backgroundCellColor = UIColor.darkGray
     }
     
     func basicSetup() {
@@ -27,8 +29,6 @@ class WaterViewController: GameViewController {
         Values.zTot = 4
         length = 200
         position = SCNVector3(0, 0, 0)
-        controllerView.cellTextColor = UIColor.white
-        controllerView.backgroundCellColor = UIColor.darkGray
         shouldRotateCamera = false
     }
     

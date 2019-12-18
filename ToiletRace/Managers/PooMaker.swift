@@ -57,9 +57,9 @@ class PooMaker {
             if bolus.radius <= 0.5 {
                 bolus.radius += item.size/2
             }
-            if bolus.displacement <= 0.2 {
-                bolus.displacement += item.displacement
-            }
+//            if bolus.displacement <= 0.05 {
+//                bolus.displacement += item.displacement
+//            }
             bolus.mass += item.mass
             bolus.colorR += item.colorR/1000
             bolus.colorG += item.colorG/1000

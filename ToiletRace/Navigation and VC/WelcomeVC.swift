@@ -24,10 +24,4 @@ class WelcomeVC: UIViewController {
         let show = MultiplayerVC()
         Navigation.main.pushViewController(show, animated: true)
     }
-    
-    @IBAction func makeYoursTapped(_ sender: UIButton) {
-        let show = PooMakerVC()
-        Navigation.main.pushViewController(show, animated: true)
-    }
-    
 }

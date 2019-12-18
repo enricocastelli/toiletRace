@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Bucket
+   uuid = "CC84224D-F021-4972-B438-2B3BFA65A731"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1F1EFC87-F13A-446F-BA71-63DFDB378A00"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ToiletRace/Navigation and VC/PooMakerVC.swift"
+            timestampString = "592613671.806201"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "118"
+            endingLineNumber = "118"
+            landmarkName = "collectionView(_:performDropWith:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>
