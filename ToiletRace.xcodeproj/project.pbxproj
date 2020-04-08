@@ -45,6 +45,8 @@
 		1CBD9E6621775A7000109DC3 /* smoke.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CBD9E6421775A7000109DC3 /* smoke.png */; };
 		1CBD9E6721775A7000109DC3 /* smoke.scnp in Resources */ = {isa = PBXBuildFile; fileRef = 1CBD9E6521775A7000109DC3 /* smoke.scnp */; };
 		1CBD9E692178A29900109DC3 /* NodeCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CBD9E682178A29900109DC3 /* NodeCreator.swift */; };
+		1CE146D823AB7D8E00CCC356 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE146D623AB7D8E00CCC356 /* SettingsVC.swift */; };
+		1CE146D923AB7D8E00CCC356 /* SettingsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CE146D723AB7D8E00CCC356 /* SettingsVC.xib */; };
 		1CE3CB32219CBF48007DB899 /* bokeh.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CE3CB30219CBF48007DB899 /* bokeh.png */; };
 		1CE3CB33219CBF48007DB899 /* bubble.scnp in Resources */ = {isa = PBXBuildFile; fileRef = 1CE3CB31219CBF48007DB899 /* bubble.scnp */; };
 		1CFE97082191D942007F837A /* Bonus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CFE97072191D942007F837A /* Bonus.swift */; };
@@ -91,6 +93,8 @@
 		1CBD9E6421775A7000109DC3 /* smoke.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smoke.png; sourceTree = "<group>"; };
 		1CBD9E6521775A7000109DC3 /* smoke.scnp */ = {isa = PBXFileReference; lastKnownFileType = file.scp; path = smoke.scnp; sourceTree = "<group>"; };
 		1CBD9E682178A29900109DC3 /* NodeCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeCreator.swift; sourceTree = "<group>"; };
+		1CE146D623AB7D8E00CCC356 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
+		1CE146D723AB7D8E00CCC356 /* SettingsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsVC.xib; sourceTree = "<group>"; };
 		1CE3CB30219CBF48007DB899 /* bokeh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bokeh.png; sourceTree = "<group>"; };
 		1CE3CB31219CBF48007DB899 /* bubble.scnp */ = {isa = PBXFileReference; lastKnownFileType = file.scp; path = bubble.scnp; sourceTree = "<group>"; };
 		1CFE97072191D942007F837A /* Bonus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bonus.swift; sourceTree = "<group>"; };
@@ -175,6 +179,8 @@
 				1C76170421CA3D7B0085FCB8 /* WelcomeVC.xib */,
 				1C27D34621CA992200E3C322 /* MultiplayerVC.swift */,
 				1C27D34821CB947A00E3C322 /* MultiplayerVC.xib */,
+				1CE146D623AB7D8E00CCC356 /* SettingsVC.swift */,
+				1CE146D723AB7D8E00CCC356 /* SettingsVC.xib */,
 				1C815D2D21806496006557D4 /* ShowroomVC.swift */,
 				1C815D2E21806496006557D4 /* ShowroomVC.xib */,
 				1CB8D7912176168200B38BA2 /* GameResultVC.swift */,
@@ -287,6 +293,7 @@
 				1CB8D786217615C100B38BA2 /* Assets.xcassets in Resources */,
 				1C815D3021806496006557D4 /* ShowroomVC.xib in Resources */,
 				1CBD9E6621775A7000109DC3 /* smoke.png in Resources */,
+				1CE146D923AB7D8E00CCC356 /* SettingsVC.xib in Resources */,
 				1CE3CB33219CBF48007DB899 /* bubble.scnp in Resources */,
 				1CE3CB32219CBF48007DB899 /* bokeh.png in Resources */,
 				1CB8D7B02176168300B38BA2 /* GameResultVC.xib in Resources */,
@@ -315,6 +322,7 @@
 				1C27D34521CA91F200E3C322 /* Logger.swift in Sources */,
 				1CB8D77D217615C000B38BA2 /* AppDelegate.swift in Sources */,
 				1C7C1C1921C7B2E400D47FC8 /* ContactManager.swift in Sources */,
+				1CE146D823AB7D8E00CCC356 /* SettingsVC.swift in Sources */,
 				1C76170721CA3D7B0085FCB8 /* WelcomeVC.swift in Sources */,
 				1CB8D7AE2176168300B38BA2 /* Stuff.swift in Sources */,
 				1C27D35A21CBDB8300E3C322 /* PooNodeCreator.swift in Sources */,
@@ -466,9 +474,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L4BGB43YX2;
 				INFOPLIST_FILE = ToiletRace/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -477,7 +485,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = E.TheToiletRace;
 				PRODUCT_NAME = "The Toilet Race";
-				PROVISIONING_PROFILE_SPECIFIER = ToiletRace;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -487,9 +495,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L4BGB43YX2;
 				INFOPLIST_FILE = ToiletRace/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -498,7 +506,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = E.TheToiletRace;
 				PRODUCT_NAME = "The Toilet Race";
-				PROVISIONING_PROFILE_SPECIFIER = ToiletRace;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

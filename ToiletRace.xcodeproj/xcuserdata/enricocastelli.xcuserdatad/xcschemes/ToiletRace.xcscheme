@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "1CB8D778217615C000B38BA2"
-               BuildableName = "ToiletRace.app"
+               BuildableName = "The Toilet Race.app"
                BlueprintName = "ToiletRace"
                ReferencedContainer = "container:ToiletRace.xcodeproj">
             </BuildableReference>
@@ -27,19 +27,17 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
-      <Testables>
-      </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1CB8D778217615C000B38BA2"
-            BuildableName = "ToiletRace.app"
+            BuildableName = "The Toilet Race.app"
             BlueprintName = "ToiletRace"
             ReferencedContainer = "container:ToiletRace.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
-      <AdditionalOptions>
-      </AdditionalOptions>
+      <Testables>
+      </Testables>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -57,13 +55,11 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1CB8D778217615C000B38BA2"
-            BuildableName = "ToiletRace.app"
+            BuildableName = "The Toilet Race.app"
             BlueprintName = "ToiletRace"
             ReferencedContainer = "container:ToiletRace.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -76,7 +72,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1CB8D778217615C000B38BA2"
-            BuildableName = "ToiletRace.app"
+            BuildableName = "The Toilet Race.app"
             BlueprintName = "ToiletRace"
             ReferencedContainer = "container:ToiletRace.xcodeproj">
          </BuildableReference>

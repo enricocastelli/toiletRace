@@ -24,4 +24,10 @@ class WelcomeVC: UIViewController {
         let show = MultiplayerVC()
         Navigation.main.pushViewController(show, animated: true)
     }
+    
+    @IBAction func settingsTapped(_ sender: UIButton) {
+        let settings = SettingsVC()
+        Navigation.main.pushViewController(settings, animated: true)
+    }
+    
 }

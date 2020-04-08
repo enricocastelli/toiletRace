@@ -49,11 +49,15 @@ class ShowroomVC: UIViewController {
         addLight()
         addBalls()
         // Do any additional setup after loading the view.
-        addButtons()
         addBonus()
         prepare {
             self.view.alpha = 1
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        addButtons()
     }
     
     func prepare(completion: @escaping () -> ()) {
@@ -105,11 +109,12 @@ class ShowroomVC: UIViewController {
     }
     
     func addButtons() {
-        rightButton = UIButton(frame: CGRect(x: view.frame.width - 64, y: 0, width: 64, height: 64))
+        self.view.layoutIfNeeded()
+        rightButton = UIButton(frame: CGRect(x: view.frame.width - 80, y: 0, width: 80, height: 64))
         rightButton.center.y = view.center.y
         rightButton.setTitle("▶️", for: .normal)
         rightButton.addTarget(self, action: #selector(rightTap), for: .touchUpInside)
-        leftButton = UIButton(frame: CGRect(x: 16, y: 0, width: 64, height: 64))
+        leftButton = UIButton(frame: CGRect(x: 32, y: 0, width: 64, height: 64))
         leftButton.center.y = view.center.y
         leftButton.setTitle("◀️", for: .normal)
         leftButton.addTarget(self, action: #selector(leftTap), for: .touchUpInside)
@@ -150,6 +155,7 @@ class ShowroomVC: UIViewController {
             { bonusView.alpha = 1 }
         }
         view.addSubview(bonusView)
+        bonusView.isEnabled = false
     }
 
     @objc func goToRace() {

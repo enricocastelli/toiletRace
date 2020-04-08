@@ -160,6 +160,7 @@ class GameViewController: UIViewController {
         vsPoo.node = vsOpponentNode
         vsOpponentNode?.name = vsPoo.name.rawValue
         initUsersPoo(nil)
+        currentPlayers = [vsPoo, SessionData.shared.selectedPlayer]
     }
     
     // init user's poo. Connects the node to the poo and saves it in local session data. Also resets it (for some reason 🧐)
@@ -353,8 +354,10 @@ class GameViewController: UIViewController {
     
     /// in a for loop, a force is applied on every poo based on it's speed (also with bonus)
     func movePoops() {
-        for n in 0...currentPlayers.count - 1 {
+        let playersCount = isMultiplayer ? 3 : currentPlayers.count - 1
+        for n in 0...playersCount {
             let poo = currentPlayers[n]
+            print(n, poo.displayName)
             let bonusOffset = calculateBonusOffset(poo)
             guard let node = poo.node, node != vsOpponentNode else { return }
             checkIfBonusShouldDisabled(poo, node, n)
@@ -433,7 +436,14 @@ class GameViewController: UIViewController {
         if isLimit {
             return pos.x > 6.5 ? .left : .right
         }
-        for ind in 1...10 {
+        let level: Int = {
+            switch StorageManager.retrieveLevel() {
+            case 0: return 5
+            case 2: return 10
+            default: return 7
+            }
+        }()
+        for ind in 1...level {
             let x = 12/2 - Float(ind)/2
             let z = -Float(ind)/3
             let pointR = SCNVector3(pos.x + x, 0.5, pos.z + z)
