@@ -20,6 +20,12 @@ class MultiplayerVC: UIViewController {
         super.viewDidLoad()
         setupTable()
         setupMultiplayer()
+        DispatchQueue.main.async {
+            let gameVC = GameViewController()
+            gameVC.multiplayer = self.multiplayer
+            Navigation.main.pushViewController(gameVC, animated: true)
+            Navigation.startLoading()
+        }
     }
     
     func setupTable() {
@@ -67,9 +73,7 @@ extension MultiplayerVC: MultiplayerConnectionDelegate {
     
     func didConnect() {
         DispatchQueue.main.async {
-            let gameVC : GameViewController = {
-                return ToiletViewController()
-            }()
+            let gameVC = GameViewController()
             gameVC.multiplayer = self.multiplayer
             Navigation.main.pushViewController(gameVC, animated: true)
             Navigation.startLoading()

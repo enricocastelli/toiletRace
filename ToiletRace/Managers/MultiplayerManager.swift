@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import FirebaseDatabase
 
 import UIKit
 import MultipeerConnectivity
@@ -17,6 +18,7 @@ protocol MultiplayerDelegate {
     func didReceivePooName(_ name: PooName, displayName: String)
     func didReceiveStart()
     func didReceiveEnd()
+    func didReceivePlayers(_ players: [Player])
 }
 
 protocol MultiplayerConnectionDelegate {
@@ -26,29 +28,6 @@ protocol MultiplayerConnectionDelegate {
     func didConnect()
 }
 
-struct PlayerPosition: Codable {
-    var xPos: Float { get { return Float(xPosition) ?? 0 }}
-    var yPos: Float { get { return Float(yPosition) ?? 0 }}
-    var zPos: Float { get { return Float(zPosition) ?? 0 }}
-    private var xPosition: String
-    private var zPosition: String
-    private var yPosition: String
-}
-
-struct PlayerName: Codable {
-    var pooName: String
-    var displayName: String
-}
-
-struct PlayerReady: Codable {
-    private var ready: String
-    var isReady: Bool { get { return ready == "true" }}
-}
-
-struct PlayerFinish: Codable {
-    private var finish: String
-    var didFinish: Bool { get { return finish == "true" }}
-}
 
 class MultiplayerManager: NSObject {
     
@@ -65,6 +44,7 @@ class MultiplayerManager: NSObject {
     var connected = false
     // exact date when connection got established
     var connectionDate: Date?
+    var firestore = true
     
     init(delegate: MultiplayerDelegate?, connectionDelegate: MultiplayerConnectionDelegate?) {
         self.delegate = delegate
@@ -103,8 +83,12 @@ class MultiplayerManager: NSObject {
     }
     
     public func sendPosition(x: Float, y: Float, z: Float) {
-        let params = ["xPosition": x.string(), "yPosition": y.string(), "zPosition": z.string()]
-        sendData(params)
+        if firestore {
+            updateSelf(Player(id: "poo1", position: Position(x: x, y: y, z: z)))
+        } else {
+            let params = ["xPosition": x.string(), "yPosition": y.string(), "zPosition": z.string()]
+            sendData(params)
+        }
     }
     
     public func sendName(_ pooName: PooName) {
@@ -117,6 +101,16 @@ class MultiplayerManager: NSObject {
     public func sendReady() {
         let params = ["ready": "true"]
         self.sendData(params)
+        if firestore {
+            createGame()
+            updateSelf(Player(id: testName(), position: Position(x: 0, y: 0, z: 50)))
+            connectionDate = Date()
+            delegate?.didReceivePooName(PooName.ApolloPoo, displayName: "ios")
+            delegate?.didReceiveStart()
+            addChallengeObserver("test") { (players) in
+                self.delegate?.didReceivePlayers(players)
+            }
+        }
     }
     
     public func sendFinish() {
@@ -252,3 +246,91 @@ extension MultiplayerManager: MCNearbyServiceBrowserDelegate {
     }
 }
 
+extension MultiplayerManager {
+    
+    private func game() -> DatabaseReference {
+        return Database.database().reference().child("games")
+    }
+    
+    func createGame() {
+    }
+    
+    
+    func updateSelf(_ player: Player) {
+        guard let data = player.toData() else { return }
+        let childUpdates = ["test/\(testName())": data]
+        game().updateChildValues(childUpdates)
+    }
+    
+    func addChallengeObserver(_ id: String, callback: @escaping([Player]) -> ()) {
+        game().observe(DataEventType.childChanged) { (snapshot) in
+            callback(snapshot.toPlayers())
+        }
+    }
+}
+
+struct Player {
+    
+    let id: String
+    let position: Position
+    
+    func toData() -> [String: Any]? {
+        return ["id": id, "position": ["xPos": position.x,
+                                       "yPos": position.y,
+                                       "zPos": position.z]]
+        
+    }
+}
+
+struct Position: Codable {
+    var x: Float
+    var y: Float
+    var z: Float
+}
+
+struct PlayerPosition: Codable {
+    var xPos: Float { get { return Float(xPosition) ?? 0 }}
+    var yPos: Float { get { return Float(yPosition) ?? 0 }}
+    var zPos: Float { get { return Float(zPosition) ?? 0 }}
+    private var xPosition: String
+    private var zPosition: String
+    private var yPosition: String
+}
+
+struct PlayerName: Codable {
+    var pooName: String
+    var displayName: String
+}
+
+struct PlayerReady: Codable {
+    private var ready: String
+    var isReady: Bool { get { return ready == "true" }}
+}
+
+struct PlayerFinish: Codable {
+    private var finish: String
+    var didFinish: Bool { get { return finish == "true" }}
+}
+
+extension Dictionary where Key == String, Value == Any {
+    
+    func toPlayer() -> Player? {
+        guard let id = self["id"] as? String, let position = self["position"] as? [String: Float], let xPos = position["xPos"], let yPos = position["yPos"], let zPos = position["zPos"] else { return nil }
+        return Player(id: id, position: Position(x: xPos, y: yPos, z: zPos))
+    }
+    
+}
+
+extension DataSnapshot {
+    
+    func toPlayers() -> [Player] {
+        var arr = [Player]()
+        guard let values = value as? Dictionary<String, Any> else { return [] }
+        for case let element as [String: Any] in values.values {
+            if let player = element.toPlayer() {
+                arr.append(player)
+            }
+        }
+        return arr
+    }
+}

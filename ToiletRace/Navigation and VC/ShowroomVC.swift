@@ -159,9 +159,7 @@ class ShowroomVC: UIViewController {
     }
 
     @objc func goToRace() {
-        let gameVC : GameViewController = {
-            return ToiletViewController()
-        }()
+        let gameVC = GameViewController()
         Navigation.main.pushViewController(gameVC, animated: true)
         Navigation.startLoading()
     }

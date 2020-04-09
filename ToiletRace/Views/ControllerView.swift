@@ -95,13 +95,26 @@ class ControllerView: UIView {
         }
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    var location: CGFloat = 0
+    var isTouching = false
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
         touchLocation  = touch.location(in: self)
         guard isPlaying == true else { return }
-        gameVC.shouldTurn(right: touchLocation.x > UIScreen.main.bounds.width/2)
+        if !isTouching {
+            isTouching = true
+            location = touchLocation.x
+        } else {
+            gameVC.shouldTurn(force: (touchLocation.x - location)/20)
+            location = touchLocation.x
+        }
     }
     
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        isTouching = false
+    }
+        
     func startUpdateTimer() {
         tableTimer = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(updateTable), userInfo: nil, repeats: true)
     }

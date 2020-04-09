@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -18,7 +18,6 @@
 		1C27D35A21CBDB8300E3C322 /* PooNodeCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C27D35921CBDB8300E3C322 /* PooNodeCreator.swift */; };
 		1C27D35C21CBF07F00E3C322 /* PooMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C27D35B21CBF07F00E3C322 /* PooMaker.swift */; };
 		1C27D35E21CCF6C000E3C322 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C27D35D21CCF6C000E3C322 /* StorageManager.swift */; };
-		1C657ECA219CB44800783BD9 /* WaterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C657EC9219CB44800783BD9 /* WaterViewController.swift */; };
 		1C76170221C998290085FCB8 /* RaceResultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C76170121C998290085FCB8 /* RaceResultManager.swift */; };
 		1C76170621CA3D7B0085FCB8 /* WelcomeVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C76170421CA3D7B0085FCB8 /* WelcomeVC.xib */; };
 		1C76170721CA3D7B0085FCB8 /* WelcomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C76170521CA3D7B0085FCB8 /* WelcomeVC.swift */; };
@@ -28,8 +27,8 @@
 		1C7C1C2E21C7F7D700D47FC8 /* Values.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7C1C2D21C7F7D700D47FC8 /* Values.swift */; };
 		1C815D2F21806496006557D4 /* ShowroomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C815D2D21806496006557D4 /* ShowroomVC.swift */; };
 		1C815D3021806496006557D4 /* ShowroomVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C815D2E21806496006557D4 /* ShowroomVC.xib */; };
-		1CB8A5972193171E00084496 /* ToiletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8A5962193171E00084496 /* ToiletViewController.swift */; };
-		1CB8A59B21932A6E00084496 /* PipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8A59A21932A6E00084496 /* PipeViewController.swift */; };
+		1CA23A38243EF9F500F8872C /* BonusProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA23A37243EF9F500F8872C /* BonusProvider.swift */; };
+		1CA23A3A243F041A00F8872C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1CA23A39243F041A00F8872C /* GoogleService-Info.plist */; };
 		1CB8D77D217615C000B38BA2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8D77C217615C000B38BA2 /* AppDelegate.swift */; };
 		1CB8D77F217615C000B38BA2 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 1CB8D77E217615C000B38BA2 /* art.scnassets */; };
 		1CB8D781217615C000B38BA2 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8D780217615C000B38BA2 /* GameViewController.swift */; };
@@ -48,11 +47,13 @@
 		1CE146D823AB7D8E00CCC356 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE146D623AB7D8E00CCC356 /* SettingsVC.swift */; };
 		1CE146D923AB7D8E00CCC356 /* SettingsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CE146D723AB7D8E00CCC356 /* SettingsVC.xib */; };
 		1CE3CB32219CBF48007DB899 /* bokeh.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CE3CB30219CBF48007DB899 /* bokeh.png */; };
-		1CE3CB33219CBF48007DB899 /* bubble.scnp in Resources */ = {isa = PBXBuildFile; fileRef = 1CE3CB31219CBF48007DB899 /* bubble.scnp */; };
 		1CFE97082191D942007F837A /* Bonus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CFE97072191D942007F837A /* Bonus.swift */; };
+		982E2C45BCFEBCAFA68B15EC /* Pods_ToiletRace.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CDCF0B81B96CB5082D635BA /* Pods_ToiletRace.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0428E8DCDAE9E0DF695AA8A0 /* Pods-ToiletRace.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToiletRace.debug.xcconfig"; path = "Target Support Files/Pods-ToiletRace/Pods-ToiletRace.debug.xcconfig"; sourceTree = "<group>"; };
+		0FE76644B8F49AE8CAD961BF /* Pods-ToiletRace.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToiletRace.release.xcconfig"; path = "Target Support Files/Pods-ToiletRace/Pods-ToiletRace.release.xcconfig"; sourceTree = "<group>"; };
 		1C034CFF218CA06E001C5694 /* BonusButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonusButton.swift; sourceTree = "<group>"; };
 		1C03B3A3217E658F003CD652 /* Loading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loading.swift; sourceTree = "<group>"; };
 		1C0EEBC2217F56DE008EE331 /* spluff.scnp */ = {isa = PBXFileReference; lastKnownFileType = file.scp; path = spluff.scnp; sourceTree = "<group>"; };
@@ -64,7 +65,6 @@
 		1C27D35921CBDB8300E3C322 /* PooNodeCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PooNodeCreator.swift; sourceTree = "<group>"; };
 		1C27D35B21CBF07F00E3C322 /* PooMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PooMaker.swift; sourceTree = "<group>"; };
 		1C27D35D21CCF6C000E3C322 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
-		1C657EC9219CB44800783BD9 /* WaterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterViewController.swift; sourceTree = "<group>"; };
 		1C76170121C998290085FCB8 /* RaceResultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceResultManager.swift; sourceTree = "<group>"; };
 		1C76170421CA3D7B0085FCB8 /* WelcomeVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WelcomeVC.xib; sourceTree = "<group>"; };
 		1C76170521CA3D7B0085FCB8 /* WelcomeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeVC.swift; sourceTree = "<group>"; };
@@ -74,8 +74,8 @@
 		1C7C1C2D21C7F7D700D47FC8 /* Values.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Values.swift; sourceTree = "<group>"; };
 		1C815D2D21806496006557D4 /* ShowroomVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowroomVC.swift; sourceTree = "<group>"; };
 		1C815D2E21806496006557D4 /* ShowroomVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShowroomVC.xib; sourceTree = "<group>"; };
-		1CB8A5962193171E00084496 /* ToiletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToiletViewController.swift; sourceTree = "<group>"; };
-		1CB8A59A21932A6E00084496 /* PipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipeViewController.swift; sourceTree = "<group>"; };
+		1CA23A37243EF9F500F8872C /* BonusProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonusProvider.swift; sourceTree = "<group>"; };
+		1CA23A39243F041A00F8872C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1CB8D779217615C000B38BA2 /* The Toilet Race.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "The Toilet Race.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CB8D77C217615C000B38BA2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1CB8D77E217615C000B38BA2 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -96,8 +96,8 @@
 		1CE146D623AB7D8E00CCC356 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		1CE146D723AB7D8E00CCC356 /* SettingsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsVC.xib; sourceTree = "<group>"; };
 		1CE3CB30219CBF48007DB899 /* bokeh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bokeh.png; sourceTree = "<group>"; };
-		1CE3CB31219CBF48007DB899 /* bubble.scnp */ = {isa = PBXFileReference; lastKnownFileType = file.scp; path = bubble.scnp; sourceTree = "<group>"; };
 		1CFE97072191D942007F837A /* Bonus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bonus.swift; sourceTree = "<group>"; };
+		3CDCF0B81B96CB5082D635BA /* Pods_ToiletRace.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ToiletRace.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +105,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				982E2C45BCFEBCAFA68B15EC /* Pods_ToiletRace.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,20 +119,9 @@
 				1CBD9E6521775A7000109DC3 /* smoke.scnp */,
 				1C0EEBC3217F56DE008EE331 /* spark.png */,
 				1CE3CB30219CBF48007DB899 /* bokeh.png */,
-				1CE3CB31219CBF48007DB899 /* bubble.scnp */,
 				1C0EEBC2217F56DE008EE331 /* spluff.scnp */,
 			);
 			path = Particles;
-			sourceTree = "<group>";
-		};
-		1C7C1C2F21C7FBE800D47FC8 /* Worlds */ = {
-			isa = PBXGroup;
-			children = (
-				1CB8A5962193171E00084496 /* ToiletViewController.swift */,
-				1CB8A59A21932A6E00084496 /* PipeViewController.swift */,
-				1C657EC9219CB44800783BD9 /* WaterViewController.swift */,
-			);
-			path = Worlds;
 			sourceTree = "<group>";
 		};
 		1C7C1C3021C7FBFD00D47FC8 /* Managers */ = {
@@ -145,6 +135,7 @@
 				1C27D24821CA899E00E3C322 /* MultiplayerManager.swift */,
 				1C7C1C1821C7B2E400D47FC8 /* ContactManager.swift */,
 				1C27D35D21CCF6C000E3C322 /* StorageManager.swift */,
+				1CA23A37243EF9F500F8872C /* BonusProvider.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -196,6 +187,8 @@
 			children = (
 				1CB8D77B217615C000B38BA2 /* ToiletRace */,
 				1CB8D77A217615C000B38BA2 /* Products */,
+				E48ED847BE4A95821C08A993 /* Pods */,
+				46AA9286529B69AE041E8714 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -211,10 +204,10 @@
 			isa = PBXGroup;
 			children = (
 				1CB8D77C217615C000B38BA2 /* AppDelegate.swift */,
+				1CA23A39243F041A00F8872C /* GoogleService-Info.plist */,
 				1C657EC82199D5CF00783BD9 /* Particles */,
 				1CB8D77E217615C000B38BA2 /* art.scnassets */,
 				1CB8D780217615C000B38BA2 /* GameViewController.swift */,
-				1C7C1C2F21C7FBE800D47FC8 /* Worlds */,
 				1C7C1C3221C7FC3300D47FC8 /* Views */,
 				1C7C1C3021C7FBFD00D47FC8 /* Managers */,
 				1C7C1C3121C7FC2600D47FC8 /* Objects */,
@@ -226,6 +219,23 @@
 			path = ToiletRace;
 			sourceTree = "<group>";
 		};
+		46AA9286529B69AE041E8714 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3CDCF0B81B96CB5082D635BA /* Pods_ToiletRace.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E48ED847BE4A95821C08A993 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0428E8DCDAE9E0DF695AA8A0 /* Pods-ToiletRace.debug.xcconfig */,
+				0FE76644B8F49AE8CAD961BF /* Pods-ToiletRace.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -233,9 +243,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1CB8D78D217615C100B38BA2 /* Build configuration list for PBXNativeTarget "ToiletRace" */;
 			buildPhases = (
+				50619F1E50D60950A0E92C8E /* [CP] Check Pods Manifest.lock */,
 				1CB8D775217615C000B38BA2 /* Sources */,
 				1CB8D776217615C000B38BA2 /* Frameworks */,
 				1CB8D777217615C000B38BA2 /* Resources */,
+				B7BA7F10523DE1CA29291F32 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -286,6 +298,7 @@
 			files = (
 				1CBD9E6721775A7000109DC3 /* smoke.scnp in Resources */,
 				1C27D34921CB947A00E3C322 /* MultiplayerVC.xib in Resources */,
+				1CA23A3A243F041A00F8872C /* GoogleService-Info.plist in Resources */,
 				1CB8D77F217615C000B38BA2 /* art.scnassets in Resources */,
 				1CB8D789217615C100B38BA2 /* LaunchScreen.storyboard in Resources */,
 				1C0EEBC5217F56DE008EE331 /* spark.png in Resources */,
@@ -294,7 +307,6 @@
 				1C815D3021806496006557D4 /* ShowroomVC.xib in Resources */,
 				1CBD9E6621775A7000109DC3 /* smoke.png in Resources */,
 				1CE146D923AB7D8E00CCC356 /* SettingsVC.xib in Resources */,
-				1CE3CB33219CBF48007DB899 /* bubble.scnp in Resources */,
 				1CE3CB32219CBF48007DB899 /* bokeh.png in Resources */,
 				1CB8D7B02176168300B38BA2 /* GameResultVC.xib in Resources */,
 				1C76170621CA3D7B0085FCB8 /* WelcomeVC.xib in Resources */,
@@ -304,15 +316,57 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		50619F1E50D60950A0E92C8E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ToiletRace-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B7BA7F10523DE1CA29291F32 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ToiletRace/Pods-ToiletRace-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ToiletRace/Pods-ToiletRace-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ToiletRace/Pods-ToiletRace-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		1CB8D775217615C000B38BA2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1CA23A38243EF9F500F8872C /* BonusProvider.swift in Sources */,
 				1C815D2F21806496006557D4 /* ShowroomVC.swift in Sources */,
 				1C27D24921CA899E00E3C322 /* MultiplayerManager.swift in Sources */,
 				1CB8D781217615C000B38BA2 /* GameViewController.swift in Sources */,
-				1CB8A5972193171E00084496 /* ToiletViewController.swift in Sources */,
 				1CB8D7B22176168300B38BA2 /* ResultCell.swift in Sources */,
 				1CB8D7A92176168300B38BA2 /* Poo.swift in Sources */,
 				1C7C1C1B21C7B79200D47FC8 /* Navigation.swift in Sources */,
@@ -329,8 +383,6 @@
 				1C76170221C998290085FCB8 /* RaceResultManager.swift in Sources */,
 				1CB8D7A32176168300B38BA2 /* GameResultVC.swift in Sources */,
 				1C7C1C1D21C7B85A00D47FC8 /* ControllerView.swift in Sources */,
-				1CB8A59B21932A6E00084496 /* PipeViewController.swift in Sources */,
-				1C657ECA219CB44800783BD9 /* WaterViewController.swift in Sources */,
 				1CFE97082191D942007F837A /* Bonus.swift in Sources */,
 				1C03B3A4217E658F003CD652 /* Loading.swift in Sources */,
 				1C27D35C21CBF07F00E3C322 /* PooMaker.swift in Sources */,
@@ -472,6 +524,7 @@
 		};
 		1CB8D78E217615C100B38BA2 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0428E8DCDAE9E0DF695AA8A0 /* Pods-ToiletRace.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -493,6 +546,7 @@
 		};
 		1CB8D78F217615C100B38BA2 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0FE76644B8F49AE8CAD961BF /* Pods-ToiletRace.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";

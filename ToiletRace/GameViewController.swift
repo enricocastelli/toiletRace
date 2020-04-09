@@ -11,11 +11,8 @@ import UIKit
 import SceneKit
 import AudioToolbox
 
-class GameViewController: UIViewController {
-    
-    ///Selected world or circuit where poops are playing
-    var world = World.toilet
-    
+class GameViewController: UIViewController, BonusProvider {
+        
     var sceneView:SCNView!
     var scene:SCNScene!
     
@@ -39,7 +36,7 @@ class GameViewController: UIViewController {
     
     /// timer that triggers specific opponents actions (bonus usage)
     var oppTimer = Timer()
-
+    
     /// started is true when game is playing, so poos are moved
     var started = false
     
@@ -58,7 +55,7 @@ class GameViewController: UIViewController {
     /// Array of currentPlayers, generally copied from global var players. Order SHOULD NOT change
     var currentPlayers = players
     //test
-//    var currentPlayers = [Poo(name: PooName.IndianSurprise)]
+    //    var currentPlayers = [Poo(name: PooName.IndianSurprise)]
     
     /// Array of current opponents
     var opponents:[Poo] = []
@@ -69,18 +66,30 @@ class GameViewController: UIViewController {
     /// Array of players, generally copied from global var players. It SHOULD CHANGE depending on players position
     var ranking = players
     //test
-//    var ranking = [Poo(name: PooName.GuanoStar)]
-
+    //    var ranking = [Poo(name: PooName.GuanoStar)]
+    
     /// if is bonus from slower activated
     var slowerActivated = false
     /// specifies a special position at beginning for poos
     var position: SCNVector3?
     /// bool if it should rotate camera
     var shouldRotateCamera: Bool = true
+    var toiletNode: SCNNode!
+    /// Euler angles are activated
+    var eulerYes = false
     
     // MARK:- PREPARATION AND INITIAL COMMON METHODS
     
+    func basicSetup() {
+        Values.yTot = 2.5
+        Values.zTot = 4.0
+        length = -400
+    }
+
+    // MARK:- PREPARATION AND INITIAL COMMON METHODS
+    
     override func viewDidLoad() {
+        basicSetup()
         sceneView = SCNView(frame: view.frame)
         view.addSubview(sceneView)
         contactManager = ContactManager(gameVC: self)
@@ -89,6 +98,30 @@ class GameViewController: UIViewController {
         view.addSubview(controllerView)
     }
     
+    func addObstacle() {
+        let safeEnd = abs(length) - 20
+        let supersafeEnd = abs(length) - 40
+        let safeStart = UInt32(abs(length) - 40)
+        let supersafeStart = UInt32(abs(length) - 70)
+        for index in 0...Int(abs(length)/3) {
+            let random = Float(index) * 2.7
+            let zedRand = safeEnd - random
+            scene.rootNode.addChildNode(NodeCreator.createPaper(zed: ((0 - zedRand))))
+        }
+        for _ in 0...5 {
+            let random = Float(arc4random_uniform(safeStart))
+            let zedRand = safeEnd - random
+            scene.rootNode.addChildNode(NodeCreator.createSponge(zed: (0 - zedRand)))
+        }
+        
+        let randomPill = Float(arc4random_uniform(supersafeStart))
+        let zedRandPill = supersafeEnd - randomPill
+        scene.rootNode.addChildNode(NodeCreator.createPill(zed: 0 - zedRandPill))
+        let random = Float(arc4random_uniform(supersafeStart))
+        let zedRand = supersafeEnd - random
+        scene.rootNode.addChildNode(NodeCreator.createTunnel(zed: 0 - zedRand))
+    }
+
     /// create scene, user's node, floor and add opponents
     func prepare() {
         self.setupScene()
@@ -98,6 +131,16 @@ class GameViewController: UIViewController {
         self.addOpponents()
         self.addVSOpponent()
         self.setupFloor()
+        let carpetNode = NodeCreator.createCarpet(zed: length)
+        self.scene.rootNode.addChildNode(carpetNode)
+        for node in NodeCreator.createBound(zed: abs(length)) {
+            self.scene.rootNode.addChildNode(node)
+        }
+        self.addObstacle()
+        self.scene.rootNode.addChildNode(NodeCreator.createFinish(zed: self.length))
+        self.sceneView.prepare([scene, SCNScene(named: "art.scnassets/Nodes/ToiletPaper.scn")!, SCNScene(named: "art.scnassets/Nodes/pill.scn")!, scene.rootNode]) { (done) in
+            self.newGame()
+        }
     }
     
     /// general preparation of the scene, not playing yet
@@ -109,6 +152,9 @@ class GameViewController: UIViewController {
         scene.physicsWorld.contactDelegate = contactManager
         sceneView.isPlaying = false
         selfieStickNode = scene.rootNode.childNode(withName: "selfieStick", recursively: true)!
+        toiletNode = scene.rootNode.childNode(withName: "toilet", recursively: true)!
+        toiletNode.position.z = length
+        scene.physicsWorld.gravity = SCNVector3(0, -2, 0)
     }
     
     func setupFloor() {
@@ -120,18 +166,7 @@ class GameViewController: UIViewController {
     
     /// returns a specific scene based on world passed
     func sceneForWorld() -> SCNScene {
-        switch world {
-        case .toilet:
-            return SCNScene(named: "art.scnassets/worldScene/MainScene.scn")!
-        case .pipe:
-            return SCNScene(named: "art.scnassets/worldScene/testScene.scn")!
-        case .house:
-            return SCNScene(named: "art.scnassets/worldScene/doubleScene.scn")!
-        case .falling:
-            return SCNScene(named: "art.scnassets/worldScene/fallingScene.scn")!
-        case .water:
-            return SCNScene(named: "art.scnassets/worldScene/waterScene.scn")!
-        }
+        return SCNScene(named: "art.scnassets/worldScene/MainScene.scn")!
     }
     
     /// works only if multiplayer is OFF. For every currentPlayers, create poo and nodes
@@ -174,6 +209,7 @@ class GameViewController: UIViewController {
     func newGame() {
         //time to stop waiting
         moveCamera()
+        eulerYes = false
     }
     
     /// initial animation of camera moving from end off track to beginning. Scope of this action is also to load the nodes so that the rendering is less bumpy during the race.
@@ -182,6 +218,7 @@ class GameViewController: UIViewController {
         let cameraPosition = SCNVector3(Values.xTot, Values.yTot, Values.zTot)
         let action = SCNAction.move(to: cameraPosition, duration: 3)
         selfieStickNode.runAction(action) {
+            self.selfieStickNode.childNodes.first?.camera?.motionBlurIntensity = 0.0
             self.start()
         }
     }
@@ -205,7 +242,7 @@ class GameViewController: UIViewController {
     func prepareMultiplayer() {
         guard let startDate = multiplayer?.connectionDate else { return }
         let calendar = Calendar.current
-        let date = calendar.date(byAdding: .second, value: 15, to: startDate)
+        let date = calendar.date(byAdding: .second, value: 5, to: startDate)
         if let time = date?.timeIntervalSince(Date()) {
             DispatchQueue.main.asyncAfter(deadline: .now() + time, execute: {
                 self.startMultiplayer()
@@ -266,85 +303,16 @@ class GameViewController: UIViewController {
         currentPlayers[index].canUseBonus = true
     }
     
-    
-    /// display a bonus behaviour for a specific node
-    func showBonus(bonus: Bonus, node: SCNNode) {
-        if let bonusTrail = SCNParticleSystem(named: "smoke", inDirectory: nil) {
-            bonusTrail.loops = true
-            node.addParticleSystem(bonusTrail)
-        }
-        switch bonus {
-        case .NoBonus:
-            break
-        case .Sprint:
-            SessionData.shared.selectedPlayer.bonusEnabled = true
-            break
-        case .Slower:
-            slowerActivated = true
-            break
-        case .Ghost:
-            node.geometry?.materials.first?.transparent.contents = UIColor.white.withAlphaComponent(0.2)
-            node.physicsBody?.collisionBitMask = Collider.floor | Collider.bounds
-            break
-        case .Teleport:
-            node.runAction(SCNAction.move(to: SCNVector3(pooNode.presentation.position.x, pooNode.presentation.position.y, pooNode.presentation.position.z - 15), duration: 0.05))
-            break
-        case .MiniPoo:
-            let geo = SCNSphere(radius: 0.2)
-            geo.materials.first?.diffuse.contents = UIColor.brown
-            let lserN = SCNNode(geometry: geo)
-            lserN.position = node.presentation.position
-            lserN.position.z = node.presentation.position.z + 1
-            lserN.physicsBody = SCNPhysicsBody.static()
-            scene.rootNode.addChildNode(lserN)
-            break
-        case .Almighty:
-            node.geometry?.materials.first?.transparent.contents = UIColor.white.withAlphaComponent(0.2)
-            node.physicsBody?.collisionBitMask = Collider.floor | Collider.bounds
-            slowerActivated = true
-            break
-        }
-    }
-    
-    /// stop the displaying of a bonus behaviour for a specific node
-    func stopShowBonus(bonus: Bonus, node: SCNNode) {
-        node.removeAllParticleSystems()
-        node.opacity = 1
-        switch bonus {
-        case .NoBonus:
-            break
-        case .Sprint:
-            SessionData.shared.selectedPlayer.bonusEnabled = false
-            break
-        case .Slower:
-            slowerActivated = false
-            break
-        case .Ghost:
-            node.geometry?.materials.first?.transparent.contents = UIColor.white.withAlphaComponent(1)
-            node.physicsBody?.collisionBitMask = 0xFFFFFFFF
-            break
-        case .Teleport:
-            break
-        case .MiniPoo:
-            break
-        case .Almighty:
-            slowerActivated = false
-            node.geometry?.materials.first?.transparent.contents = UIColor.white.withAlphaComponent(1)
-            node.physicsBody?.collisionBitMask = 0xFFFFFFFF
-            break
-        }
-    }
-    
     // MARK:- MOVING POOPS, CAMERA AND TURNING
     
     /// called from controllerView, user tapped the screen
-    func shouldTurn(right: Bool) {
-        let turningForce = SessionData.shared.selectedPlayer.turningForce()
-        let rightLeftForce = right ? turningForce : -turningForce
-        let force = SCNVector3(rightLeftForce, 0, 0)
+    func shouldTurn(force: CGFloat) {
+        let turningForce = SessionData.shared.selectedPlayer.turningForce()*force
+        let right = force > 0
+        let force = SCNVector3(turningForce, 0, 0)
         pooNode.physicsBody?.applyForce(force, asImpulse: true)
         if shouldRotateCamera {
-            let rotation: CGFloat = right ? 0.05 : -0.05
+            let rotation: CGFloat = right ? 0.01 : -0.01
             let rotateAction = SCNAction.rotateBy(x: 0, y: 0, z: rotation, duration: 0.4)
             selfieStickNode.runAction(rotateAction) {
                 self.selfieStickNode.runAction(rotateAction.reversed())
@@ -354,14 +322,15 @@ class GameViewController: UIViewController {
     
     /// in a for loop, a force is applied on every poo based on it's speed (also with bonus)
     func movePoops() {
-        let playersCount = isMultiplayer ? 3 : currentPlayers.count - 1
+        let playersCount = isMultiplayer ? 1 : currentPlayers.count - 1
         for n in 0...playersCount {
             let poo = currentPlayers[n]
-            print(n, poo.displayName)
             let bonusOffset = calculateBonusOffset(poo)
-            guard let node = poo.node, node != vsOpponentNode else { return }
-            checkIfBonusShouldDisabled(poo, node, n)
-            node.physicsBody?.applyForce(SCNVector3(0, 0, poo.velocity() + bonusOffset), asImpulse: true)
+            guard let node = poo.node else { return }
+            if node != vsOpponentNode {
+                checkIfBonusShouldDisabled(poo, node, n)
+                node.physicsBody?.applyForce(SCNVector3(0, 0, poo.velocity() + bonusOffset), asImpulse: true)
+            }
         }
     }
     
@@ -460,13 +429,30 @@ class GameViewController: UIViewController {
     
     /// action when poo collides with carpet
     func jump(node: SCNNode) {
-        // TO BE OVERRIDDEN
+        node.physicsBody?.clearAllForces()
+        if node == pooNode {
+            eulerYes = true
+            node.physicsBody?.clearAllForces()
+            scene.physicsWorld.gravity = SCNVector3(0, -0.5, 0)
+            node.physicsBody?.applyForce(SCNVector3(0, 3.7, -0.12), asImpulse: true)
+            node.physicsBody?.applyTorque(SCNVector4(0.5, 0.5, 0.5, 0.5), asImpulse: true)
+            perform(#selector(forceFinish), with: nil, afterDelay: 4)
+        } else {
+            let byFinish = SCNVector3(0, 14, length + 8)
+            let finish = SCNVector3(0, 4, length)
+            node.runAction(SCNAction.move(to: byFinish, duration: 1)) {
+                node.runAction(SCNAction.move(to: finish, duration: 1)) {
+                    self.didFinish(node: node)
+                }
+            }
+        }
     }
     
     // MARK:- END OF RACE
     
     /// game is finished for a specific poo: if poo is user, tells multiplayer and prepares finale
     func handleFinish(_ poo: SCNNode) {
+        guard poo.name != nil && poo.name != "" && poo.name != "C_Low" && poo.name != "carpet" else { return }
         didFinish(node: poo)
         if poo == pooNode {
             gameOver = true
@@ -479,6 +465,7 @@ class GameViewController: UIViewController {
     
     /// called by every poo when finish race. update winners array, raceResultManager (BUGGY) and multiplayer
     func didFinish(node: SCNNode) {
+        node.removeFromParentNode()
         if !winners.contains(node) {
             winners.append(node)
             if !isMultiplayer {
@@ -488,6 +475,11 @@ class GameViewController: UIViewController {
                 raceResultManager.didFinishMultiplayer(poo: vsPoo!, gameOver: false)
             }
         }
+    }
+    
+    func addFinalAnimation() {
+        guard let trail = SCNParticleSystem(named: "spluff", inDirectory: nil) else { return  }
+        toiletNode.addParticleSystem(trail)
     }
     
     /// if user didn't finish (ex: entered the toilet..) this force the game to end with a penalty. Basically same thing as handleFinish method but with small changes.
@@ -520,11 +512,6 @@ class GameViewController: UIViewController {
         Navigation.main.popToRootViewController(animated: true)
     }
     
-    /// final animation when race is finished. Of cours vary depends on the race.
-    func addFinalAnimation() {
-        // TO BE OVERRIDDEN
-    }
-    
     /// tells the controller to add the finish view on top (white screen with opacity animation)
     @objc func addFinishView(_ sender: Timer) {
         controllerView.addFinishView()
@@ -547,6 +534,12 @@ extension GameViewController : SCNSceneRendererDelegate {
     
     /// renderer gets called continously! moves the camera, moves the poos, avoid blocks for opponent and send multiplayer position
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
+        guard gameOver == false else { return }
+        if eulerYes == true {
+            if Values.zTot > 10 { Values.zTot -= 0.03 }
+            if Values.yTot < 20 { Values.yTot += 0.01 }
+            if selfieStickNode.eulerAngles.x > -Float.pi { selfieStickNode.eulerAngles.x -= 0.01 }
+        }
         if shouldMoveCamera {
             let cameraPosition = getCameraPosition()
             selfieStickNode.position = cameraPosition
@@ -589,5 +582,10 @@ extension GameViewController : MultiplayerDelegate {
         if scene != nil && vsOpponentNode == nil {
             addVSOpponent()
         }
+    }
+    
+    func didReceivePlayers(_ players: [Player]) {
+        guard let pos = players.first?.position else { return }
+        vsOpponentNode?.position = SCNVector3(pos.x, pos.y, pos.z)
     }
 }
