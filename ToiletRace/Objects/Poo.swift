@@ -10,16 +10,6 @@ import Foundation
 import UIKit
 import SceneKit
 
-var players : [Poo] = [
-    Poo(name: .GuanoStar),
-    Poo(name: .HoleRunner),
-    Poo(name: .IndianSurprise),
-    Poo(name: .BrownTornado),
-    Poo(name: .GarganTurd),
-    Poo(name: .FecalRaider),
-    Poo(name: .ApolloPoo)
-]
-
 enum PooName : String {
 
     case GuanoStar = "Guano Star"  // Soft Basic
@@ -33,15 +23,31 @@ enum PooName : String {
 //    case UserPoo = "My Poo"
     // BEWARE OF THE ALMIGHTYYY POOOOPPPP
     case MightyPoop = "The Mighty Poop"
+    
+    init(index: Int) {
+        self = Poo.players[index].name
+    }
 }
 
-class Poo {
+class Poo: StoreProvider {
+    
+    static let players : [Poo] = [
+        Poo(name: .GuanoStar),
+        Poo(name: .HoleRunner),
+        Poo(name: .IndianSurprise),
+        Poo(name: .BrownTornado),
+        Poo(name: .GarganTurd),
+        Poo(name: .FecalRaider),
+        Poo(name: .ApolloPoo)]
     
     var name: PooName
+    var id: String?
+    var isMultiplayer: Bool {
+        guard let id = id else { return false }
+        return id != getID()
+    }
     var distance: Float {
-        get {
-            return node.presentation.position.z
-        }
+        return node.presentation.position.z
     }
     var node: SCNNode!
     var bonusEnabled = true
@@ -51,8 +57,9 @@ class Poo {
     // in case of multiplayer or customized poo, should display a different name
     var displayName: String?
     
-    init(name: PooName, userPoo: Bool? = nil) {
+    init(name: PooName, id: String? = nil) {
         self.name = name
+        self.id = id
         displayName = self.name.rawValue
     }
     

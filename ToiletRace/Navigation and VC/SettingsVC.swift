@@ -8,18 +8,18 @@
 
 import UIKit
 
-class SettingsVC: UIViewController {
+class SettingsVC: UIViewController, StoreProvider {
 
     @IBOutlet weak var segmented: UISegmentedControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        segmented.selectedSegmentIndex = StorageManager.retrieveLevel()
+        segmented.selectedSegmentIndex = retrieveLevel()
         // Do any additional setup after loading the view.
     }
 
     @IBAction func segmentedTapped(_ sender: UISegmentedControl) {
-        StorageManager.saveLevel(sender.selectedSegmentIndex)
+        saveLevel(sender.selectedSegmentIndex)
     }
     
     

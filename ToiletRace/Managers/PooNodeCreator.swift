@@ -9,9 +9,11 @@
 import Foundation
 import SceneKit
 
-class PooNodeCreator {
+protocol PooNodeCreator{}
     
-    static func createPoo(postion: SCNVector3?) -> SCNNode {
+extension PooNodeCreator {
+
+    func createPoo(postion: SCNVector3?) -> SCNNode {
         let selected = SessionData.shared.selectedPlayer
         let geo = SCNSphere(radius: selected.radius())
         geo.materials.insert(selected.createMaterial(), at: 0)
@@ -26,10 +28,9 @@ class PooNodeCreator {
         return pooNode
     }
     
-    static func createOpponent(index: Int, postion: SCNVector3?) -> SCNNode {
-        let selected = players[index]
-        let geo = SCNSphere(radius: selected.radius())
-        geo.materials.insert(selected.createMaterial(), at: 0)
+    func createOpponent(poo: Poo, index: Int, postion: SCNVector3? = nil) -> SCNNode {
+        let geo = SCNSphere(radius: poo.radius())
+        geo.materials.insert(poo.createMaterial(), at: 0)
         geo.materials.removeLast()
         let oppNode = SCNNode(geometry: geo)
         var pos = Double(-3 + index)
@@ -43,23 +44,13 @@ class PooNodeCreator {
         }()
         oppNode.position = actualPosition
         oppNode.physicsBody = SCNPhysicsBody(type: SCNPhysicsBodyType.dynamic, shape: nil)
-        oppNode.physicsBody?.restitution = players[index].restitution()
+        oppNode.physicsBody?.restitution = poo.restitution()
         oppNode.physicsBody?.contactTestBitMask = Collider.poo | Collider.bounds | Collider.obstacle
         oppNode.physicsBody?.categoryBitMask = Collider.poo
         return oppNode
     }
     
-    static func createVSOpponent(name: PooName, position: SCNVector3) -> SCNNode {
-        let selected = Poo(name: name)
-        let geo = SCNSphere(radius: selected.radius())
-        geo.materials.insert(selected.createMaterial(), at: 0)
-        geo.materials.removeLast()
-        let oppNode = SCNNode(geometry: geo)
-        oppNode.position = position
-        return oppNode
-    }
-    
-    static func createCustomizedBall(postion: SCNVector3?, item: BolusItem) -> SCNNode {
+    func createCustomizedBall(postion: SCNVector3?, item: BolusItem) -> SCNNode {
         let geo = SCNSphere(radius: CGFloat(item.radius))
         geo.materials.insert(materialFromItem(item), at: 0)
         geo.materials.removeLast()
@@ -74,7 +65,7 @@ class PooNodeCreator {
         return pooNode
     }
     
-    private static func materialFromItem(_ item: BolusItem) -> SCNMaterial {
+    func materialFromItem(_ item: BolusItem) -> SCNMaterial {
         let material = SCNMaterial()
         material.lightingModel = .physicallyBased
         material.diffuse.contents = UIColor.init(red: CGFloat(item.colorR), green: CGFloat(item.colorG), blue: CGFloat(item.colorB), alpha: 1)

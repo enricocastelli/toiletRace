@@ -9,7 +9,7 @@
 import UIKit
 import MultipeerConnectivity
 
-class MultiplayerVC: UIViewController {
+class MultiplayerVC: UIViewController, StoreProvider {
 
 
     @IBOutlet weak var tableView: UITableView!
@@ -20,8 +20,10 @@ class MultiplayerVC: UIViewController {
         super.viewDidLoad()
         setupTable()
         setupMultiplayer()
+        // test
         DispatchQueue.main.async {
-            let gameVC = GameViewController()
+            let players = [Poo(name: .GuanoStar, id: self.getID()), Poo(name: .ApolloPoo, id: "test-sim"), Poo(name: .GarganTurd)]
+            let gameVC = GameViewController(players: players)
             gameVC.multiplayer = self.multiplayer
             Navigation.main.pushViewController(gameVC, animated: true)
             Navigation.startLoading()
@@ -73,10 +75,10 @@ extension MultiplayerVC: MultiplayerConnectionDelegate {
     
     func didConnect() {
         DispatchQueue.main.async {
-            let gameVC = GameViewController()
-            gameVC.multiplayer = self.multiplayer
-            Navigation.main.pushViewController(gameVC, animated: true)
-            Navigation.startLoading()
+//            let gameVC = GameViewController()
+//            gameVC.multiplayer = self.multiplayer
+//            Navigation.main.pushViewController(gameVC, animated: true)
+//            Navigation.startLoading()
         }
     }
 }

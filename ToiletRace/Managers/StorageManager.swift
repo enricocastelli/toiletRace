@@ -13,11 +13,10 @@ enum StorageKeys {
     static let ID = "ID"
 }
 
-class StorageManager {
-    
-    
-    static var defaults = UserDefaults.standard
-    
+protocol StoreProvider {}
+
+extension StoreProvider{
+        
     func setID(_ id: String) {
         UserDefaults.standard.set(id, forKey: StorageKeys.ID)
     }
@@ -37,12 +36,12 @@ class StorageManager {
         }
     }
     
-    static func saveLevel(_ level:Int) {
-        defaults.setValue(level, forKey: StorageKeys.Level)
+    func saveLevel(_ level:Int) {
+        UserDefaults.standard.setValue(level, forKey: StorageKeys.Level)
     }
     
-    static func retrieveLevel() -> Int {
-        defaults.value(forKey: StorageKeys.Level) as? Int ?? 1
+    func retrieveLevel() -> Int {
+        UserDefaults.standard.value(forKey: StorageKeys.Level) as? Int ?? 1
     }
 }
 

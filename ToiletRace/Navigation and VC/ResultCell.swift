@@ -20,7 +20,7 @@ class ResultCell: UITableViewCell {
     var index : Int? {
         didSet {
             positionLabel.text = "\((index ?? -1) + 1)"
-            if index == players.count - 1 {
+            if index == Poo.players.count - 1 {
                 separatorLine.isHidden = true
             } else {
                 separatorLine.isHidden = false

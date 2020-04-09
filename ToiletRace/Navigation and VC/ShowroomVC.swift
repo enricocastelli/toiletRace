@@ -9,7 +9,7 @@
 import UIKit
 import SceneKit
 
-class ShowroomVC: UIViewController {
+class ShowroomVC: UIViewController, StoreProvider, PooNodeCreator {
 
     var sceneView: SCNView!
     var nodes: [SCNNode] = []
@@ -28,7 +28,7 @@ class ShowroomVC: UIViewController {
             nameLabel.frame.size.width = nameLabel.intrinsicContentSize.width
             nameLabel.frame.size.height = nameLabel.intrinsicContentSize.height + 2
             nameLabel.center.x = view.center.x
-            if let bonus = players[selectedItem].bonus() {
+            if let bonus = Poo.players[selectedItem].bonus() {
                 bonusView.updateBonus(bonus: bonus)
             }
         }
@@ -67,27 +67,28 @@ class ShowroomVC: UIViewController {
     }
     
     func addBalls() {
-        for index in 0...players.count - 1 {
-            let pooNode = PooNodeCreator.createOpponent(index: index, postion: nil)
+        for poo in Poo.players {
+            let index = Poo.players.firstIndex {$0.name == poo.name}!
+            let pooNode = createOpponent(poo: poo, index: index, postion: nil)
             pooNode.position = SCNVector3(index*10, 0, -2)
             pooNode.physicsBody?.isAffectedByGravity = false
             sceneView.scene!.rootNode.addChildNode(pooNode)
             pooNode.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 2, z: 0, duration: 1)))
-            pooNode.name = players[index].name.rawValue
+            pooNode.name = poo.name.rawValue
             nodes.append(pooNode)
         }
-        if shouldShowMighty {
-            shouldShowMighty = false
-            players.append(Poo(name: PooName.MightyPoop))
-            let index = players.count - 1
-            let pooNode = PooNodeCreator.createOpponent(index: index, postion: nil)
-            pooNode.position = SCNVector3(index*10, 0, -2)
-            pooNode.physicsBody?.isAffectedByGravity = false
-            sceneView.scene!.rootNode.addChildNode(pooNode)
-            pooNode.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 2, z: 0, duration: 1)))
-            pooNode.name = players[index].name.rawValue
-            nodes.append(pooNode)
-        }
+//        if shouldShowMighty {
+//            shouldShowMighty = false
+//            Poo.players.append(Poo(name: PooName.MightyPoop))
+//            let index = Poo.players.count - 1
+//            let pooNode = PooNodeCreator.createOpponent(index: index, postion: nil)
+//            pooNode.position = SCNVector3(index*10, 0, -2)
+//            pooNode.physicsBody?.isAffectedByGravity = false
+//            sceneView.scene!.rootNode.addChildNode(pooNode)
+//            pooNode.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 2, z: 0, duration: 1)))
+//            pooNode.name = Poo.players[index].name.rawValue
+//            nodes.append(pooNode)
+//        }
     }
     
     func addLight() {
@@ -148,7 +149,7 @@ class ShowroomVC: UIViewController {
     }
     
     func addBonus() {
-        if let bonus = players[selectedItem].bonus() {
+        if let bonus = Poo.players[selectedItem].bonus() {
         bonusView = BonusButton(frame: CGRect(x: view.frame.width - 100, y: view.frame.height - 100, width: 64, height: 64), bonus: bonus, delegate: nil)
             if bonus == .NoBonus {
                 bonusView.alpha = 0 } else
@@ -158,14 +159,14 @@ class ShowroomVC: UIViewController {
         bonusView.isEnabled = false
     }
 
-    @objc func goToRace() {
-        let gameVC = GameViewController()
+    func goToRace(players: [Poo]) {
+        let gameVC = GameViewController(players: players)
         Navigation.main.pushViewController(gameVC, animated: true)
         Navigation.startLoading()
     }
 
     @objc func rightTap(_ sender: UIButton) {
-        guard selectedItem < players.count - 1 else { return }
+        guard selectedItem < Poo.players.count - 1 else { return }
         cameraNode.runAction(SCNAction.move(by: SCNVector3(10, 0, 0), duration: 0.5))
         selectedItem += 1
     }
@@ -198,8 +199,12 @@ class ShowroomVC: UIViewController {
         nodes[selectedItem].addParticleSystem(trail)
         let action = SCNAction.move(to: SCNVector3(selectedItem*10, 0, -1), duration: 2)
         nodes[selectedItem].runAction(action)
-        SessionData.shared.selectedPlayer = Poo.init(name: PooName(rawValue: nodes[selectedItem].name!)!)
-        perform(#selector(goToRace), with: nil, afterDelay: 1.5)
+        SessionData.shared.selectedPlayer = Poo(name: PooName(index: selectedItem), id: getID())
+        var players = Poo.players
+        players[selectedItem] = SessionData.shared.selectedPlayer
+        let _ = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { (_) in
+            self.goToRace(players: players)
+        }
     }
     
 }
