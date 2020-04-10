@@ -115,5 +115,20 @@ extension Array where Element == Poo {
     func selfIndex(_ id: String) -> Int? {
         return self.firstIndex(where: {($0.id == id)})
     }
+    
+    mutating func replace(_ poo: Poo) {
+        guard let index = self.firstIndex(where: { (p) -> Bool in
+            return p == poo
+        }) else { return }
+        self[index] = poo
+    }
+}
+
+
+extension Array where Element == Result {
+    
+    func containsPoo(poo: Poo) -> Bool {
+        return self.contains { $0.player == poo }
+    }
 }
 

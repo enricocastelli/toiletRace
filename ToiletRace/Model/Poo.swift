@@ -19,8 +19,6 @@ enum PooName : String {
     case GarganTurd = "Garganturd" // GarganTurd
     case FecalRaider = "Fecal Raider" //  FecalRaider
     case ApolloPoo = "Apollo Poo" // Hard raisins
-    // Customized
-//    case UserPoo = "My Poo"
     // BEWARE OF THE ALMIGHTYYY POOOOPPPP
     case MightyPoop = "The Mighty Poop"
     
@@ -29,7 +27,7 @@ enum PooName : String {
     }
 }
 
-class Poo: StoreProvider {
+class Poo: StoreProvider, Equatable {
     
     static let players : [Poo] = [
         Poo(name: .GuanoStar),
@@ -330,6 +328,15 @@ class Poo: StoreProvider {
         direction = .straight
         canUseBonus = true
         bonusEnabled = false
+    }
+    
+    static func == (lhs: Poo, rhs: Poo) -> Bool {
+        if let id = lhs.id {
+            return id == rhs.id
+        } else if lhs.name.rawValue == rhs.name.rawValue {
+            return true
+        }
+        return false
     }
 }
 

@@ -11,7 +11,7 @@ import SceneKit
 
 protocol BonusProvider {}
 
-extension BonusProvider where Self : GameViewController {
+extension BonusProvider where Self: GameViewController {
     
     func showBonus(bonus: Bonus, node: SCNNode) {
         if let bonusTrail = SCNParticleSystem(named: "smoke", inDirectory: nil) {
@@ -82,5 +82,69 @@ extension BonusProvider where Self : GameViewController {
             break
         }
         Values.zTot = 4.0
+    }
+    
+    /// if getting too close to finish line, bonus should be disabled for opponents and removed for user
+    func checkIfBonusShouldDisabled(_ poo: Poo, _ node: SCNNode, _ index: Int) {
+        if node.presentation.position.z < length + 50 && poo.canUseBonus == true {
+            if node == pooNode {
+                poo.canUseBonus = false
+                DispatchQueue.main.async {
+                    self.controllerView.removeBonus()
+                }
+            } else {
+                poo.canUseBonus = false
+            }
+            // resave the poo so that cannot use bonus
+            currentPlayers[index] = poo
+        }
+    }
+    
+    /// calculate if bonus are on for a poo and how much offset should be applied to it's speed
+    func calculateBonusOffset(_ poo: Poo) -> Float {
+        let offset : Float  = {
+            if slowerActivated && poo.bonus() != .Slower && poo.bonus() != .Almighty {
+                return 0.015
+            } else { return 0 }
+        }()
+        guard poo.bonusEnabled else { return offset }
+        if let bonus = poo.bonus() {
+            if bonus == .Sprint {
+                if poo.bonusEnabled {
+                    return -0.2 + offset
+                }
+            }
+        }
+        return offset
+    }
+    
+    /// activate bonus opponent (if there's any)
+    func activateOpponentBonus(poo: Poo) {
+        guard let bonus = poo.bonus() else { return }
+        // check if it's really opponent and if can use bonus at the moment
+        guard poo.node != pooNode, poo.canUseBonus == true && poo.bonusEnabled == false else { return }
+        poo.bonusEnabled = true
+        let _ = Timer.scheduledTimer(withTimeInterval: bonus.duration(), repeats: false) { _ in
+            self.stopOpponentBonus(poo)
+        }
+        showBonus(bonus: bonus, node: poo.node)
+    }
+    
+    /// stop opponent's bonus when expired, receives the index of bonus player in the timer user info
+    func stopOpponentBonus(_ poo: Poo) {
+        guard let bonus = poo.bonus() else { return }
+        poo.bonusEnabled = false
+        poo.canUseBonus = false
+        currentPlayers.replace(poo)
+        stopShowBonus(bonus: bonus, node: poo.node)
+        let _ = Timer.scheduledTimer(withTimeInterval: bonus.rechargeDuration()/2, repeats: false) { (_) in
+            self.rechargeOpponentBonus(poo)
+        }
+    }
+    
+    /// recharge the bonus so cannot use consecutively
+    func rechargeOpponentBonus(_ poo: Poo)  {
+        poo.canUseBonus = true
+        currentPlayers.replace(poo)
     }
 }

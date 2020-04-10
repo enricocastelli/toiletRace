@@ -11,7 +11,7 @@ import UIKit
 import SceneKit
 import AudioToolbox
 
-class GameViewController: UIViewController, BonusProvider, StoreProvider, PooNodeCreator {
+class GameViewController: UIViewController, BonusProvider, PooNodeCreator, ContactProvider {
     
         
     var sceneView:SCNView!
@@ -24,7 +24,6 @@ class GameViewController: UIViewController, BonusProvider, StoreProvider, PooNod
     var toiletNode: SCNNode!
     
     // managers
-    var contactManager: ContactManager!
     var controllerView: ControllerView!
     var raceResultManager = RaceResultManager.shared
     var multiplayer: MultiplayerManager?
@@ -41,10 +40,8 @@ class GameViewController: UIViewController, BonusProvider, StoreProvider, PooNod
     /// Array of currentPlayers, AI or multiplayer
     var currentPlayers: [Poo]
     
-    /// array of nodes that finished the track
-    var winners : [SCNNode] = []
-    //test
-    //    var currentPlayers = [Poo(name: PooName.IndianSurprise)]
+    
+
     /// Array of players, generally copied from global var players. It SHOULD CHANGE depending on players position
     var ranking = Poo.players
     
@@ -73,7 +70,6 @@ class GameViewController: UIViewController, BonusProvider, StoreProvider, PooNod
         basicSetup()
         sceneView = SCNView(frame: view.frame)
         view.addSubview(sceneView)
-        contactManager = ContactManager(gameVC: self)
         controllerView = ControllerView(frame: view.frame, gameVC: self)
         prepare()
         view.addSubview(controllerView)
@@ -91,20 +87,20 @@ class GameViewController: UIViewController, BonusProvider, StoreProvider, PooNod
         for index in 0...Int(abs(length)/3) {
             let random = Float(index) * 2.7
             let zedRand = safeEnd - random
-            scene.rootNode.addChildNode(NodeCreator.createPaper(zed: ((0 - zedRand))))
+            scene.rootNode.addChildNode(createPaper(zed: ((0 - zedRand))))
         }
         for _ in 0...5 {
             let random = Float(arc4random_uniform(safeStart))
             let zedRand = safeEnd - random
-            scene.rootNode.addChildNode(NodeCreator.createSponge(zed: (0 - zedRand)))
+            scene.rootNode.addChildNode(createSponge(zed: (0 - zedRand)))
         }
         
         let randomPill = Float(arc4random_uniform(supersafeStart))
         let zedRandPill = supersafeEnd - randomPill
-        scene.rootNode.addChildNode(NodeCreator.createPill(zed: 0 - zedRandPill))
+        scene.rootNode.addChildNode(createPill(zed: 0 - zedRandPill))
         let random = Float(arc4random_uniform(supersafeStart))
         let zedRand = supersafeEnd - random
-        scene.rootNode.addChildNode(NodeCreator.createTunnel(zed: 0 - zedRand))
+        scene.rootNode.addChildNode(createTunnel(zed: 0 - zedRand))
     }
 
     /// create scene, user's node, floor and add opponents
@@ -114,13 +110,13 @@ class GameViewController: UIViewController, BonusProvider, StoreProvider, PooNod
         self.scene.rootNode.addChildNode(self.pooNode)
         self.addOpponents()
         self.setupFloor()
-        let carpetNode = NodeCreator.createCarpet(zed: length)
+        let carpetNode = createCarpet(zed: length)
         self.scene.rootNode.addChildNode(carpetNode)
-        for node in NodeCreator.createBound(zed: abs(length)) {
+        for node in createBound(zed: abs(length)) {
             self.scene.rootNode.addChildNode(node)
         }
         self.addObstacle()
-        self.scene.rootNode.addChildNode(NodeCreator.createFinish(zed: self.length))
+        self.scene.rootNode.addChildNode(createFinish(zed: self.length))
         self.sceneView.prepare([scene, SCNScene(named: "art.scnassets/Nodes/ToiletPaper.scn")!, SCNScene(named: "art.scnassets/Nodes/pill.scn")!, scene.rootNode]) { (done) in
             self.newGame()
         }
@@ -132,7 +128,7 @@ class GameViewController: UIViewController, BonusProvider, StoreProvider, PooNod
         sceneView.allowsCameraControl = false
         scene = sceneForWorld()
         sceneView.scene = scene
-        scene.physicsWorld.contactDelegate = contactManager
+        scene.physicsWorld.contactDelegate = self
         sceneView.isPlaying = false
         selfieStickNode = scene.rootNode.childNode(withName: "selfieStick", recursively: true)!
         toiletNode = scene.rootNode.childNode(withName: "toilet", recursively: true)!
@@ -208,63 +204,18 @@ class GameViewController: UIViewController, BonusProvider, StoreProvider, PooNod
         scene.isPaused = false
         sceneView.isPlaying = true
         controllerView.start()
-        raceResultManager.start()
+        raceResultManager.start(length)
         perform(#selector(startOppTimer), with: nil, afterDelay: 1)
-    }
-    
-    /// Adapt timing to the other player (can have different start time otherwise)
-    func prepareMultiplayer() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
-            self.startMultiplayer()
-        })
-    }
-    
-    /// actual moment when game starts for Multiplayer (physics, camera ecc...)
-    @objc func startMultiplayer() {
-        ranking = currentPlayers
-        started = true
-        scene.isPaused = false
-        sceneView.isPlaying = true
-        controllerView.start()
-        raceResultManager.start()
     }
     
     // MARK:- BONUS RELATED STUFF
     
     /// Timer to activate bonus for a random opponent, for simulation
     @objc func startOppTimer() {
-//        oppTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true, block: { (timer) in
-//            let random = Int(arc4random_uniform(UInt32(self.currentPlayers.count)))
-//            self.activateOpponentBonus(poo: self.currentPlayers[random])
-//        })
-    }
-    
-    /// activate bonus opponent (if there's any)
-    func activateOpponentBonus(poo: Poo) {
-        guard let bonus = poo.bonus() else { return }
-        // check if it's really opponent and if can use bonus at the moment
-        guard poo.node != pooNode, poo.canUseBonus == true && poo.bonusEnabled == false else { return }
-        poo.bonusEnabled = true
-        let _ = Timer.scheduledTimer(timeInterval: TimeInterval(bonus.duration()), target: self, selector: #selector(stopOpponentBonus(sender:)), userInfo: ["index": index], repeats: false)
-        showBonus(bonus: bonus, node: poo.node)
-    }
-    
-    /// stop opponent's bonus when expired, receives the index of bonus player in the timer user info
-    @objc func stopOpponentBonus(sender: Timer) {
-        guard let info = sender.userInfo as? [String: Int], let index = info["index"] else { return }
-        let bonusPoo = currentPlayers[index]
-        guard let bonus = bonusPoo.bonus() else { return }
-        bonusPoo.bonusEnabled = false
-        bonusPoo.canUseBonus = false
-        currentPlayers[index] = bonusPoo
-        stopShowBonus(bonus: bonus, node: bonusPoo.node!)
-        let _ = Timer.scheduledTimer(timeInterval: TimeInterval(bonus.rechargeDuration()/2), target: self, selector: #selector(rechargeOpponentBonus(sender:)), userInfo: info, repeats: false)
-    }
-    
-    /// recharge the bonus so cannot use consecutively
-    @objc func rechargeOpponentBonus(sender: Timer) {
-        guard let info = sender.userInfo as? [String: Int], let index = info["index"] else { return }
-        currentPlayers[index].canUseBonus = true
+        oppTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true, block: { (timer) in
+            let random = Int(arc4random_uniform(UInt32(self.currentPlayers.count)))
+            self.activateOpponentBonus(poo: self.currentPlayers[random])
+        })
     }
     
     // MARK:- MOVING POOPS, CAMERA AND TURNING
@@ -275,8 +226,8 @@ class GameViewController: UIViewController, BonusProvider, StoreProvider, PooNod
         let right = force > 0
         let force = SCNVector3(turningForce, 0, 0)
         pooNode.physicsBody?.applyForce(force, asImpulse: true)
-        let rotation: CGFloat = right ? 0.005 : -0.005
-        let rotateAction = SCNAction.rotateBy(x: 0, y: 0, z: rotation, duration: 0.4)
+        let rotation: CGFloat = right ? 0.002 : -0.002
+        let rotateAction = SCNAction.rotateBy(x: 0, y: 0, z: rotation, duration: 0.1)
         selfieStickNode.runAction(rotateAction) {
             self.selfieStickNode.runAction(rotateAction.reversed())
         }
@@ -294,40 +245,6 @@ class GameViewController: UIViewController, BonusProvider, StoreProvider, PooNod
         }
     }
     
-    /// if getting too close to finish line, bonus should be disabled for opponents and removed for user
-    func checkIfBonusShouldDisabled(_ poo: Poo, _ node: SCNNode, _ index: Int) {
-        if node.presentation.position.z < length + 50 && poo.canUseBonus == true {
-            if node == pooNode {
-                poo.canUseBonus = false
-                DispatchQueue.main.async {
-                    self.controllerView.removeBonus()
-                }
-            } else {
-                poo.canUseBonus = false
-            }
-            // resave the poo so that cannot use bonus
-            currentPlayers[index] = poo
-        }
-    }
-    
-    /// calculate if bonus are on for a poo and how much offset should be applied to it's speed
-    func calculateBonusOffset(_ poo: Poo) -> Float {
-        let offset : Float  = {
-            if slowerActivated && poo.bonus() != .Slower && poo.bonus() != .Almighty {
-                return 0.015
-            } else { return 0 }
-        }()
-        guard poo.bonusEnabled else { return offset }
-        if let bonus = poo.bonus() {
-            if bonus == .Sprint {
-                if poo.bonusEnabled {
-                    return -0.2 + offset
-                }
-            }
-        }
-        return offset
-    }
-    
     /// returns first camera position
     func getCameraPosition() -> SCNVector3 {
         let pooPosition = pooNode.presentation.position
@@ -341,52 +258,6 @@ class GameViewController: UIViewController, BonusProvider, StoreProvider, PooNod
         return cameraPosition
     }
     
-    /// AI to detect if a collision is coming and to avoid it
-    @objc func blockAvoider() {
-        for opponent in currentPlayers.filter({$0.id != getID()}) {
-            guard !opponent.isMultiplayer else { return }
-            let pos = opponent.node.presentation.position
-            opponent.turn(direction: getBestDirection(pos: pos))
-        }
-    }
-    
-    /// Returns best direction possible for a node, based on it's position and colliders positions. Pretty complex logic to dive in but tested 🤷🏻‍♂️.
-    func getBestDirection(pos: SCNVector3) -> Direction {
-        var rightList = [SCNHitTestResult]()
-        var leftList = [SCNHitTestResult]()
-        let straightList =
-            scene.physicsWorld.rayTestWithSegment(from: pos, to: SCNVector3(pos.x, 0.5, pos.z - 5), options: nil) +
-            scene.physicsWorld.rayTestWithSegment(from: pos, to: SCNVector3(pos.x + 0.3, 0.5, pos.z - 5), options: nil) +
-            scene.physicsWorld.rayTestWithSegment(from: pos, to: SCNVector3(pos.x - 0.3, 0.5, pos.z - 5), options: nil)
-        let isLimit = (pos.x > 6.5 || pos.x < -6.5)
-        if straightList.count == 0 {
-            return .straight
-        }
-        if isLimit {
-            return pos.x > 6.5 ? .left : .right
-        }
-        let level: Int = {
-            switch retrieveLevel() {
-            case 0: return 5
-            case 2: return 10
-            default: return 7
-            }
-        }()
-        for ind in 1...level {
-            let x = 12/2 - Float(ind)/2
-            let z = -Float(ind)/3
-            let pointR = SCNVector3(pos.x + x, 0.5, pos.z + z)
-            let pointL = SCNVector3(pos.x - x, 0.5, pos.z + z)
-            rightList = rightList + scene.physicsWorld.rayTestWithSegment(from: pos, to: pointR, options: nil)
-            leftList = leftList + scene.physicsWorld.rayTestWithSegment(from: pos, to: pointL, options: nil)
-        }
-
-        if leftList.count == rightList.count {
-            if pos.x == 0 { return arc4random_uniform(2) == 1 ? .left : .right }
-        }
-        return leftList.count > rightList.count ? .right : .left
-    }
-    
     /// action when poo collides with carpet
     func jump(node: SCNNode) {
         node.physicsBody?.clearAllForces()
@@ -396,7 +267,9 @@ class GameViewController: UIViewController, BonusProvider, StoreProvider, PooNod
             scene.physicsWorld.gravity = SCNVector3(0, -0.5, 0)
             node.physicsBody?.applyForce(SCNVector3(0, 3.7, -0.12), asImpulse: true)
             node.physicsBody?.applyTorque(SCNVector4(0.5, 0.5, 0.5, 0.5), asImpulse: true)
-            perform(#selector(forceFinish), with: nil, afterDelay: 4)
+            let _ = Timer.scheduledTimer(withTimeInterval: 4, repeats: false) { (_) in
+                self.forceFinish()
+            }
         } else {
             let byFinish = SCNVector3(0, 14, length + 8)
             let finish = SCNVector3(0, 4, length)
@@ -412,29 +285,37 @@ class GameViewController: UIViewController, BonusProvider, StoreProvider, PooNod
     
     /// game is finished for a specific poo: if poo is user, tells multiplayer and prepares finale
     func handleFinish(_ poo: SCNNode) {
-        guard poo.name != nil && poo.name != "" && poo.name != "C_Low" && poo.name != "carpet" else { return }
         didFinish(node: poo)
         if poo == pooNode {
             gameOver = true
             multiplayer?.sendStatus(.Finish)
             gameIsOver()
             addFinalAnimation()
-            let _ = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(addFinishView), userInfo: nil, repeats: false)
+            let _ = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { (_) in
+                self.controllerView.addFinishView()
+            }
+            let _ = Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { (_) in
+                DispatchQueue.main.async {
+                    let result = GameResultVC(results: self.raceResultManager.getResults(opponents: self.currentPlayers.filter({$0.id != self.getID()})))
+                    Navigation.main.viewControllers = [result]
+                }
+
+            }
         }
     }
     
-    /// called by every poo when finish race. update winners array, raceResultManager (BUGGY) and multiplayer
+    /// if user didn't finish (ex: entered the toilet..) this force the game to end with a penalty. Basically same thing as handleFinish method but with small changes.
+    func forceFinish() {
+        raceResultManager.didFinish(poo: SessionData.shared.selectedPlayer, penalty: true)
+        gameOver = true
+        gameIsOver()
+    }
+    
+    /// called by every poo when finish race.
     func didFinish(node: SCNNode) {
         node.removeFromParentNode()
-        if !winners.contains(node) {
-            winners.append(node)
-//            if !isMultiplayer {
-                raceResultManager.didFinish(poo: PooName(rawValue: node.name!)!, penalty: false)
-//            } else {
-//                guard node != pooNode else {return }
-//                raceResultManager.didFinishMultiplayer(poo: vsPoo!, gameOver: false)
-//            }
-        }
+        guard let poo = currentPlayers.filter({$0.node == node}).first else { return }
+        raceResultManager.didFinish(poo: poo, penalty: false)
     }
     
     func addFinalAnimation() {
@@ -442,25 +323,10 @@ class GameViewController: UIViewController, BonusProvider, StoreProvider, PooNod
         toiletNode.addParticleSystem(trail)
     }
     
-    /// if user didn't finish (ex: entered the toilet..) this force the game to end with a penalty. Basically same thing as handleFinish method but with small changes.
-    @objc func forceFinish() {
-        if !winners.contains(pooNode) {
-            winners.append(pooNode)
-            raceResultManager.didFinish(poo: PooName(rawValue: pooNode.name!)!, penalty: true)
-            gameOver = true
-            gameIsOver()
-        }
-    }
-    
     /// Stops controller view, multiplayer, invalidate timer,
     func gameIsOver() {
         oppTimer.invalidate()
         controllerView.stop()
-//        if !isMultiplayer {
-//            raceResultManager.getResults(opponents: opponents, length: length)
-//        } else {
-            raceResultManager.didFinishMultiplayer(poo: SessionData.shared.selectedPlayer, gameOver: true)
-//        }
     }
     
     /// user stopped the game. Go back to main screen.
@@ -471,11 +337,6 @@ class GameViewController: UIViewController, BonusProvider, StoreProvider, PooNod
         sceneView.stop(nil)
         multiplayer?.removeObservers()
         Navigation.main.popToRootViewController(animated: true)
-    }
-    
-    /// tells the controller to add the finish view on top (white screen with opacity animation)
-    @objc func addFinishView(_ sender: Timer) {
-        controllerView.addFinishView()
     }
     
     required init?(coder: NSCoder) {
@@ -492,6 +353,13 @@ extension GameViewController : BonusButtonDelegate {
     
     func didFinishBonus(bonus: Bonus) {
         stopShowBonus(bonus: bonus, node: pooNode)
+    }
+}
+
+extension GameViewController: SCNPhysicsContactDelegate {
+   
+    func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
+        contactStarted(world, contact)
     }
 }
 

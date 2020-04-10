@@ -46,7 +46,7 @@ class MultiplayerManager: StoreProvider {
             let players = snapshot.toPlayers()
              completion(players)
         }) { (error) in
-            Logger(error.localizedDescription)
+            Logger.error(error)
         }
     }
     

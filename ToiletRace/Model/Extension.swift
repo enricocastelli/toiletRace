@@ -6,11 +6,10 @@
 //  Copyright © 2018 Enrico Castelli. All rights reserved.
 //
 
-import Foundation
 import UIKit
 import SceneKit
-
-public extension UIImage {
+ 
+extension UIImage {
     public convenience init?(color: UIColor, size: CGSize = CGSize(width: 10, height: 10)) {
         let rect = CGRect(origin: .zero, size: size)
         UIGraphicsBeginImageContextWithOptions(rect.size, false, 0.0)
@@ -25,42 +24,7 @@ public extension UIImage {
 }
 
 
-public extension SCNNode {
-    
-    internal func moveCasually(direction: Direction) {
-        let forceX : Float = {
-            if presentation.position.x < -5 {
-                return 1
-            } else if presentation.position.x > 5 {
-                return -1
-            }
-            return (direction == .right) ? 0.8 : -0.8
-        }()
-        let force = SCNVector3(forceX, 0.0, 0)
-        physicsBody?.applyForce(force, asImpulse: true)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05, execute: {
-            let counterForce = SCNVector3(-forceX/8, 0.0, 0)
-            self.physicsBody?.applyForce(counterForce, asImpulse: true)
-        })
-    }
-    
-    internal func moveStrong(direction: Direction) {
-        let forceX : Float = {
-            if presentation.position.x < -5 {
-                return 1.5
-            } else if presentation.position.x > 5 {
-                return -1.5
-            }
-            return (direction == .right) ? 0.8 : -0.8
-        }()
-        let force = SCNVector3(forceX, 0.0, 0)
-        physicsBody?.applyForce(force, asImpulse: true)
-    }
-    
-    func moveSpecific(specificX : Float) {
-        let force = SCNVector3(specificX, 0.0, 0.0)
-        physicsBody?.applyForce(force, asImpulse: true)
-    }
+extension SCNNode {
     
     // For rolling pill bottle
     func moveForever() {

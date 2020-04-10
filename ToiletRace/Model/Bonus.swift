@@ -45,7 +45,7 @@ enum Bonus {
         }
     }
     
-    func duration() -> Float {
+    func duration() -> Double {
         switch self {
         case .NoBonus:
             return 0
@@ -64,7 +64,7 @@ enum Bonus {
         }
     }
     
-    func rechargeDuration() -> Float {
+    func rechargeDuration() -> Double {
         switch self {
         case .NoBonus:
             return 0

@@ -16,7 +16,7 @@ enum StorageKeys {
 
 protocol StoreProvider {}
 
-extension StoreProvider{
+extension StoreProvider {
         
     func setID(_ id: String) {
         UserDefaults.standard.set(id, forKey: StorageKeys.ID)
