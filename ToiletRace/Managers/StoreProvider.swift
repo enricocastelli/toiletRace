@@ -11,6 +11,7 @@ import UIKit
 enum StorageKeys {
     static let Level = "Level"
     static let ID = "ID"
+    static let name = "name"
 }
 
 protocol StoreProvider {}
@@ -34,6 +35,18 @@ extension StoreProvider{
             return uuid.lowercased()
             #endif
         }
+    }
+   
+    func setName(_ name: String) {
+        UserDefaults.standard.set(name, forKey: StorageKeys.name)
+    }
+    
+    func getName() -> String {
+        #if DEBUG
+        return testName()
+        #else
+        return UserDefaults.standard.object(forKey: StorageKeys.name) as? String ?? UIDevice.current.name.playerName
+        #endif
     }
     
     func saveLevel(_ level:Int) {

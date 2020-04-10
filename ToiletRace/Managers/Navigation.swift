@@ -15,6 +15,7 @@ class Navigation {
     static var loading: Loading?
     
     static func startLoading() {
+        guard Navigation.loading == nil else { return }
         let loading = Loading()
         loading.modalPresentationStyle = .overCurrentContext
         Navigation.main.present(loading, animated: false) {

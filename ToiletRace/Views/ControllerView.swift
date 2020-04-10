@@ -76,7 +76,7 @@ class ControllerView: UIView {
     }
     
     func setupStopButton() {
-        let stopButton = UIButton(frame: CGRect(x: frame.width - 44, y: 8, width: 36, height: 36))
+        let stopButton = UIButton(frame: CGRect(x: frame.width - 44, y: 36, width: 36, height: 36))
         stopButton.setTitle("⏹", for: .normal)
         stopButton.addTarget(self, action: #selector(stopped), for: .touchUpInside)
         stopButton.alpha = 0.3

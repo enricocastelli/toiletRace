@@ -12,6 +12,7 @@ import SceneKit
 import AudioToolbox
 
 class GameViewController: UIViewController, BonusProvider, StoreProvider, PooNodeCreator {
+    
         
     var sceneView:SCNView!
     var scene:SCNScene!
@@ -22,52 +23,38 @@ class GameViewController: UIViewController, BonusProvider, StoreProvider, PooNod
     var floor: SCNNode!
     var toiletNode: SCNNode!
     
+    // managers
     var contactManager: ContactManager!
     var controllerView: ControllerView!
     var raceResultManager = RaceResultManager.shared
-    var multiplayer: MultiplayerManager? {
-        didSet {
-            multiplayer?.delegate = self
-        }
-    }
+    var multiplayer: MultiplayerManager?
+    
     /// length of track
     var length: Float = -250
-    
     /// timer that triggers specific opponents actions (bonus usage)
     var oppTimer = Timer()
-    
+    var multiplayerTimer = Timer()
     /// started is true when game is playing, so poos are moved
     var started = false
-    
     /// game is over when pooNode has completed the track
     var gameOver = false
-    
-    /// bool triggered at the right time at beginning so that camera moves nicely from the end to the beginning of the track
-    var shouldMoveCamera = false
+    /// Array of currentPlayers, AI or multiplayer
+    var currentPlayers: [Poo]
     
     /// array of nodes that finished the track
     var winners : [SCNNode] = []
-    
-    /// Array of currentPlayers, generally copied from global var players. Order SHOULD NOT change
-    var currentPlayers: [Poo]
     //test
     //    var currentPlayers = [Poo(name: PooName.IndianSurprise)]
-    
-    /// Array of current opponents
-    var opponents:[Poo] = []
     /// Array of players, generally copied from global var players. It SHOULD CHANGE depending on players position
     var ranking = Poo.players
-    //test
-    //    var ranking = [Poo(name: PooName.GuanoStar)]
+    
+    
     
     /// if is bonus from slower activated
     var slowerActivated = false
-    /// specifies a special position at beginning for poos
-    var position: SCNVector3?
-    /// bool if it should rotate camera
-    var shouldRotateCamera: Bool = true
-    /// Euler angles are activated
-    var eulerYes = false
+    /// bool if it should rotate camera at the end
+    var shouldRotateCamera: Bool = false
+    var room: Room?
     
     // MARK:- PREPARATION AND INITIAL COMMON METHODS
     
@@ -90,6 +77,10 @@ class GameViewController: UIViewController, BonusProvider, StoreProvider, PooNod
         controllerView = ControllerView(frame: view.frame, gameVC: self)
         prepare()
         view.addSubview(controllerView)
+        if let room = room, let index = currentPlayers.selfIndex(getID()) {
+            multiplayer = MultiplayerManager(room: room, indexSelf: index)
+            multiplayer?.delegate = self
+        }
     }
     
     func addObstacle() {
@@ -119,8 +110,7 @@ class GameViewController: UIViewController, BonusProvider, StoreProvider, PooNod
     /// create scene, user's node, floor and add opponents
     func prepare() {
         self.setupScene()
-        self.pooNode = (createPoo(postion: position))
-        multiplayer?.sendName(SessionData.shared.selectedPlayer.name)
+        self.pooNode = createPoo()
         self.scene.rootNode.addChildNode(self.pooNode)
         self.addOpponents()
         self.setupFloor()
@@ -162,46 +152,35 @@ class GameViewController: UIViewController, BonusProvider, StoreProvider, PooNod
         return SCNScene(named: "art.scnassets/worldScene/MainScene.scn")!
     }
     
-    /// works only if multiplayer is OFF. For every currentPlayers, create poo and nodes
+    /// For every currentPlayers, create poo and nodes
     func addOpponents() {
         for index in 0...currentPlayers.count - 1 {
             if currentPlayers[index].id != getID() {
                 // opponent
-                let oppNode = createOpponent(poo: currentPlayers[index], index: index, postion: position)
+                let oppNode = createOpponent(poo: currentPlayers[index], index: index)
                 currentPlayers[index].reset()
                 scene.rootNode.addChildNode(oppNode)
-                opponents.append( currentPlayers[index])
                 currentPlayers[index].node = oppNode
                 oppNode.name = currentPlayers[index].name.rawValue
             } else {
-                initUsersPoo(index)
+                initUsersPoo(currentPlayers[index], index: index)
             }
         }
     }
     
-    /// works only if multiplayer is ON. creates a node for VS player and
-//    func addVSOpponent() {
-//        guard let vsPoo = vsPoo, vsOpponentNode == nil else { return }
-//        vsOpponentNode = PooNodeCreator.createVSOpponent(name: vsPoo.name, position: SCNVector3(1, 0, 0))
-//        scene.rootNode.addChildNode(vsOpponentNode!)
-//        vsPoo.node = vsOpponentNode
-//        vsOpponentNode?.name = vsPoo.name.rawValue
-//        initUsersPoo(nil)
-//        currentPlayers = [vsPoo, SessionData.shared.selectedPlayer]
-//    }
     
     // init user's poo. Connects the node to the poo and saves it in local session data. Also resets it (for some reason 🧐)
-    func initUsersPoo(_ index: Int?) {
+    func initUsersPoo(_ poo: Poo, index: Int) {
+        SessionData.shared.selectedPlayer = poo
         SessionData.shared.selectedPlayer.node = pooNode
         SessionData.shared.selectedPlayer.reset()
-        guard let index = index else { return }
         self.currentPlayers[index] = SessionData.shared.selectedPlayer
     }
     
     func newGame() {
         //time to stop waiting
         moveCamera()
-        eulerYes = false
+        shouldRotateCamera = false
     }
     
     /// initial animation of camera moving from end off track to beginning. Scope of this action is also to load the nodes so that the rendering is less bumpy during the race.
@@ -211,41 +190,38 @@ class GameViewController: UIViewController, BonusProvider, StoreProvider, PooNod
         let action = SCNAction.move(to: cameraPosition, duration: 3)
         selfieStickNode.runAction(action) {
             self.selfieStickNode.childNodes.first?.camera?.motionBlurIntensity = 0.0
-            self.start()
+            self.isReadyToStart()
+        }
+    }
+    
+    func isReadyToStart() {
+        if let multiplayer = multiplayer {
+            multiplayer.sendStatus(.Ready)
+        } else {
+            start()
         }
     }
     
     /// actual moment when game starts (physics, camera ecc...)
-    @objc func start() {
-        if let multiplayer = multiplayer {
-            multiplayer.sendReady()
-        } else {
-            shouldMoveCamera = true
-            started = true
-            scene.isPaused = false
-            sceneView.isPlaying = true
-            controllerView.start()
-            raceResultManager.start()
-            perform(#selector(startOppTimer), with: nil, afterDelay: 1)
-        }
+    func start() {
+        started = true
+        scene.isPaused = false
+        sceneView.isPlaying = true
+        controllerView.start()
+        raceResultManager.start()
+        perform(#selector(startOppTimer), with: nil, afterDelay: 1)
     }
     
     /// Adapt timing to the other player (can have different start time otherwise)
     func prepareMultiplayer() {
-        guard let startDate = multiplayer?.connectionDate else { return }
-        let calendar = Calendar.current
-        let date = calendar.date(byAdding: .second, value: 5, to: startDate)
-        if let time = date?.timeIntervalSince(Date()) {
-            DispatchQueue.main.asyncAfter(deadline: .now() + time, execute: {
-                self.startMultiplayer()
-            })
-        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
+            self.startMultiplayer()
+        })
     }
     
     /// actual moment when game starts for Multiplayer (physics, camera ecc...)
     @objc func startMultiplayer() {
         ranking = currentPlayers
-        shouldMoveCamera = true
         started = true
         scene.isPaused = false
         sceneView.isPlaying = true
@@ -299,12 +275,10 @@ class GameViewController: UIViewController, BonusProvider, StoreProvider, PooNod
         let right = force > 0
         let force = SCNVector3(turningForce, 0, 0)
         pooNode.physicsBody?.applyForce(force, asImpulse: true)
-        if shouldRotateCamera {
-            let rotation: CGFloat = right ? 0.007 : -0.007
-            let rotateAction = SCNAction.rotateBy(x: 0, y: 0, z: rotation, duration: 0.4)
-            selfieStickNode.runAction(rotateAction) {
-                self.selfieStickNode.runAction(rotateAction.reversed())
-            }
+        let rotation: CGFloat = right ? 0.005 : -0.005
+        let rotateAction = SCNAction.rotateBy(x: 0, y: 0, z: rotation, duration: 0.4)
+        selfieStickNode.runAction(rotateAction) {
+            self.selfieStickNode.runAction(rotateAction.reversed())
         }
     }
     
@@ -369,7 +343,7 @@ class GameViewController: UIViewController, BonusProvider, StoreProvider, PooNod
     
     /// AI to detect if a collision is coming and to avoid it
     @objc func blockAvoider() {
-        for opponent in opponents {
+        for opponent in currentPlayers.filter({$0.id != getID()}) {
             guard !opponent.isMultiplayer else { return }
             let pos = opponent.node.presentation.position
             opponent.turn(direction: getBestDirection(pos: pos))
@@ -417,7 +391,7 @@ class GameViewController: UIViewController, BonusProvider, StoreProvider, PooNod
     func jump(node: SCNNode) {
         node.physicsBody?.clearAllForces()
         if node == pooNode {
-            eulerYes = true
+            shouldRotateCamera = true
             node.physicsBody?.clearAllForces()
             scene.physicsWorld.gravity = SCNVector3(0, -0.5, 0)
             node.physicsBody?.applyForce(SCNVector3(0, 3.7, -0.12), asImpulse: true)
@@ -442,7 +416,7 @@ class GameViewController: UIViewController, BonusProvider, StoreProvider, PooNod
         didFinish(node: poo)
         if poo == pooNode {
             gameOver = true
-            multiplayer?.sendFinish()
+            multiplayer?.sendStatus(.Finish)
             gameIsOver()
             addFinalAnimation()
             let _ = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(addFinishView), userInfo: nil, repeats: false)
@@ -487,14 +461,15 @@ class GameViewController: UIViewController, BonusProvider, StoreProvider, PooNod
 //        } else {
             raceResultManager.didFinishMultiplayer(poo: SessionData.shared.selectedPlayer, gameOver: true)
 //        }
-        multiplayer?.stop()
     }
     
     /// user stopped the game. Go back to main screen.
     func stopped() {
         oppTimer.invalidate()
+        multiplayerTimer.invalidate()
         controllerView.stop()
-        multiplayer?.stop()
+        sceneView.stop(nil)
+        multiplayer?.removeObservers()
         Navigation.main.popToRootViewController(animated: true)
     }
     
@@ -525,61 +500,50 @@ extension GameViewController : SCNSceneRendererDelegate {
     /// renderer gets called continously! moves the camera, moves the poos, avoid blocks for opponent and send multiplayer position
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         guard gameOver == false else { return }
-        if eulerYes == true {
+        if shouldRotateCamera == true {
             if Values.zTot > 10 { Values.zTot -= 0.03 }
             if Values.yTot < 20 { Values.yTot += 0.01 }
-            if selfieStickNode.eulerAngles.x > -Float.pi { selfieStickNode.eulerAngles.x -= 0.01 }
+            if selfieStickNode.eulerAngles.x > -Float.pi/2 { selfieStickNode.eulerAngles.x -= 0.01 }
         }
-        if shouldMoveCamera {
-            let cameraPosition = getCameraPosition()
-            selfieStickNode.position = cameraPosition
-        }
+        let cameraPosition = getCameraPosition()
+        selfieStickNode.position = cameraPosition
         guard started == true else { return }
         movePoops()
         blockAvoider()
-        sendMultiplayerData()
     }
 }
 
 extension GameViewController : MultiplayerDelegate {
-   
-    /// the other player is ready
-    func didReceiveStart() {
-        prepareMultiplayer()
+    
+    func shouldStart() {
+        multiplayer?.removeObservers()
+        guard !started else { return }
+        start()
+        multiplayerTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { (timer) in
+            guard !self.gameOver && self.sceneView.isPlaying else {
+                timer.invalidate()
+                return
+            }
+            self.updatePlayers()
+            self.sendMultiplayerData()
+        })
     }
     
-    /// the other player finished
-    func didReceiveEnd() {
-//        handleFinish(vsOpponentNode!)
+    /// get position of opponents's poo
+    func updatePlayers() {
+        multiplayer?.updatePlayers({ (players) in
+            for pl in players {
+                if pl.id != self.getID() {
+                    let poo = self.currentPlayers.pooWithPl(pl)
+                    poo.node.runAction(SCNAction.move(to: SCNVector3(pl.position.x, pl.position.y, pl.position.z), duration: 0.1))
+                }
+            }
+        })
     }
     
     /// send position of user's poo
     func sendMultiplayerData() {
         let pooPosition = pooNode.presentation.position
         multiplayer?.sendPosition(x: pooPosition.x, y: pooPosition.y, z: pooPosition.z)
-    }
-    
-    /// received position of VSopponent poo and moves it
-    func didReceivePosition(pos: PlayerPosition) {
-//        vsOpponentNode?.position = SCNVector3(pos.xPos, pos.yPos, pos.zPos)
-    }
-    
-    /// display the poo name of VS and create the vsPoo object and node
-    func didReceivePooName(_ name: PooName, displayName: String) {
-//        vsPoo = Poo(name: name)
-//        vsPoo?.displayName = displayName
-//        opponents.append(vsPoo!)
-//        if scene != nil && vsOpponentNode == nil {
-//            addVSOpponent()
-//        }
-    }
-    
-    func didReceivePlayers(_ players: [Player]) {
-        guard let pl = players.first else { return }
-        for poo in currentPlayers {
-            if poo.id == pl.id {
-                poo.node.position = SCNVector3(pl.position.x, pl.position.y, pl.position.z)
-            }
-        }
     }
 }

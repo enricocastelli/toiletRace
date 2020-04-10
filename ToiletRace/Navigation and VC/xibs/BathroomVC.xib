@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BathroomVC" customModule="The_Toilet_Race" customModuleProvider="target">
+            <connections>
+                <outlet property="startButton" destination="lBa-QO-qag" id="cUb-wc-WnX"/>
+                <outlet property="tableView" destination="VjY-Uw-4aH" id="gZM-Nc-eIQ"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="VjY-Uw-4aH">
+                    <rect key="frame" x="0.0" y="108" width="414" height="754"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="XvB-wS-Ffg"/>
+                        <outlet property="delegate" destination="-1" id="rmw-Dn-7Dc"/>
+                    </connections>
+                </tableView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ruS-hj-6pY">
+                    <rect key="frame" x="16" y="60" width="35.5" height="38"/>
+                    <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
+                    <state key="normal" image="arrow.left.square.fill" catalog="system"/>
+                    <connections>
+                        <action selector="backTapped:" destination="-1" eventType="touchUpInside" id="zI7-7v-yKc"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7hH-C9-yNO">
+                    <rect key="frame" x="362.5" y="60" width="35.5" height="38"/>
+                    <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
+                    <state key="normal" image="plus.app.fill" catalog="system"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lBa-QO-qag">
+                    <rect key="frame" x="16" y="791.5" width="382" height="54.5"/>
+                    <color key="backgroundColor" red="0.34509803919999998" green="0.61176470589999998" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="lBa-QO-qag" secondAttribute="height" multiplier="7:1" id="BRP-r8-TaP"/>
+                    </constraints>
+                    <color key="tintColor" red="0.34509803919999998" green="0.61176470589999998" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <state key="normal" title="START">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="startTapped:" destination="-1" eventType="touchUpInside" id="B1e-PF-Mpg"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="lBa-QO-qag" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="6o7-J7-gQq"/>
+                <constraint firstItem="VjY-Uw-4aH" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="72U-ir-hMc"/>
+                <constraint firstItem="7hH-C9-yNO" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="16" id="Nrv-Rr-f40"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="lBa-QO-qag" secondAttribute="trailing" constant="16" id="RR8-fX-nev"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="VjY-Uw-4aH" secondAttribute="bottom" id="ape-io-Jqb"/>
+                <constraint firstItem="VjY-Uw-4aH" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="64" id="dsM-TE-kVY"/>
+                <constraint firstItem="ruS-hj-6pY" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="16" id="h8E-rE-mdK"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="lBa-QO-qag" secondAttribute="bottom" constant="16" id="lhx-FV-u8d"/>
+                <constraint firstItem="ruS-hj-6pY" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="rmC-ET-b58"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="VjY-Uw-4aH" secondAttribute="trailing" id="vty-Ya-NHg"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="7hH-C9-yNO" secondAttribute="trailing" constant="16" id="ykc-oC-Cgm"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="139" y="88"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="arrow.left.square.fill" catalog="system" width="64" height="56"/>
+        <image name="plus.app.fill" catalog="system" width="64" height="56"/>
+    </resources>
+</document>

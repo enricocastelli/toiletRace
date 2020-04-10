@@ -13,13 +13,13 @@ protocol PooNodeCreator{}
     
 extension PooNodeCreator {
 
-    func createPoo(postion: SCNVector3?) -> SCNNode {
+    func createPoo() -> SCNNode {
         let selected = SessionData.shared.selectedPlayer
         let geo = SCNSphere(radius: selected.radius())
         geo.materials.insert(selected.createMaterial(), at: 0)
         geo.materials.removeLast()
         let pooNode = SCNNode(geometry: geo)
-        pooNode.position = postion ?? SCNVector3(0.0, 0.0, 0.0)
+        pooNode.position = SCNVector3(0.0, 0.0, 0.0)
         pooNode.physicsBody = SCNPhysicsBody.dynamic()
         pooNode.physicsBody?.restitution = SessionData.shared.selectedPlayer.restitution()
         pooNode.physicsBody?.contactTestBitMask = Collider.poo | Collider.obstacle | Collider.bounds
@@ -28,20 +28,14 @@ extension PooNodeCreator {
         return pooNode
     }
     
-    func createOpponent(poo: Poo, index: Int, postion: SCNVector3? = nil) -> SCNNode {
+    func createOpponent(poo: Poo, index: Int) -> SCNNode {
         let geo = SCNSphere(radius: poo.radius())
         geo.materials.insert(poo.createMaterial(), at: 0)
         geo.materials.removeLast()
         let oppNode = SCNNode(geometry: geo)
         var pos = Double(-3 + index)
         if pos == 0 { pos = -3 }
-        let actualPosition : SCNVector3 = {
-            if postion == nil {
-                return SCNVector3(pos, 2, 0)
-            } else {
-                return SCNVector3(Float(pos), postion!.y, postion!.z)
-            }
-        }()
+        let actualPosition = SCNVector3(pos, 2, 0)
         oppNode.position = actualPosition
         oppNode.physicsBody = SCNPhysicsBody(type: SCNPhysicsBodyType.dynamic, shape: nil)
         oppNode.physicsBody?.restitution = poo.restitution()

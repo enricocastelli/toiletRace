@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="landscape">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MultiplayerVC" customModule="ToiletRace" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MultiplayerVC" customModule="The_Toilet_Race" customModuleProvider="target">
             <connections>
                 <outlet property="tableView" destination="WbS-7B-pEw" id="eX7-m5-BFC"/>
                 <outlet property="view" destination="iN0-l3-epB" id="NPo-js-TGa"/>
@@ -17,22 +16,32 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="WbS-7B-pEw">
-                    <rect key="frame" x="0.0" y="64" width="667" height="247"/>
+                    <rect key="frame" x="0.0" y="64" width="375" height="539"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <connections>
-                        <outlet property="dataSource" destination="-1" id="odc-ob-FuV"/>
+                        <outlet property="dataSource" destination="-1" id="lc0-XT-vzu"/>
                         <outlet property="delegate" destination="-1" id="J69-Xb-AY0"/>
                     </connections>
                 </tableView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jDb-aU-u6a">
-                    <rect key="frame" x="16" y="16" width="30" height="30"/>
+                    <rect key="frame" x="16" y="16" width="37" height="34"/>
+                    <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                     <state key="normal" title="◀️"/>
                     <connections>
                         <action selector="backTapped:" destination="-1" eventType="touchUpInside" id="G1w-6z-wbt"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0kY-4j-aCI">
+                    <rect key="frame" x="323.5" y="16" width="35.5" height="38"/>
+                    <color key="tintColor" red="0.48122644419999999" green="0.57227212189999999" blue="0.23521170020000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
+                    <state key="normal" image="plus.app.fill" catalog="system"/>
+                    <connections>
+                        <action selector="addTapped:" destination="-1" eventType="touchUpInside" id="hUm-xG-V8b"/>
                     </connections>
                 </button>
             </subviews>
@@ -40,13 +49,18 @@
             <constraints>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="WbS-7B-pEw" secondAttribute="bottom" constant="64" id="ZBo-3k-Gj5"/>
                 <constraint firstItem="jDb-aU-u6a" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="16" id="cQJ-qC-dIL"/>
+                <constraint firstItem="0kY-4j-aCI" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="16" id="d8h-cY-ZmN"/>
                 <constraint firstItem="WbS-7B-pEw" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="64" id="fMS-Y6-xdN"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="0kY-4j-aCI" secondAttribute="trailing" constant="16" id="tIe-ZG-CiH"/>
                 <constraint firstItem="WbS-7B-pEw" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="tXA-2V-q3u"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="WbS-7B-pEw" secondAttribute="trailing" id="tnl-CI-83C"/>
                 <constraint firstItem="jDb-aU-u6a" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="vXp-Ed-TzW"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <point key="canvasLocation" x="-168" y="86"/>
+            <point key="canvasLocation" x="-168.80000000000001" y="85.907046476761622"/>
         </view>
     </objects>
+    <resources>
+        <image name="plus.app.fill" catalog="system" width="64" height="56"/>
+    </resources>
 </document>

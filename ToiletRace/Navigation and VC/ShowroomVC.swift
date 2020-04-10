@@ -69,7 +69,7 @@ class ShowroomVC: UIViewController, StoreProvider, PooNodeCreator {
     func addBalls() {
         for poo in Poo.players {
             let index = Poo.players.firstIndex {$0.name == poo.name}!
-            let pooNode = createOpponent(poo: poo, index: index, postion: nil)
+            let pooNode = createOpponent(poo: poo, index: index)
             pooNode.position = SCNVector3(index*10, 0, -2)
             pooNode.physicsBody?.isAffectedByGravity = false
             sceneView.scene!.rootNode.addChildNode(pooNode)

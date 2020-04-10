@@ -9,101 +9,87 @@
 import UIKit
 import MultipeerConnectivity
 
-class MultiplayerVC: UIViewController, StoreProvider {
-
+class MultiplayerVC: UIViewController, StoreProvider, AlertProvider {
 
     @IBOutlet weak var tableView: UITableView!
-    var multiplayer: MultiplayerManager!
-    var players : Array<MCPeerID> = []
+    var rooms: [Room] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTable()
-        setupMultiplayer()
-        // test
-        DispatchQueue.main.async {
-            let players = [Poo(name: .GuanoStar, id: self.getID()), Poo(name: .ApolloPoo, id: "test-sim"), Poo(name: .GarganTurd)]
-            let gameVC = GameViewController(players: players)
-            gameVC.multiplayer = self.multiplayer
-            Navigation.main.pushViewController(gameVC, animated: true)
-            Navigation.startLoading()
-        }
+        addRoomsObserver()
     }
     
     func setupTable() {
-        
+        tableView.backgroundColor = .white
+        tableView.refreshControl = UIRefreshControl()
+        tableView.refreshControl?.addTarget(self, action:
+            #selector(handleRefreshControl),for: .valueChanged)
     }
     
-    func setupMultiplayer() {
-        multiplayer = MultiplayerManager(delegate: nil, connectionDelegate: self)
-    }
     
     @IBAction func backTapped(_ sender: UIButton) {
-        multiplayer.stop()
         Navigation.main.popToRootViewController(animated: true)
     }
     
+    @IBAction func addTapped(_ sender: UIButton) {
+        let room = createRoom("testami")
+        Navigation.main.pushViewController(BathroomVC(room), animated: true)
+    }
+    
+    @objc func handleRefreshControl() {
+        rooms = []
+        tableView.reloadData()
+        removeRoomObservers()
+        addRoomsObserver()
+        DispatchQueue.main.async {
+            self.tableView.refreshControl?.endRefreshing()
+        }
+    }
 }
 
-extension MultiplayerVC: MultiplayerConnectionDelegate {
-    
-    func didFoundPeer(_ peer: MCPeerID) {
-        if !players.contains(peer) {
-            players.append(peer)
-            tableView.reloadData()
-        }
-    }
-    
-    func didReceiveInvitation(peerID: MCPeerID, invitationHandler: @escaping (Bool) -> Void) {
-        let alert = UIAlertController(title: "Oh 💩", message: "You just received an invitation game from this poo: \(peerID.displayName).", preferredStyle: UIAlertController.Style.alert)
-        let action1 = UIAlertAction(title: "Nope", style: UIAlertAction.Style.cancel) { (action) in
-            invitationHandler(false)
-        }
-        let action2 = UIAlertAction(title: "Race", style: UIAlertAction.Style.default) { (action) in
-            invitationHandler(true)
-        }
-        alert.addAction(action1)
-        alert.addAction(action2)
-        self.present(alert, animated: true) {
-            
-        }
-    }
-    
-    func didDisconnect() {
-        
-    }
-    
-    func didConnect() {
-        DispatchQueue.main.async {
-//            let gameVC = GameViewController()
-//            gameVC.multiplayer = self.multiplayer
-//            Navigation.main.pushViewController(gameVC, animated: true)
-//            Navigation.startLoading()
-        }
-    }
-}
 
 extension MultiplayerVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        SessionData.shared.selectedPlayer = Poo(name: PooName.ApolloPoo)
-        let peerID = players[indexPath.row]
-        multiplayer.connect(peerID)
+        removeRoomObservers()
+        subscribeToRoom(rooms[indexPath.row].id) { (room) in
+            Navigation.main.pushViewController(BathroomVC(room), animated: true)
+        }
     }
 }
 
 extension MultiplayerVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return players.count
+        return rooms.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         cell.backgroundColor = UIColor.clear
-        cell.textLabel?.text = players[indexPath.row].displayName
+        cell.textLabel?.textColor = .black
+        cell.textLabel?.text = rooms[indexPath.row].name
         cell.selectionStyle = .none
         return cell
     }
     
+}
+
+
+extension MultiplayerVC: RoomsProvider {
+    
+    func roomIsReady() {}
+    func didAddedPlayer(_ player: Player) {}
+    func didRemovedPlayer(_ player: Player) {}
+    
+    func didAddedRoom(_ room: Room) {
+        self.rooms.append(room)
+        self.tableView.reloadData()
+    }
+    
+    func didRemovedRoom(_ room: Room) {
+        self.rooms.removeAll {$0.id == room.id }
+        self.tableView.reloadData()
+    }
 }

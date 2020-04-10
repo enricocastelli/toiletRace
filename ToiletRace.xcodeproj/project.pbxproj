@@ -16,8 +16,7 @@
 		1C27D34721CA992200E3C322 /* MultiplayerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C27D34621CA992200E3C322 /* MultiplayerVC.swift */; };
 		1C27D34921CB947A00E3C322 /* MultiplayerVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C27D34821CB947A00E3C322 /* MultiplayerVC.xib */; };
 		1C27D35A21CBDB8300E3C322 /* PooNodeCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C27D35921CBDB8300E3C322 /* PooNodeCreator.swift */; };
-		1C27D35C21CBF07F00E3C322 /* PooMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C27D35B21CBF07F00E3C322 /* PooMaker.swift */; };
-		1C27D35E21CCF6C000E3C322 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C27D35D21CCF6C000E3C322 /* StorageManager.swift */; };
+		1C27D35E21CCF6C000E3C322 /* StoreProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C27D35D21CCF6C000E3C322 /* StoreProvider.swift */; };
 		1C76170221C998290085FCB8 /* RaceResultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C76170121C998290085FCB8 /* RaceResultManager.swift */; };
 		1C76170621CA3D7B0085FCB8 /* WelcomeVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C76170421CA3D7B0085FCB8 /* WelcomeVC.xib */; };
 		1C76170721CA3D7B0085FCB8 /* WelcomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C76170521CA3D7B0085FCB8 /* WelcomeVC.swift */; };
@@ -29,6 +28,14 @@
 		1C815D3021806496006557D4 /* ShowroomVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C815D2E21806496006557D4 /* ShowroomVC.xib */; };
 		1CA23A38243EF9F500F8872C /* BonusProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA23A37243EF9F500F8872C /* BonusProvider.swift */; };
 		1CA23A3A243F041A00F8872C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1CA23A39243F041A00F8872C /* GoogleService-Info.plist */; };
+		1CA23A3C243F6ED200F8872C /* PlayerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA23A3B243F6ED200F8872C /* PlayerModel.swift */; };
+		1CA23A3E243F78A900F8872C /* AlertProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA23A3D243F78A900F8872C /* AlertProvider.swift */; };
+		1CA23A40243F791B00F8872C /* ErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA23A3F243F791B00F8872C /* ErrorHandling.swift */; };
+		1CA23A43243F7BBE00F8872C /* BathroomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA23A41243F7BBE00F8872C /* BathroomVC.swift */; };
+		1CA23A44243F7BBE00F8872C /* BathroomVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CA23A42243F7BBE00F8872C /* BathroomVC.xib */; };
+		1CA23A46243F95F400F8872C /* ModelsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA23A45243F95F400F8872C /* ModelsExtension.swift */; };
+		1CA23A48243FB6C700F8872C /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA23A47243FB6C700F8872C /* DateExtension.swift */; };
+		1CA23A4A243FBE6400F8872C /* RoomsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA23A49243FBE6400F8872C /* RoomsProvider.swift */; };
 		1CB8D77D217615C000B38BA2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8D77C217615C000B38BA2 /* AppDelegate.swift */; };
 		1CB8D77F217615C000B38BA2 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 1CB8D77E217615C000B38BA2 /* art.scnassets */; };
 		1CB8D781217615C000B38BA2 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8D780217615C000B38BA2 /* GameViewController.swift */; };
@@ -63,8 +70,7 @@
 		1C27D34621CA992200E3C322 /* MultiplayerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplayerVC.swift; sourceTree = "<group>"; };
 		1C27D34821CB947A00E3C322 /* MultiplayerVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MultiplayerVC.xib; sourceTree = "<group>"; };
 		1C27D35921CBDB8300E3C322 /* PooNodeCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PooNodeCreator.swift; sourceTree = "<group>"; };
-		1C27D35B21CBF07F00E3C322 /* PooMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PooMaker.swift; sourceTree = "<group>"; };
-		1C27D35D21CCF6C000E3C322 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		1C27D35D21CCF6C000E3C322 /* StoreProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreProvider.swift; sourceTree = "<group>"; };
 		1C76170121C998290085FCB8 /* RaceResultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceResultManager.swift; sourceTree = "<group>"; };
 		1C76170421CA3D7B0085FCB8 /* WelcomeVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WelcomeVC.xib; sourceTree = "<group>"; };
 		1C76170521CA3D7B0085FCB8 /* WelcomeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeVC.swift; sourceTree = "<group>"; };
@@ -76,6 +82,14 @@
 		1C815D2E21806496006557D4 /* ShowroomVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShowroomVC.xib; sourceTree = "<group>"; };
 		1CA23A37243EF9F500F8872C /* BonusProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonusProvider.swift; sourceTree = "<group>"; };
 		1CA23A39243F041A00F8872C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1CA23A3B243F6ED200F8872C /* PlayerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerModel.swift; sourceTree = "<group>"; };
+		1CA23A3D243F78A900F8872C /* AlertProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertProvider.swift; sourceTree = "<group>"; };
+		1CA23A3F243F791B00F8872C /* ErrorHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandling.swift; sourceTree = "<group>"; };
+		1CA23A41243F7BBE00F8872C /* BathroomVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BathroomVC.swift; sourceTree = "<group>"; };
+		1CA23A42243F7BBE00F8872C /* BathroomVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BathroomVC.xib; sourceTree = "<group>"; };
+		1CA23A45243F95F400F8872C /* ModelsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelsExtension.swift; sourceTree = "<group>"; };
+		1CA23A47243FB6C700F8872C /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
+		1CA23A49243FBE6400F8872C /* RoomsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomsProvider.swift; sourceTree = "<group>"; };
 		1CB8D779217615C000B38BA2 /* The Toilet Race.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "The Toilet Race.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CB8D77C217615C000B38BA2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1CB8D77E217615C000B38BA2 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -128,13 +142,14 @@
 			isa = PBXGroup;
 			children = (
 				1C27D35921CBDB8300E3C322 /* PooNodeCreator.swift */,
-				1C27D35B21CBF07F00E3C322 /* PooMaker.swift */,
 				1CBD9E682178A29900109DC3 /* NodeCreator.swift */,
 				1C7C1C1A21C7B79200D47FC8 /* Navigation.swift */,
 				1C76170121C998290085FCB8 /* RaceResultManager.swift */,
 				1C27D24821CA899E00E3C322 /* MultiplayerManager.swift */,
+				1CA23A49243FBE6400F8872C /* RoomsProvider.swift */,
+				1CA23A3D243F78A900F8872C /* AlertProvider.swift */,
 				1C7C1C1821C7B2E400D47FC8 /* ContactManager.swift */,
-				1C27D35D21CCF6C000E3C322 /* StorageManager.swift */,
+				1C27D35D21CCF6C000E3C322 /* StoreProvider.swift */,
 				1CA23A37243EF9F500F8872C /* BonusProvider.swift */,
 			);
 			path = Managers;
@@ -144,8 +159,12 @@
 			isa = PBXGroup;
 			children = (
 				1CB8D7972176168200B38BA2 /* Poo.swift */,
+				1CA23A3F243F791B00F8872C /* ErrorHandling.swift */,
 				1CB8D7922176168200B38BA2 /* Extension.swift */,
+				1CA23A47243FB6C700F8872C /* DateExtension.swift */,
 				1CB8D79C2176168200B38BA2 /* Stuff.swift */,
+				1CA23A3B243F6ED200F8872C /* PlayerModel.swift */,
+				1CA23A45243F95F400F8872C /* ModelsExtension.swift */,
 				1C27D34421CA91F200E3C322 /* Logger.swift */,
 				1C7C1C2D21C7F7D700D47FC8 /* Values.swift */,
 				1CFE97072191D942007F837A /* Bonus.swift */,
@@ -167,19 +186,29 @@
 			isa = PBXGroup;
 			children = (
 				1C76170521CA3D7B0085FCB8 /* WelcomeVC.swift */,
-				1C76170421CA3D7B0085FCB8 /* WelcomeVC.xib */,
 				1C27D34621CA992200E3C322 /* MultiplayerVC.swift */,
-				1C27D34821CB947A00E3C322 /* MultiplayerVC.xib */,
+				1CA23A41243F7BBE00F8872C /* BathroomVC.swift */,
 				1CE146D623AB7D8E00CCC356 /* SettingsVC.swift */,
-				1CE146D723AB7D8E00CCC356 /* SettingsVC.xib */,
 				1C815D2D21806496006557D4 /* ShowroomVC.swift */,
-				1C815D2E21806496006557D4 /* ShowroomVC.xib */,
 				1CB8D7912176168200B38BA2 /* GameResultVC.swift */,
-				1CB8D79E2176168200B38BA2 /* GameResultVC.xib */,
 				1CB8D7A02176168200B38BA2 /* ResultCell.swift */,
-				1CB8D79F2176168200B38BA2 /* ResultCell.xib */,
+				1C990342244098C400C9ACC8 /* xibs */,
 			);
 			path = "Navigation and VC";
+			sourceTree = "<group>";
+		};
+		1C990342244098C400C9ACC8 /* xibs */ = {
+			isa = PBXGroup;
+			children = (
+				1C76170421CA3D7B0085FCB8 /* WelcomeVC.xib */,
+				1C27D34821CB947A00E3C322 /* MultiplayerVC.xib */,
+				1CA23A42243F7BBE00F8872C /* BathroomVC.xib */,
+				1CE146D723AB7D8E00CCC356 /* SettingsVC.xib */,
+				1C815D2E21806496006557D4 /* ShowroomVC.xib */,
+				1CB8D79E2176168200B38BA2 /* GameResultVC.xib */,
+				1CB8D79F2176168200B38BA2 /* ResultCell.xib */,
+			);
+			path = xibs;
 			sourceTree = "<group>";
 		};
 		1CB8D770217615C000B38BA2 = {
@@ -300,6 +329,7 @@
 				1C27D34921CB947A00E3C322 /* MultiplayerVC.xib in Resources */,
 				1CA23A3A243F041A00F8872C /* GoogleService-Info.plist in Resources */,
 				1CB8D77F217615C000B38BA2 /* art.scnassets in Resources */,
+				1CA23A44243F7BBE00F8872C /* BathroomVC.xib in Resources */,
 				1CB8D789217615C100B38BA2 /* LaunchScreen.storyboard in Resources */,
 				1C0EEBC5217F56DE008EE331 /* spark.png in Resources */,
 				1C0EEBC4217F56DE008EE331 /* spluff.scnp in Resources */,
@@ -367,26 +397,32 @@
 				1C815D2F21806496006557D4 /* ShowroomVC.swift in Sources */,
 				1C27D24921CA899E00E3C322 /* MultiplayerManager.swift in Sources */,
 				1CB8D781217615C000B38BA2 /* GameViewController.swift in Sources */,
+				1CA23A40243F791B00F8872C /* ErrorHandling.swift in Sources */,
 				1CB8D7B22176168300B38BA2 /* ResultCell.swift in Sources */,
 				1CB8D7A92176168300B38BA2 /* Poo.swift in Sources */,
 				1C7C1C1B21C7B79200D47FC8 /* Navigation.swift in Sources */,
 				1C27D34721CA992200E3C322 /* MultiplayerVC.swift in Sources */,
+				1CA23A48243FB6C700F8872C /* DateExtension.swift in Sources */,
 				1CBD9E692178A29900109DC3 /* NodeCreator.swift in Sources */,
+				1CA23A43243F7BBE00F8872C /* BathroomVC.swift in Sources */,
 				1C034D00218CA06E001C5694 /* BonusButton.swift in Sources */,
 				1C27D34521CA91F200E3C322 /* Logger.swift in Sources */,
 				1CB8D77D217615C000B38BA2 /* AppDelegate.swift in Sources */,
+				1CA23A3C243F6ED200F8872C /* PlayerModel.swift in Sources */,
 				1C7C1C1921C7B2E400D47FC8 /* ContactManager.swift in Sources */,
 				1CE146D823AB7D8E00CCC356 /* SettingsVC.swift in Sources */,
 				1C76170721CA3D7B0085FCB8 /* WelcomeVC.swift in Sources */,
 				1CB8D7AE2176168300B38BA2 /* Stuff.swift in Sources */,
+				1CA23A3E243F78A900F8872C /* AlertProvider.swift in Sources */,
 				1C27D35A21CBDB8300E3C322 /* PooNodeCreator.swift in Sources */,
+				1CA23A4A243FBE6400F8872C /* RoomsProvider.swift in Sources */,
+				1CA23A46243F95F400F8872C /* ModelsExtension.swift in Sources */,
 				1C76170221C998290085FCB8 /* RaceResultManager.swift in Sources */,
 				1CB8D7A32176168300B38BA2 /* GameResultVC.swift in Sources */,
 				1C7C1C1D21C7B85A00D47FC8 /* ControllerView.swift in Sources */,
 				1CFE97082191D942007F837A /* Bonus.swift in Sources */,
 				1C03B3A4217E658F003CD652 /* Loading.swift in Sources */,
-				1C27D35C21CBF07F00E3C322 /* PooMaker.swift in Sources */,
-				1C27D35E21CCF6C000E3C322 /* StorageManager.swift in Sources */,
+				1C27D35E21CCF6C000E3C322 /* StoreProvider.swift in Sources */,
 				1CB8D7A42176168300B38BA2 /* Extension.swift in Sources */,
 				1C7C1C2E21C7F7D700D47FC8 /* Values.swift in Sources */,
 			);
