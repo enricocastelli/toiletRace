@@ -82,4 +82,16 @@ enum Bonus {
             return 4
         }
     }
+    
+    var description: String {
+        switch self {
+        case .NoBonus: return "No bonus"
+        case .Sprint: return "Sprint: Sprints faster."
+        case .Ghost: return "Ghost: Can avoid obstacles and other poops."
+        case .Slower: return "Slow Down: slows down all the other poops."
+        case .Teleport:  return "Teleport: Can teleport further on the track."
+        case .MiniPoo: return "MiniPoo: Deposit small mini poos that can impact on other players."
+        case .Almighty: return "Beware of the almigthy Poop!"
+        }
+    }
 }

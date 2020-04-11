@@ -1,23 +1,255 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="landscape">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Lato-Bold.ttf">
+            <string>Lato-Semibold</string>
+        </array>
+        <array key="Lato-Light.ttf">
+            <string>Lato-Light</string>
+        </array>
+        <array key="Lato-Medium.ttf">
+            <string>Lato-Medium</string>
+        </array>
+    </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ShowroomVC" customModule="ToiletRace" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ShowroomVC" customModule="The_Toilet_Race" customModuleProvider="target">
             <connections>
-                <outlet property="view" destination="5Zg-i9-UQW" id="35d-RW-EpT"/>
+                <outlet property="barView" destination="f6N-RL-KiO" id="z8V-QC-XsG"/>
+                <outlet property="bonusImageView" destination="Vu3-H6-8Is" id="hUn-tb-Lp6"/>
+                <outlet property="bonusLabel" destination="rgW-jf-m9d" id="Cde-W3-krt"/>
+                <outlet property="bonusView" destination="pMG-OG-ZdB" id="ZTx-Rl-kOY"/>
+                <outlet property="driveLabel" destination="2VN-Bx-VyH" id="t8h-g5-Cco"/>
+                <outlet property="driveProgress" destination="SOp-oM-va6" id="kBH-64-7st"/>
+                <outlet property="nameLabel" destination="ZfL-ln-i07" id="Ogq-sq-1Jd"/>
+                <outlet property="sceneView" destination="cNU-kC-iR8" id="vFj-Lh-oOx"/>
+                <outlet property="selectButton" destination="RX4-Rv-F96" id="Fbm-94-Nj3"/>
+                <outlet property="speedLabel" destination="avb-5z-L1Z" id="jOi-d6-Rbu"/>
+                <outlet property="speedProgress" destination="BIh-yo-gT6" id="AkT-rz-n7R"/>
+                <outlet property="strengthLabel" destination="2sx-St-DoX" id="xWG-35-Iz4"/>
+                <outlet property="strengthProgress" destination="CnV-JV-vSz" id="OSF-n5-9Rp"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outletCollection property="fallingObjects" destination="rgW-jf-m9d" collectionClass="NSMutableArray" id="KVO-S4-8aF"/>
+                <outletCollection property="fallingObjects" destination="RX4-Rv-F96" collectionClass="NSMutableArray" id="Qge-IR-hrk"/>
+                <outletCollection property="fallingObjects" destination="avb-5z-L1Z" collectionClass="NSMutableArray" id="MqH-Ld-pm7"/>
+                <outletCollection property="fallingObjects" destination="BIh-yo-gT6" collectionClass="NSMutableArray" id="6TX-ds-9xq"/>
+                <outletCollection property="fallingObjects" destination="2sx-St-DoX" collectionClass="NSMutableArray" id="BzT-Gm-hRD"/>
+                <outletCollection property="fallingObjects" destination="CnV-JV-vSz" collectionClass="NSMutableArray" id="rHQ-oE-OXk"/>
+                <outletCollection property="fallingObjects" destination="2VN-Bx-VyH" collectionClass="NSMutableArray" id="rNV-rm-XNd"/>
+                <outletCollection property="fallingObjects" destination="SOp-oM-va6" collectionClass="NSMutableArray" id="pGz-wO-Lxt"/>
+                <outletCollection property="fallingObjects" destination="Vu3-H6-8Is" collectionClass="NSMutableArray" id="mjW-DF-Nhd"/>
+                <outletCollection property="fallingObjects" destination="pMG-OG-ZdB" collectionClass="NSMutableArray" id="OeK-9l-nNW"/>
+                <outletCollection property="fallingObjects" destination="krx-2Z-uxn" collectionClass="NSMutableArray" id="Jyu-Ct-xGY"/>
+                <outletCollection property="fallingObjects" destination="rXr-bd-a8N" collectionClass="NSMutableArray" id="oCg-Qz-QqI"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <sceneKitView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="5Zg-i9-UQW">
-            <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <point key="canvasLocation" x="2" y="-532"/>
-        </sceneKitView>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <sceneKitView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cNU-kC-iR8">
+                    <rect key="frame" x="0.0" y="75" width="375" height="200"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="cNU-kC-iR8" secondAttribute="height" multiplier="15:8" id="z63-HA-hAa"/>
+                    </constraints>
+                </sceneKitView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f6N-RL-KiO" customClass="BarView" customModule="The_Toilet_Race" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="75"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="f6N-RL-KiO" secondAttribute="height" multiplier="5:1" constant="1" id="1a4-9B-eV3"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RX4-Rv-F96">
+                    <rect key="frame" x="16" y="602" width="343" height="49"/>
+                    <color key="backgroundColor" red="0.43529411759999997" green="0.61176470589999998" blue="0.47843137250000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="RX4-Rv-F96" secondAttribute="height" multiplier="7:1" id="Q2n-UO-loT"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Lato-Light" family="Lato" pointSize="17"/>
+                    <color key="tintColor" red="0.0" green="0.36078431372549019" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <state key="normal" title="SELECT"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="8"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="selectTapped:" destination="-1" eventType="touchUpInside" id="4xH-lf-TtY"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NAME OF POO" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZfL-ln-i07">
+                    <rect key="frame" x="16" y="291" width="343" height="32.5"/>
+                    <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="27"/>
+                    <color key="textColor" red="0.18823529411764706" green="0.18823529411764706" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="fts-cP-Z0l">
+                    <rect key="frame" x="16" y="339.5" width="343" height="174.5"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="PBR-gy-15c">
+                            <rect key="frame" x="0.0" y="0.0" width="343" height="19.5"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NAME OF POO" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="avb-5z-L1Z">
+                                    <rect key="frame" x="0.0" y="0.0" width="167.5" height="19.5"/>
+                                    <fontDescription key="fontDescription" name="Lato-Medium" family="Lato" pointSize="16"/>
+                                    <color key="textColor" red="0.1137254902" green="0.1137254902" blue="0.1137254902" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="BIh-yo-gT6">
+                                    <rect key="frame" x="175.5" y="7.5" width="167.5" height="4"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="4" id="wcR-PN-RgN"/>
+                                    </constraints>
+                                    <color key="progressTintColor" red="0.54810918330000002" green="0.426608033" blue="0.17384217490000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </progressView>
+                            </subviews>
+                        </stackView>
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="g61-f2-squ">
+                            <rect key="frame" x="0.0" y="35.5" width="343" height="19.5"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NAME OF POO" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2sx-St-DoX">
+                                    <rect key="frame" x="0.0" y="0.0" width="167.5" height="19.5"/>
+                                    <fontDescription key="fontDescription" name="Lato-Medium" family="Lato" pointSize="16"/>
+                                    <color key="textColor" red="0.1137254902" green="0.1137254902" blue="0.1137254902" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="CnV-JV-vSz">
+                                    <rect key="frame" x="175.5" y="7.5" width="167.5" height="4"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="4" id="fwK-J4-HJq"/>
+                                    </constraints>
+                                    <color key="progressTintColor" red="0.54810918330000002" green="0.426608033" blue="0.17384217490000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </progressView>
+                            </subviews>
+                        </stackView>
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="yQX-Qj-pcE">
+                            <rect key="frame" x="0.0" y="71" width="343" height="19.5"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NAME OF POO" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2VN-Bx-VyH">
+                                    <rect key="frame" x="0.0" y="0.0" width="167.5" height="19.5"/>
+                                    <fontDescription key="fontDescription" name="Lato-Medium" family="Lato" pointSize="16"/>
+                                    <color key="textColor" red="0.1137254902" green="0.1137254902" blue="0.1137254902" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="SOp-oM-va6">
+                                    <rect key="frame" x="175.5" y="7.5" width="167.5" height="4"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="4" id="tHu-9t-zF3"/>
+                                    </constraints>
+                                    <color key="progressTintColor" red="0.54901960780000003" green="0.42745098040000001" blue="0.17254901959999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </progressView>
+                            </subviews>
+                        </stackView>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iNd-ps-mjk">
+                            <rect key="frame" x="0.0" y="106.5" width="343" height="68"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NAME OF POO" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rgW-jf-m9d">
+                                    <rect key="frame" x="84" y="8" width="259" height="52"/>
+                                    <fontDescription key="fontDescription" name="Lato-Medium" family="Lato" pointSize="14"/>
+                                    <color key="textColor" red="0.1137254902" green="0.1137254902" blue="0.1137254902" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pMG-OG-ZdB" customClass="RoundedView" customModule="The_Toilet_Race" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="68" height="68"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Vu3-H6-8Is">
+                                            <rect key="frame" x="8" y="8" width="40" height="40"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="Vu3-H6-8Is" secondAttribute="height" multiplier="1:1" id="Tko-VB-QUg"/>
+                                                <constraint firstAttribute="height" constant="40" id="icx-85-xm2"/>
+                                            </constraints>
+                                        </imageView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" secondItem="pMG-OG-ZdB" secondAttribute="height" multiplier="1:1" id="CWP-8b-4eA"/>
+                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Vu3-H6-8Is" secondAttribute="bottom" constant="8" id="Plf-aq-dIR"/>
+                                        <constraint firstItem="Vu3-H6-8Is" firstAttribute="leading" secondItem="pMG-OG-ZdB" secondAttribute="leading" constant="8" id="UsW-4L-9Wl"/>
+                                        <constraint firstItem="Vu3-H6-8Is" firstAttribute="top" secondItem="pMG-OG-ZdB" secondAttribute="top" constant="8" id="f7y-HQ-mGR"/>
+                                    </constraints>
+                                </view>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="rgW-jf-m9d" firstAttribute="top" secondItem="iNd-ps-mjk" secondAttribute="top" constant="8" id="0Bg-cp-v7G"/>
+                                <constraint firstItem="rgW-jf-m9d" firstAttribute="leading" secondItem="pMG-OG-ZdB" secondAttribute="trailing" constant="16" id="0NA-K8-Ugf"/>
+                                <constraint firstAttribute="bottom" secondItem="rgW-jf-m9d" secondAttribute="bottom" constant="8" id="6w5-xC-JWh"/>
+                                <constraint firstItem="pMG-OG-ZdB" firstAttribute="top" secondItem="iNd-ps-mjk" secondAttribute="top" id="J3H-WG-QUk"/>
+                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="pMG-OG-ZdB" secondAttribute="bottom" id="Q0j-AP-Gi8"/>
+                                <constraint firstItem="pMG-OG-ZdB" firstAttribute="leading" secondItem="iNd-ps-mjk" secondAttribute="leading" id="rbt-gj-hFB"/>
+                                <constraint firstAttribute="trailing" secondItem="rgW-jf-m9d" secondAttribute="trailing" id="uyt-5c-NqV"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                </stackView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m22-xF-3SW" userLabel="Separator">
+                    <rect key="frame" x="16" y="275" width="343" height="1"/>
+                    <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="9Xz-6j-JUS"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="27"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="krx-2Z-uxn">
+                    <rect key="frame" x="8" y="292" width="36" height="38"/>
+                    <color key="tintColor" red="0.43422997219999998" green="0.61122969159999996" blue="0.47900890839999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
+                    <state key="normal" image="arrow.left.circle.fill" catalog="system"/>
+                    <connections>
+                        <action selector="leftTap:" destination="-1" eventType="touchUpInside" id="FXn-S4-FkO"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rXr-bd-a8N">
+                    <rect key="frame" x="331" y="292" width="36" height="38"/>
+                    <color key="tintColor" red="0.43422997219999998" green="0.61122969159999996" blue="0.47900890839999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
+                    <state key="normal" image="arrow.right.circle.fill" catalog="system"/>
+                    <connections>
+                        <action selector="rightTap:" destination="-1" eventType="touchUpInside" id="acS-Nh-hpH"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="f6N-RL-KiO" secondAttribute="trailing" id="2Jg-2k-4Ca"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="RX4-Rv-F96" secondAttribute="bottom" constant="16" id="45X-Ll-wFq"/>
+                <constraint firstItem="ZfL-ln-i07" firstAttribute="top" secondItem="cNU-kC-iR8" secondAttribute="bottom" constant="16" id="8lW-JH-oUp"/>
+                <constraint firstItem="fts-cP-Z0l" firstAttribute="top" secondItem="ZfL-ln-i07" secondAttribute="bottom" constant="16" id="Dcx-BA-pRD"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="m22-xF-3SW" secondAttribute="trailing" constant="16" id="Mce-OR-DfX"/>
+                <constraint firstItem="rXr-bd-a8N" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="-8" id="OzX-gx-O0b"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="fts-cP-Z0l" secondAttribute="trailing" constant="16" id="Sb0-2w-6ei"/>
+                <constraint firstItem="f6N-RL-KiO" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Uk1-Tb-PB5"/>
+                <constraint firstItem="RX4-Rv-F96" firstAttribute="top" relation="greaterThanOrEqual" secondItem="fts-cP-Z0l" secondAttribute="bottom" constant="16" id="ZRy-8Z-ugX"/>
+                <constraint firstItem="m22-xF-3SW" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="aCn-ie-3vv"/>
+                <constraint firstItem="cNU-kC-iR8" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="bpZ-ZX-iTS"/>
+                <constraint firstItem="krx-2Z-uxn" firstAttribute="top" secondItem="m22-xF-3SW" secondAttribute="bottom" constant="16" id="cvq-Cq-fDt"/>
+                <constraint firstItem="cNU-kC-iR8" firstAttribute="top" secondItem="f6N-RL-KiO" secondAttribute="bottom" id="diP-dU-5O1"/>
+                <constraint firstItem="krx-2Z-uxn" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="8" id="dye-fS-AgW"/>
+                <constraint firstItem="f6N-RL-KiO" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="f1l-gU-Pip"/>
+                <constraint firstItem="RX4-Rv-F96" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="gCp-9R-NQR"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="cNU-kC-iR8" secondAttribute="trailing" id="kRB-fi-Vg8"/>
+                <constraint firstItem="rXr-bd-a8N" firstAttribute="top" secondItem="m22-xF-3SW" secondAttribute="bottom" constant="16" id="lSK-iV-CL6"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ZfL-ln-i07" secondAttribute="trailing" constant="16" id="lh5-Ew-k4N"/>
+                <constraint firstItem="ZfL-ln-i07" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="lj5-u6-V6k"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="RX4-Rv-F96" secondAttribute="trailing" constant="16" id="q0b-MT-05U"/>
+                <constraint firstItem="m22-xF-3SW" firstAttribute="top" secondItem="cNU-kC-iR8" secondAttribute="bottom" id="tF9-yO-9q2"/>
+                <constraint firstItem="fts-cP-Z0l" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="tnR-ap-kiA"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="136.80000000000001" y="94.902548725637189"/>
+        </view>
     </objects>
+    <resources>
+        <image name="arrow.left.circle.fill" catalog="system" width="64" height="60"/>
+        <image name="arrow.right.circle.fill" catalog="system" width="64" height="60"/>
+    </resources>
 </document>

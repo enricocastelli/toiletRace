@@ -185,14 +185,14 @@ extension ControllerView: UITableViewDataSource {
         if RaceResultManager.shared.finalResults.count > indexPath.row {
             // this poo finished the race
             let poo = RaceResultManager.shared.finalResults[indexPath.row]
-            cell.textLabel?.text = "\(indexPath.row + 1)) \(poo.player.displayName ?? poo.player.name.rawValue)"
+            cell.textLabel?.text = "\(indexPath.row + 1)) \(poo.poo.displayName ?? poo.poo.name.rawValue)"
             if indexPath.row != 0 {
                 // poo is not first. Detail text show's time to Winner in red
                 cell.detailTextLabel?.text = "\((poo.timeToWinner ?? 0).string())"
                 cell.detailTextLabel?.textColor = UIColor.red
             } else {
                 // poo is first. Detail text show's time
-                cell.detailTextLabel?.text = "\(poo.time.string())"
+                cell.detailTextLabel?.text = poo.time == nil ? "NA" : "\(poo.time!.string())"
                 cell.detailTextLabel?.textColor = cellTextColor
             }
         } else {

@@ -95,3 +95,11 @@ class BonusButton : UIButton {
     
     
 }
+
+class RoundedView: UIView {
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.cornerRadius = frame.height/2
+    }
+}

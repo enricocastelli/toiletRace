@@ -31,13 +31,14 @@ class GameResultVC: UIViewController {
         tableView.allowsSelection = false
         titleLabel.text = "RACE RESULTS"
         finalResults = finalResults.sorted { (obj1, obj2) -> Bool in
-            return obj1.time < obj2.time
+            guard let time1 = obj1.time , let time2 = obj2.time else { return false }
+            return time1 < time2
         }
     }
     
     @IBAction func playTapped(_ sender: UIButton) {
         let first = WelcomeVC()
-        Navigation.main.viewControllers = [first]
+        navigation.viewControllers = [first]
     }
 }
 

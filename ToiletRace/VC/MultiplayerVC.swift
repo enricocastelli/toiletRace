@@ -12,29 +12,37 @@ import MultipeerConnectivity
 class MultiplayerVC: UIViewController, StoreProvider, AlertProvider {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var barView: BarView!
     var rooms: [Room] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTable()
+        setBarView()
         addRoomsObserver()
     }
     
-    func setupTable() {
+    private func setupTable() {
         tableView.backgroundColor = .white
         tableView.refreshControl = UIRefreshControl()
-        tableView.refreshControl?.addTarget(self, action:
-            #selector(handleRefreshControl),for: .valueChanged)
+        tableView.register(UINib(nibName: RoomCell.id, bundle: nil), forCellReuseIdentifier: RoomCell.id)
+        tableView.refreshControl?.addTarget(self, action: #selector(handleRefreshControl),for: .valueChanged)
     }
     
-    
-    @IBAction func backTapped(_ sender: UIButton) {
-        Navigation.main.popToRootViewController(animated: true)
+    private func setBarView(){
+        barView.onLeftTap = backTapped
+        barView.onRightTap = addTapped
+        barView.rightImage = UIImage(systemName: "plus.app.fill")
+        barView.lineHidden = false
+    }
+        
+    private func backTapped() {
+        navigation.pop()
     }
     
-    @IBAction func addTapped(_ sender: UIButton) {
+    private func addTapped() {
         let room = createRoom("testami")
-        Navigation.main.pushViewController(BathroomVC(room), animated: true)
+        navigation.push(BathroomVC(room))
     }
     
     @objc func handleRefreshControl() {
@@ -54,7 +62,7 @@ extension MultiplayerVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         removeRoomObservers()
         subscribeToRoom(rooms[indexPath.row].id) { (room) in
-            Navigation.main.pushViewController(BathroomVC(room), animated: true)
+            self.navigation.push(BathroomVC(room))
         }
     }
 }
@@ -66,11 +74,8 @@ extension MultiplayerVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.backgroundColor = UIColor.clear
-        cell.textLabel?.textColor = .black
-        cell.textLabel?.text = rooms[indexPath.row].name
-        cell.selectionStyle = .none
+        let cell = tableView.dequeueReusableCell(withIdentifier: RoomCell.id, for: indexPath) as! RoomCell
+        cell.room = rooms[indexPath.row]
         return cell
     }
     

@@ -7,10 +7,9 @@
 //
 
 struct Result {
-    var player: Poo
-    var time: Float
+    var poo: Poo
+    var time: Float?
     var timeToWinner: Float?
-    var penalty: Bool?
 }
 
 import Foundation
@@ -20,7 +19,7 @@ class RaceResultManager {
     
     static var shared = RaceResultManager()
     /// startDate is saved when game start (calculate the timing off players when they finish the track -> totalTime = startDate - arrivalDate
-    private var startDate : Date?
+    private var startDate = Date()
     ///final results created when players finish the track and passed to GameResultVC for showing time and positions
     var finalResults: [Result] = []
     ///property to detect if game is finished and asking for results
@@ -34,16 +33,16 @@ class RaceResultManager {
         finalResults = []
     }
     
-    func didFinish(poo: Poo, penalty: Bool) {
-        guard isGameOver == false, !finalResults.contains(where: { $0.player.id == poo.id}) else { return }
-        let result = createResult(poo: poo, penalty: penalty)
+    func didFinish(poo: Poo) {
+        guard isGameOver == false, !finalResults.contains(where: { $0.poo.id == poo.id}) else { return }
+        let result = createResult(poo: poo)
         finalResults.append(result)
     }
     
-    private func createResult(poo: Poo, penalty: Bool) -> Result {
-        let totalTime = calculateTime(firstDate: startDate!) + (penalty ? 3 : 0)
+    private func createResult(poo: Poo) -> Result {
+        let totalTime = calculateTime(firstDate: startDate)
         let toWinner = timeToWinner(totalTime)
-        let result = Result(player: poo, time: totalTime, timeToWinner: toWinner, penalty: penalty)
+        let result = Result(poo: poo, time: totalTime, timeToWinner: toWinner)
         return result
     }
     
@@ -53,12 +52,12 @@ class RaceResultManager {
         guard finalResults.count != opponents.count + 1 else { return finalResults } // user is last
         for opponent in opponents {
             // opponent's result is already in final results
-            guard !finalResults.containsPoo(poo: opponent) else { continue }
+            guard !finalResults.containsPoo(poo: opponent) && !opponent.isMultiplayer else { continue }
             // opponent's result is not in final results, so didn't finish yet, i have to calculate a simulated time
             let distance = abs(length) + opponent.node.presentation.position.z
-            let totalTime = calculateTime(firstDate: startDate!) + distance/10
+            let totalTime = calculateTime(firstDate: startDate) + distance/10
             let toWinner = timeToWinner(totalTime)
-            let res = Result(player: opponent, time: totalTime, timeToWinner: toWinner, penalty: false)
+            let res = Result(poo: opponent, time: totalTime, timeToWinner: toWinner)
             finalResults.append(res)
         }
         return finalResults

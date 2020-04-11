@@ -128,7 +128,7 @@ extension Array where Element == Poo {
 extension Array where Element == Result {
     
     func containsPoo(poo: Poo) -> Bool {
-        return self.contains { $0.player == poo }
+        return self.contains { $0.poo == poo }
     }
 }
 

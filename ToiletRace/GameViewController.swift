@@ -181,9 +181,9 @@ class GameViewController: UIViewController, BonusProvider, PooNodeCreator, Conta
     
     /// initial animation of camera moving from end off track to beginning. Scope of this action is also to load the nodes so that the rendering is less bumpy during the race.
     @objc func moveCamera() {
-        Navigation.stopLoading()
+        navigation.stopLoading()
         let cameraPosition = SCNVector3(Values.xTot, Values.yTot, Values.zTot)
-        let action = SCNAction.move(to: cameraPosition, duration: 3)
+        let action = SCNAction.move(to: cameraPosition, duration: 2)
         selfieStickNode.runAction(action) {
             self.selfieStickNode.childNodes.first?.camera?.motionBlurIntensity = 0.0
             self.isReadyToStart()
@@ -297,7 +297,7 @@ class GameViewController: UIViewController, BonusProvider, PooNodeCreator, Conta
             let _ = Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { (_) in
                 DispatchQueue.main.async {
                     let result = GameResultVC(results: self.raceResultManager.getResults(opponents: self.currentPlayers.filter({$0.id != self.getID()})))
-                    Navigation.main.viewControllers = [result]
+                    self.navigation.viewControllers = [result]
                 }
 
             }
@@ -306,7 +306,7 @@ class GameViewController: UIViewController, BonusProvider, PooNodeCreator, Conta
     
     /// if user didn't finish (ex: entered the toilet..) this force the game to end with a penalty. Basically same thing as handleFinish method but with small changes.
     func forceFinish() {
-        raceResultManager.didFinish(poo: SessionData.shared.selectedPlayer, penalty: true)
+        raceResultManager.didFinish(poo: SessionData.shared.selectedPlayer)
         gameOver = true
         gameIsOver()
     }
@@ -315,7 +315,7 @@ class GameViewController: UIViewController, BonusProvider, PooNodeCreator, Conta
     func didFinish(node: SCNNode) {
         node.removeFromParentNode()
         guard let poo = currentPlayers.filter({$0.node == node}).first else { return }
-        raceResultManager.didFinish(poo: poo, penalty: false)
+        raceResultManager.didFinish(poo: poo)
     }
     
     func addFinalAnimation() {
@@ -336,7 +336,7 @@ class GameViewController: UIViewController, BonusProvider, PooNodeCreator, Conta
         controllerView.stop()
         sceneView.stop(nil)
         multiplayer?.removeObservers()
-        Navigation.main.popToRootViewController(animated: true)
+        navigation.pop()
     }
     
     required init?(coder: NSCoder) {
@@ -373,9 +373,9 @@ extension GameViewController : SCNSceneRendererDelegate {
             if Values.yTot < 20 { Values.yTot += 0.01 }
             if selfieStickNode.eulerAngles.x > -Float.pi/2 { selfieStickNode.eulerAngles.x -= 0.01 }
         }
+        guard started == true else { return }
         let cameraPosition = getCameraPosition()
         selfieStickNode.position = cameraPosition
-        guard started == true else { return }
         movePoops()
         blockAvoider()
     }
@@ -403,7 +403,12 @@ extension GameViewController : MultiplayerDelegate {
             for pl in players {
                 if pl.id != self.getID() {
                     let poo = self.currentPlayers.pooWithPl(pl)
-                    poo.node.runAction(SCNAction.move(to: SCNVector3(pl.position.x, pl.position.y, pl.position.z), duration: 0.1))
+                    if pl.status == .Finish {
+                        poo.node.removeFromParentNode()
+                        self.raceResultManager.didFinish(poo: poo)
+                    } else {
+                        poo.node.runAction(SCNAction.move(to: SCNVector3(pl.position.x, pl.position.y, pl.position.z), duration: 0.1))
+                    }
                 }
             }
         })

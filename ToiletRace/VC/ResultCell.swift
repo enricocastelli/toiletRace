@@ -29,20 +29,16 @@ class ResultCell: UITableViewCell {
     }
     var result : Result? {
         didSet {
-            if result?.penalty == true {
-                timeLabel.text = "\(result?.time.string() ?? "") + 3"
-            } else {
-                timeLabel.text = result?.time.string()
-            }
-            titleLabel.text = result?.player.displayName ?? result?.player.name.rawValue
+            timeLabel.text = result?.time?.string()
+            titleLabel.text = result?.poo.displayName ?? result?.poo.name.rawValue
             if let displayName = SessionData.shared.selectedPlayer.displayName {
-                if result?.player.displayName == displayName {
+                if result?.poo.displayName == displayName {
                     titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
                 } else {
                     titleLabel.font = UIFont.systemFont(ofSize: 16)
                 }
             } else {
-                if result?.player.name.rawValue == SessionData.shared.selectedPlayer.name.rawValue {
+                if result?.poo.name.rawValue == SessionData.shared.selectedPlayer.name.rawValue {
                     titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
                 } else {
                     titleLabel.font = UIFont.systemFont(ofSize: 16)

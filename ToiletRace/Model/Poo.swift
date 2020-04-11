@@ -106,6 +106,13 @@ class Poo: StoreProvider, Equatable {
         }
     }
     
+    // returns value of speed from 0 to 1
+    func speed() -> Float {
+        let basedValue = abs(velocity())*1000 - 30
+        let maxValue: Float = 15
+        return basedValue/maxValue
+    }
+    
     /// Radius of sphere.
     func radius() -> CGFloat {
         switch name {
@@ -136,7 +143,7 @@ class Poo: StoreProvider, Equatable {
         case .HoleRunner:
             return 0.4
         case .IndianSurprise:
-            return 0.1
+            return 0.5
         case .BrownTornado:
             return 0.4
         case .GarganTurd:
@@ -148,6 +155,14 @@ class Poo: StoreProvider, Equatable {
         case .MightyPoop:
             return 0
         }
+    }
+    
+    // returns value of strength from 0 to 1
+    func strength() -> Float {
+        let maxValue: Float = 10
+        let amplifiedValue = Float(restitution())*19
+        let basedValue = (maxValue - Float(amplifiedValue))
+        return basedValue/maxValue
     }
     
     /// When user taps, poop apply this force at x.
@@ -170,6 +185,13 @@ class Poo: StoreProvider, Equatable {
         case .MightyPoop:
             return 3
         }
+    }
+    
+    // returns value of driveability from 0 to 1
+    func driveability() -> Float {
+        let basedValue = Float(turningForce())
+        let maxValue: Float = 3
+        return basedValue/maxValue
     }
     
     /// Color shown in result table

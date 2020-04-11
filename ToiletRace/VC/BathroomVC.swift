@@ -35,8 +35,8 @@ class BathroomVC: UIViewController, AlertProvider {
     func goToRace() {
         let gameVC = GameViewController(players: players.toPoos())
         gameVC.room = room
-        Navigation.main.pushViewController(gameVC, animated: true)
-        Navigation.startLoading()
+        navigation.push(gameVC)
+        navigation.startLoading()
     }
     
     @IBAction func backTapped(_ sender: UIButton) {
@@ -47,7 +47,7 @@ class BathroomVC: UIViewController, AlertProvider {
                 self.removePlayerObservers(self.room.id)
             }
         }
-        Navigation.main.popViewController(animated: true)
+        navigation.pop()
     }
     
     @IBAction func startTapped(_ sender: UIButton) {

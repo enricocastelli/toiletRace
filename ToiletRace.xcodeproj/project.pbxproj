@@ -22,8 +22,18 @@
 		1C7C1C1921C7B2E400D47FC8 /* ContactProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7C1C1821C7B2E400D47FC8 /* ContactProvider.swift */; };
 		1C7C1C1B21C7B79200D47FC8 /* Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7C1C1A21C7B79200D47FC8 /* Navigation.swift */; };
 		1C7C1C1D21C7B85A00D47FC8 /* ControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7C1C1C21C7B85A00D47FC8 /* ControllerView.swift */; };
-		1C815D2F21806496006557D4 /* ShowroomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C815D2D21806496006557D4 /* ShowroomVC.swift */; };
-		1C815D3021806496006557D4 /* ShowroomVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C815D2E21806496006557D4 /* ShowroomVC.xib */; };
+		1C903E76244136BB00952C80 /* ToiletPaperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C903E75244136BB00952C80 /* ToiletPaperView.swift */; };
+		1C903E7E2441B6F500952C80 /* Lato-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1C903E782441B6F500952C80 /* Lato-Italic.ttf */; };
+		1C903E7F2441B6F500952C80 /* Lato-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1C903E792441B6F500952C80 /* Lato-Thin.ttf */; };
+		1C903E802441B6F500952C80 /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1C903E7A2441B6F500952C80 /* Lato-Bold.ttf */; };
+		1C903E812441B6F500952C80 /* Lato-Hairline.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1C903E7B2441B6F500952C80 /* Lato-Hairline.ttf */; };
+		1C903E822441B6F500952C80 /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1C903E7C2441B6F500952C80 /* Lato-Light.ttf */; };
+		1C903E832441B6F500952C80 /* Lato-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1C903E7D2441B6F500952C80 /* Lato-Medium.ttf */; };
+		1C903E862441BA5F00952C80 /* ShowroomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C903E842441BA5F00952C80 /* ShowroomVC.swift */; };
+		1C903E872441BA5F00952C80 /* ShowroomVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C903E852441BA5F00952C80 /* ShowroomVC.xib */; };
+		1C903E892441CF7900952C80 /* BarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C903E882441CF7900952C80 /* BarView.swift */; };
+		1C903E8B24421CB800952C80 /* WhirlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C903E8A24421CB700952C80 /* WhirlView.swift */; };
+		1C903E8D2442248A00952C80 /* TextPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C903E8C2442248A00952C80 /* TextPresenter.swift */; };
 		1CA23A38243EF9F500F8872C /* BonusProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA23A37243EF9F500F8872C /* BonusProvider.swift */; };
 		1CA23A3A243F041A00F8872C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1CA23A39243F041A00F8872C /* GoogleService-Info.plist */; };
 		1CA23A3C243F6ED200F8872C /* PlayerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA23A3B243F6ED200F8872C /* PlayerModel.swift */; };
@@ -49,6 +59,8 @@
 		1CBD9E6621775A7000109DC3 /* smoke.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CBD9E6421775A7000109DC3 /* smoke.png */; };
 		1CBD9E6721775A7000109DC3 /* smoke.scnp in Resources */ = {isa = PBXBuildFile; fileRef = 1CBD9E6521775A7000109DC3 /* smoke.scnp */; };
 		1CBD9E692178A29900109DC3 /* NodeCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CBD9E682178A29900109DC3 /* NodeCreator.swift */; };
+		1CBEC03324423B4B003C82C8 /* RoomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CBEC03124423B4B003C82C8 /* RoomCell.swift */; };
+		1CBEC03424423B4B003C82C8 /* RoomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CBEC03224423B4B003C82C8 /* RoomCell.xib */; };
 		1CE146D823AB7D8E00CCC356 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE146D623AB7D8E00CCC356 /* SettingsVC.swift */; };
 		1CE146D923AB7D8E00CCC356 /* SettingsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CE146D723AB7D8E00CCC356 /* SettingsVC.xib */; };
 		1CE3CB32219CBF48007DB899 /* bokeh.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CE3CB30219CBF48007DB899 /* bokeh.png */; };
@@ -74,8 +86,18 @@
 		1C7C1C1821C7B2E400D47FC8 /* ContactProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactProvider.swift; sourceTree = "<group>"; };
 		1C7C1C1A21C7B79200D47FC8 /* Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigation.swift; sourceTree = "<group>"; };
 		1C7C1C1C21C7B85A00D47FC8 /* ControllerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerView.swift; sourceTree = "<group>"; };
-		1C815D2D21806496006557D4 /* ShowroomVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowroomVC.swift; sourceTree = "<group>"; };
-		1C815D2E21806496006557D4 /* ShowroomVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShowroomVC.xib; sourceTree = "<group>"; };
+		1C903E75244136BB00952C80 /* ToiletPaperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToiletPaperView.swift; sourceTree = "<group>"; };
+		1C903E782441B6F500952C80 /* Lato-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Italic.ttf"; sourceTree = "<group>"; };
+		1C903E792441B6F500952C80 /* Lato-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Thin.ttf"; sourceTree = "<group>"; };
+		1C903E7A2441B6F500952C80 /* Lato-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Bold.ttf"; sourceTree = "<group>"; };
+		1C903E7B2441B6F500952C80 /* Lato-Hairline.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Hairline.ttf"; sourceTree = "<group>"; };
+		1C903E7C2441B6F500952C80 /* Lato-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Light.ttf"; sourceTree = "<group>"; };
+		1C903E7D2441B6F500952C80 /* Lato-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Medium.ttf"; sourceTree = "<group>"; };
+		1C903E842441BA5F00952C80 /* ShowroomVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowroomVC.swift; sourceTree = "<group>"; };
+		1C903E852441BA5F00952C80 /* ShowroomVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShowroomVC.xib; sourceTree = "<group>"; };
+		1C903E882441CF7900952C80 /* BarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarView.swift; sourceTree = "<group>"; };
+		1C903E8A24421CB700952C80 /* WhirlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhirlView.swift; sourceTree = "<group>"; };
+		1C903E8C2442248A00952C80 /* TextPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextPresenter.swift; sourceTree = "<group>"; };
 		1CA23A37243EF9F500F8872C /* BonusProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonusProvider.swift; sourceTree = "<group>"; };
 		1CA23A39243F041A00F8872C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1CA23A3B243F6ED200F8872C /* PlayerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerModel.swift; sourceTree = "<group>"; };
@@ -103,6 +125,8 @@
 		1CBD9E6421775A7000109DC3 /* smoke.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smoke.png; sourceTree = "<group>"; };
 		1CBD9E6521775A7000109DC3 /* smoke.scnp */ = {isa = PBXFileReference; lastKnownFileType = file.scp; path = smoke.scnp; sourceTree = "<group>"; };
 		1CBD9E682178A29900109DC3 /* NodeCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeCreator.swift; sourceTree = "<group>"; };
+		1CBEC03124423B4B003C82C8 /* RoomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomCell.swift; sourceTree = "<group>"; };
+		1CBEC03224423B4B003C82C8 /* RoomCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RoomCell.xib; sourceTree = "<group>"; };
 		1CE146D623AB7D8E00CCC356 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		1CE146D723AB7D8E00CCC356 /* SettingsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsVC.xib; sourceTree = "<group>"; };
 		1CE3CB30219CBF48007DB899 /* bokeh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bokeh.png; sourceTree = "<group>"; };
@@ -162,9 +186,12 @@
 			isa = PBXGroup;
 			children = (
 				1C03B3A3217E658F003CD652 /* Loading.swift */,
+				1C903E882441CF7900952C80 /* BarView.swift */,
 				1C7C1C1C21C7B85A00D47FC8 /* ControllerView.swift */,
 				1C034CFF218CA06E001C5694 /* BonusButton.swift */,
-				1C7C1C1A21C7B79200D47FC8 /* Navigation.swift */,
+				1C903E75244136BB00952C80 /* ToiletPaperView.swift */,
+				1C903E8A24421CB700952C80 /* WhirlView.swift */,
+				1C903E8C2442248A00952C80 /* TextPresenter.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -176,24 +203,39 @@
 				1C27D34621CA992200E3C322 /* MultiplayerVC.swift */,
 				1CA23A41243F7BBE00F8872C /* BathroomVC.swift */,
 				1CE146D623AB7D8E00CCC356 /* SettingsVC.swift */,
-				1C815D2D21806496006557D4 /* ShowroomVC.swift */,
 				1CB8D7912176168200B38BA2 /* GameResultVC.swift */,
+				1C903E842441BA5F00952C80 /* ShowroomVC.swift */,
 				1CB8D7A02176168200B38BA2 /* ResultCell.swift */,
+				1CBEC03124423B4B003C82C8 /* RoomCell.swift */,
 				1C990342244098C400C9ACC8 /* xibs */,
 			);
 			path = VC;
+			sourceTree = "<group>";
+		};
+		1C903E772441B6F500952C80 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				1C903E782441B6F500952C80 /* Lato-Italic.ttf */,
+				1C903E792441B6F500952C80 /* Lato-Thin.ttf */,
+				1C903E7A2441B6F500952C80 /* Lato-Bold.ttf */,
+				1C903E7B2441B6F500952C80 /* Lato-Hairline.ttf */,
+				1C903E7C2441B6F500952C80 /* Lato-Light.ttf */,
+				1C903E7D2441B6F500952C80 /* Lato-Medium.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		1C990342244098C400C9ACC8 /* xibs */ = {
 			isa = PBXGroup;
 			children = (
 				1C76170421CA3D7B0085FCB8 /* WelcomeVC.xib */,
+				1C903E852441BA5F00952C80 /* ShowroomVC.xib */,
 				1C27D34821CB947A00E3C322 /* MultiplayerVC.xib */,
 				1CA23A42243F7BBE00F8872C /* BathroomVC.xib */,
 				1CE146D723AB7D8E00CCC356 /* SettingsVC.xib */,
-				1C815D2E21806496006557D4 /* ShowroomVC.xib */,
 				1CB8D79E2176168200B38BA2 /* GameResultVC.xib */,
 				1CB8D79F2176168200B38BA2 /* ResultCell.xib */,
+				1CBEC03224423B4B003C82C8 /* RoomCell.xib */,
 			);
 			path = xibs;
 			sourceTree = "<group>";
@@ -221,9 +263,11 @@
 			children = (
 				1CB8D77C217615C000B38BA2 /* AppDelegate.swift */,
 				1CA23A39243F041A00F8872C /* GoogleService-Info.plist */,
+				1C903E772441B6F500952C80 /* Fonts */,
 				1C657EC82199D5CF00783BD9 /* Particles */,
 				1CB8D77E217615C000B38BA2 /* art.scnassets */,
 				1CB8D780217615C000B38BA2 /* GameViewController.swift */,
+				1C7C1C1A21C7B79200D47FC8 /* Navigation.swift */,
 				1C7C1C3221C7FC3300D47FC8 /* Views */,
 				1CE22E652440DE1800FE5077 /* Providers */,
 				1C7C1C3021C7FBFD00D47FC8 /* Managers */,
@@ -328,15 +372,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				1CBD9E6721775A7000109DC3 /* smoke.scnp in Resources */,
+				1C903E7F2441B6F500952C80 /* Lato-Thin.ttf in Resources */,
+				1C903E7E2441B6F500952C80 /* Lato-Italic.ttf in Resources */,
+				1C903E832441B6F500952C80 /* Lato-Medium.ttf in Resources */,
 				1C27D34921CB947A00E3C322 /* MultiplayerVC.xib in Resources */,
 				1CA23A3A243F041A00F8872C /* GoogleService-Info.plist in Resources */,
 				1CB8D77F217615C000B38BA2 /* art.scnassets in Resources */,
+				1C903E822441B6F500952C80 /* Lato-Light.ttf in Resources */,
+				1C903E812441B6F500952C80 /* Lato-Hairline.ttf in Resources */,
+				1CBEC03424423B4B003C82C8 /* RoomCell.xib in Resources */,
 				1CA23A44243F7BBE00F8872C /* BathroomVC.xib in Resources */,
 				1CB8D789217615C100B38BA2 /* LaunchScreen.storyboard in Resources */,
 				1C0EEBC5217F56DE008EE331 /* spark.png in Resources */,
+				1C903E872441BA5F00952C80 /* ShowroomVC.xib in Resources */,
 				1C0EEBC4217F56DE008EE331 /* spluff.scnp in Resources */,
 				1CB8D786217615C100B38BA2 /* Assets.xcassets in Resources */,
-				1C815D3021806496006557D4 /* ShowroomVC.xib in Resources */,
+				1C903E802441B6F500952C80 /* Lato-Bold.ttf in Resources */,
 				1CBD9E6621775A7000109DC3 /* smoke.png in Resources */,
 				1CE146D923AB7D8E00CCC356 /* SettingsVC.xib in Resources */,
 				1CE3CB32219CBF48007DB899 /* bokeh.png in Resources */,
@@ -396,9 +447,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				1CA23A38243EF9F500F8872C /* BonusProvider.swift in Sources */,
-				1C815D2F21806496006557D4 /* ShowroomVC.swift in Sources */,
 				1C27D24921CA899E00E3C322 /* MultiplayerManager.swift in Sources */,
 				1CB8D781217615C000B38BA2 /* GameViewController.swift in Sources */,
+				1CBEC03324423B4B003C82C8 /* RoomCell.swift in Sources */,
+				1C903E8B24421CB800952C80 /* WhirlView.swift in Sources */,
 				1CA23A40243F791B00F8872C /* ErrorHandling.swift in Sources */,
 				1CB8D7B22176168300B38BA2 /* ResultCell.swift in Sources */,
 				1CB8D7A92176168300B38BA2 /* Poo.swift in Sources */,
@@ -412,19 +464,23 @@
 				1CA23A3C243F6ED200F8872C /* PlayerModel.swift in Sources */,
 				1C7C1C1921C7B2E400D47FC8 /* ContactProvider.swift in Sources */,
 				1CE146D823AB7D8E00CCC356 /* SettingsVC.swift in Sources */,
+				1C903E862441BA5F00952C80 /* ShowroomVC.swift in Sources */,
 				1C76170721CA3D7B0085FCB8 /* WelcomeVC.swift in Sources */,
 				1CB8D7AE2176168300B38BA2 /* Common.swift in Sources */,
 				1CA23A3E243F78A900F8872C /* AlertProvider.swift in Sources */,
+				1C903E8D2442248A00952C80 /* TextPresenter.swift in Sources */,
 				1C27D35A21CBDB8300E3C322 /* PooNodeCreator.swift in Sources */,
 				1CA23A4A243FBE6400F8872C /* RoomsProvider.swift in Sources */,
 				1CA23A46243F95F400F8872C /* ModelsExtension.swift in Sources */,
 				1C76170221C998290085FCB8 /* RaceResultManager.swift in Sources */,
+				1C903E892441CF7900952C80 /* BarView.swift in Sources */,
 				1CB8D7A32176168300B38BA2 /* GameResultVC.swift in Sources */,
 				1C7C1C1D21C7B85A00D47FC8 /* ControllerView.swift in Sources */,
 				1CFE97082191D942007F837A /* Bonus.swift in Sources */,
 				1C03B3A4217E658F003CD652 /* Loading.swift in Sources */,
 				1C27D35E21CCF6C000E3C322 /* StoreProvider.swift in Sources */,
 				1CB8D7A42176168300B38BA2 /* Extension.swift in Sources */,
+				1C903E76244136BB00952C80 /* ToiletPaperView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

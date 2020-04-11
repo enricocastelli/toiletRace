@@ -20,8 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         self.window = UIWindow(frame: UIScreen.main.bounds)
         let firstVC = WelcomeVC()
-        let nav = UINavigationController(rootViewController: firstVC)
-        Navigation.main = nav
+        let nav = Navigation(rootViewController: firstVC)
         nav.navigationBar.isHidden = true
         self.window?.rootViewController = nav
         self.window?.makeKeyAndVisible()

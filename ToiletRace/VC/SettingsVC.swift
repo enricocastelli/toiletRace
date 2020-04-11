@@ -24,7 +24,7 @@ class SettingsVC: UIViewController, StoreProvider {
     
     
     @IBAction func backTapped(_ sender: UIButton) {
-        Navigation.main.popViewController(animated: true)
+        navigation.pop()
         
     }
     
