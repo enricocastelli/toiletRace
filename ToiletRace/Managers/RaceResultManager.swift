@@ -17,30 +17,32 @@ import SceneKit
 
 class RaceResultManager {
     
-    static var shared = RaceResultManager()
     /// startDate is saved when game start (calculate the timing off players when they finish the track -> totalTime = startDate - arrivalDate
     private var startDate = Date()
     ///final results created when players finish the track and passed to GameResultVC for showing time and positions
     var finalResults: [Result] = []
     ///property to detect if game is finished and asking for results
     private var isGameOver = false
-    private var length: Float = 0
+    private let length: Float
     
-    func start(_ length: Float) {
+    init(_ length: Float) {
         self.length = length
+    }
+    
+    func start() {
         isGameOver = false
         startDate = Date()
         finalResults = []
     }
     
-    func didFinish(poo: Poo) {
-        guard isGameOver == false, !finalResults.contains(where: { $0.poo.id == poo.id}) else { return }
-        let result = createResult(poo: poo)
+    func didFinish(poo: Poo, timeString: String? = nil) {
+        guard isGameOver == false, !finalResults.contains(where: { $0.poo == poo }) else { return }
+        let result = createResult(poo: poo, timeString: timeString)
         finalResults.append(result)
     }
     
-    private func createResult(poo: Poo) -> Result {
-        let totalTime = calculateTime(firstDate: startDate)
+    private func createResult(poo: Poo, timeString: String? = nil) -> Result {
+        let totalTime = timeString?.float() ?? calculateTime(firstDate: startDate)
         let toWinner = timeToWinner(totalTime)
         let result = Result(poo: poo, time: totalTime, timeToWinner: toWinner)
         return result
@@ -61,6 +63,10 @@ class RaceResultManager {
             finalResults.append(res)
         }
         return finalResults
+    }
+    
+    func userTime() -> Float? {
+        return finalResults.filter { $0.poo == SessionData.shared.selectedPlayer }.first?.time
     }
     
     private func timeToWinner(_ time: Float) -> Float {

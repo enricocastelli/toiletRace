@@ -61,6 +61,6 @@ class WelcomeVC: UIViewController, TextPresenter {
     }
     
     @IBAction func settingsTapped(_ sender: UIButton) {
-        navigation.push(SettingsVC())
+        navigation.present(SettingsVC(), animated: true, completion: nil)
     }
 }

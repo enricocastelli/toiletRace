@@ -61,6 +61,10 @@
 		1CBD9E692178A29900109DC3 /* NodeCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CBD9E682178A29900109DC3 /* NodeCreator.swift */; };
 		1CBEC03324423B4B003C82C8 /* RoomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CBEC03124423B4B003C82C8 /* RoomCell.swift */; };
 		1CBEC03424423B4B003C82C8 /* RoomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CBEC03224423B4B003C82C8 /* RoomCell.xib */; };
+		1CCE07E124424FCC00C43C73 /* NibView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCE07E024424FCC00C43C73 /* NibView.swift */; };
+		1CCE07E32442500500C43C73 /* ControllerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CCE07E22442500500C43C73 /* ControllerView.xib */; };
+		1CDC22CC24436B1A004BBEA2 /* RankCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDC22CA24436B1A004BBEA2 /* RankCell.swift */; };
+		1CDC22CD24436B1A004BBEA2 /* RankCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CDC22CB24436B1A004BBEA2 /* RankCell.xib */; };
 		1CE146D823AB7D8E00CCC356 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE146D623AB7D8E00CCC356 /* SettingsVC.swift */; };
 		1CE146D923AB7D8E00CCC356 /* SettingsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CE146D723AB7D8E00CCC356 /* SettingsVC.xib */; };
 		1CE3CB32219CBF48007DB899 /* bokeh.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CE3CB30219CBF48007DB899 /* bokeh.png */; };
@@ -127,6 +131,10 @@
 		1CBD9E682178A29900109DC3 /* NodeCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeCreator.swift; sourceTree = "<group>"; };
 		1CBEC03124423B4B003C82C8 /* RoomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomCell.swift; sourceTree = "<group>"; };
 		1CBEC03224423B4B003C82C8 /* RoomCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RoomCell.xib; sourceTree = "<group>"; };
+		1CCE07E024424FCC00C43C73 /* NibView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibView.swift; sourceTree = "<group>"; };
+		1CCE07E22442500500C43C73 /* ControllerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ControllerView.xib; sourceTree = "<group>"; };
+		1CDC22CA24436B1A004BBEA2 /* RankCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankCell.swift; sourceTree = "<group>"; };
+		1CDC22CB24436B1A004BBEA2 /* RankCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RankCell.xib; sourceTree = "<group>"; };
 		1CE146D623AB7D8E00CCC356 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		1CE146D723AB7D8E00CCC356 /* SettingsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsVC.xib; sourceTree = "<group>"; };
 		1CE3CB30219CBF48007DB899 /* bokeh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bokeh.png; sourceTree = "<group>"; };
@@ -186,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				1C03B3A3217E658F003CD652 /* Loading.swift */,
+				1CCE07E024424FCC00C43C73 /* NibView.swift */,
 				1C903E882441CF7900952C80 /* BarView.swift */,
 				1C7C1C1C21C7B85A00D47FC8 /* ControllerView.swift */,
 				1C034CFF218CA06E001C5694 /* BonusButton.swift */,
@@ -206,6 +215,7 @@
 				1CB8D7912176168200B38BA2 /* GameResultVC.swift */,
 				1C903E842441BA5F00952C80 /* ShowroomVC.swift */,
 				1CB8D7A02176168200B38BA2 /* ResultCell.swift */,
+				1CDC22CA24436B1A004BBEA2 /* RankCell.swift */,
 				1CBEC03124423B4B003C82C8 /* RoomCell.swift */,
 				1C990342244098C400C9ACC8 /* xibs */,
 			);
@@ -233,9 +243,11 @@
 				1C27D34821CB947A00E3C322 /* MultiplayerVC.xib */,
 				1CA23A42243F7BBE00F8872C /* BathroomVC.xib */,
 				1CE146D723AB7D8E00CCC356 /* SettingsVC.xib */,
+				1CCE07E22442500500C43C73 /* ControllerView.xib */,
 				1CB8D79E2176168200B38BA2 /* GameResultVC.xib */,
 				1CB8D79F2176168200B38BA2 /* ResultCell.xib */,
 				1CBEC03224423B4B003C82C8 /* RoomCell.xib */,
+				1CDC22CB24436B1A004BBEA2 /* RankCell.xib */,
 			);
 			path = xibs;
 			sourceTree = "<group>";
@@ -389,6 +401,8 @@
 				1CB8D786217615C100B38BA2 /* Assets.xcassets in Resources */,
 				1C903E802441B6F500952C80 /* Lato-Bold.ttf in Resources */,
 				1CBD9E6621775A7000109DC3 /* smoke.png in Resources */,
+				1CCE07E32442500500C43C73 /* ControllerView.xib in Resources */,
+				1CDC22CD24436B1A004BBEA2 /* RankCell.xib in Resources */,
 				1CE146D923AB7D8E00CCC356 /* SettingsVC.xib in Resources */,
 				1CE3CB32219CBF48007DB899 /* bokeh.png in Resources */,
 				1CB8D7B02176168300B38BA2 /* GameResultVC.xib in Resources */,
@@ -450,6 +464,7 @@
 				1C27D24921CA899E00E3C322 /* MultiplayerManager.swift in Sources */,
 				1CB8D781217615C000B38BA2 /* GameViewController.swift in Sources */,
 				1CBEC03324423B4B003C82C8 /* RoomCell.swift in Sources */,
+				1CDC22CC24436B1A004BBEA2 /* RankCell.swift in Sources */,
 				1C903E8B24421CB800952C80 /* WhirlView.swift in Sources */,
 				1CA23A40243F791B00F8872C /* ErrorHandling.swift in Sources */,
 				1CB8D7B22176168300B38BA2 /* ResultCell.swift in Sources */,
@@ -478,6 +493,7 @@
 				1C7C1C1D21C7B85A00D47FC8 /* ControllerView.swift in Sources */,
 				1CFE97082191D942007F837A /* Bonus.swift in Sources */,
 				1C03B3A4217E658F003CD652 /* Loading.swift in Sources */,
+				1CCE07E124424FCC00C43C73 /* NibView.swift in Sources */,
 				1C27D35E21CCF6C000E3C322 /* StoreProvider.swift in Sources */,
 				1CB8D7A42176168300B38BA2 /* Extension.swift in Sources */,
 				1C903E76244136BB00952C80 /* ToiletPaperView.swift in Sources */,

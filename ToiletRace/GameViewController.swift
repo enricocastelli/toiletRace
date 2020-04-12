@@ -25,7 +25,7 @@ class GameViewController: UIViewController, BonusProvider, PooNodeCreator, Conta
     
     // managers
     var controllerView: ControllerView!
-    var raceResultManager = RaceResultManager.shared
+    var raceResultManager: RaceResultManager!
     var multiplayer: MultiplayerManager?
     
     /// length of track
@@ -60,23 +60,36 @@ class GameViewController: UIViewController, BonusProvider, PooNodeCreator, Conta
         super.init(nibName: nil, bundle: nil)
     }
     
-    func basicSetup() {
-        Values.yTot = 2.5
-        Values.zTot = 4.0
-        length = -400
-    }
-    
     override func viewDidLoad() {
         basicSetup()
         sceneView = SCNView(frame: view.frame)
         view.addSubview(sceneView)
         controllerView = ControllerView(frame: view.frame, gameVC: self)
-        prepare()
+        raceResultManager = RaceResultManager(length)
+        DispatchQueue.global(qos: .background).async {
+            self.prepare()
+        }
         view.addSubview(controllerView)
         if let room = room, let index = currentPlayers.selfIndex(getID()) {
             multiplayer = MultiplayerManager(room: room, indexSelf: index)
             multiplayer?.delegate = self
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        navigation.isSwipeBackEnabled = false
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        navigation.isSwipeBackEnabled = true
+    }
+    
+    func basicSetup() {
+        Values.yTot = 2.5
+        Values.zTot = 4.0
+        length = -400
     }
     
     func addObstacle() {
@@ -193,6 +206,7 @@ class GameViewController: UIViewController, BonusProvider, PooNodeCreator, Conta
     func isReadyToStart() {
         if let multiplayer = multiplayer {
             multiplayer.sendStatus(.Ready)
+            controllerView.prepare()
         } else {
             start()
         }
@@ -200,12 +214,18 @@ class GameViewController: UIViewController, BonusProvider, PooNodeCreator, Conta
     
     /// actual moment when game starts (physics, camera ecc...)
     func start() {
-        started = true
-        scene.isPaused = false
-        sceneView.isPlaying = true
-        controllerView.start()
-        raceResultManager.start(length)
-        perform(#selector(startOppTimer), with: nil, afterDelay: 1)
+        if multiplayer == nil {
+            controllerView.prepare()
+        }
+        let _ = Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { (_) in
+            self.started = true
+            self.scene.isPaused = false
+            self.sceneView.isPlaying = true
+            self.controllerView.start()
+            self.raceResultManager.start()
+            self.perform(#selector(self.startOppTimer), with: nil, afterDelay: 1)
+        }
+
     }
     
     // MARK:- BONUS RELATED STUFF
@@ -263,6 +283,7 @@ class GameViewController: UIViewController, BonusProvider, PooNodeCreator, Conta
         node.physicsBody?.clearAllForces()
         if node == pooNode {
             shouldRotateCamera = true
+            controllerView.hideTable()
             node.physicsBody?.clearAllForces()
             scene.physicsWorld.gravity = SCNVector3(0, -0.5, 0)
             node.physicsBody?.applyForce(SCNVector3(0, 3.7, -0.12), asImpulse: true)
@@ -287,35 +308,23 @@ class GameViewController: UIViewController, BonusProvider, PooNodeCreator, Conta
     func handleFinish(_ poo: SCNNode) {
         didFinish(node: poo)
         if poo == pooNode {
-            gameOver = true
-            multiplayer?.sendStatus(.Finish)
             gameIsOver()
-            addFinalAnimation()
-            let _ = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { (_) in
-                self.controllerView.addFinishView()
-            }
-            let _ = Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { (_) in
-                DispatchQueue.main.async {
-                    let result = GameResultVC(results: self.raceResultManager.getResults(opponents: self.currentPlayers.filter({$0.id != self.getID()})))
-                    self.navigation.viewControllers = [result]
-                }
-
-            }
         }
     }
     
     /// if user didn't finish (ex: entered the toilet..) this force the game to end with a penalty. Basically same thing as handleFinish method but with small changes.
     func forceFinish() {
         raceResultManager.didFinish(poo: SessionData.shared.selectedPlayer)
-        gameOver = true
-        gameIsOver()
+        if !gameOver {
+            gameIsOver()
+        }
     }
     
     /// called by every poo when finish race.
     func didFinish(node: SCNNode) {
-        node.removeFromParentNode()
-        guard let poo = currentPlayers.filter({$0.node == node}).first else { return }
+        guard let poo = currentPlayers.filter({$0.node == node}).first, !poo.isMultiplayer else { return }
         raceResultManager.didFinish(poo: poo)
+        node.removeFromParentNode()
     }
     
     func addFinalAnimation() {
@@ -325,18 +334,29 @@ class GameViewController: UIViewController, BonusProvider, PooNodeCreator, Conta
     
     /// Stops controller view, multiplayer, invalidate timer,
     func gameIsOver() {
+        gameOver = true
         oppTimer.invalidate()
         controllerView.stop()
+        multiplayer?.sendStatus(.Finish(time: raceResultManager.userTime()?.string() ?? ""))
+        addFinalAnimation()
+        controllerView.addFinishView()
+        let _ = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { (_) in
+            DispatchQueue.main.async {
+                let resultVC = GameResultVC(results: self.raceResultManager.getResults(opponents: self.currentPlayers.filter({$0.id != self.getID()})))
+                self.navigation.goTo(resultVC)
+            }
+
+        }
     }
     
     /// user stopped the game. Go back to main screen.
     func stopped() {
         oppTimer.invalidate()
         multiplayerTimer.invalidate()
-        controllerView.stop()
         sceneView.stop(nil)
+        scene.isPaused = true
         multiplayer?.removeObservers()
-        navigation.pop()
+        navigation.goTo(WelcomeVC())
     }
     
     required init?(coder: NSCoder) {
@@ -401,14 +421,14 @@ extension GameViewController : MultiplayerDelegate {
     func updatePlayers() {
         multiplayer?.updatePlayers({ (players) in
             for pl in players {
-                if pl.id != self.getID() {
-                    let poo = self.currentPlayers.pooWithPl(pl)
-                    if pl.status == .Finish {
-                        poo.node.removeFromParentNode()
-                        self.raceResultManager.didFinish(poo: poo)
-                    } else {
-                        poo.node.runAction(SCNAction.move(to: SCNVector3(pl.position.x, pl.position.y, pl.position.z), duration: 0.1))
-                    }
+                guard pl.id != self.getID() else { continue }
+                let poo = self.currentPlayers.pooWithPl(pl)
+                switch pl.status {
+                case .Finish(let time):
+                    poo.node.removeFromParentNode()
+                    self.raceResultManager.didFinish(poo: poo, timeString: time)
+                default:
+                    poo.node.runAction(SCNAction.move(to: SCNVector3(pl.position.x, pl.position.y, pl.position.z), duration: 0.1))
                 }
             }
         })

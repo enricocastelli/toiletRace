@@ -32,6 +32,7 @@ class Navigation: UINavigationController, AlertProvider {
     var firstVC: UIViewController? {
         return self.viewControllers.first
     }
+    var isSwipeBackEnabled = true
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,7 +61,7 @@ class Navigation: UINavigationController, AlertProvider {
     
     @objc func swiped(_ swipe: UIPanGestureRecognizer) {
         let loc = swipe.location(in: view)
-        guard viewControllers.count > 1, let direction = swipe.direction else { return }
+        guard viewControllers.count > 1, let direction = swipe.direction, isSwipeBackEnabled else { return }
         switch swipe.state {
         case .ended:
             isPresentingDetail ? closeDetail() : pop()
@@ -108,6 +109,13 @@ class Navigation: UINavigationController, AlertProvider {
                 }
             })
         })
+    }
+    
+    func goTo(_ toVC: UIViewController) {
+        guard let window = UIApplication.shared.windows.first else { return }
+        toVC.view.frame = UIScreen.main.bounds
+        window.addSubview(toVC.view)
+        self.viewControllers = [toVC]
     }
     
     func pop() {
@@ -168,5 +176,12 @@ class Navigation: UINavigationController, AlertProvider {
 
 extension Navigation: UIGestureRecognizerDelegate {
     
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+    
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return isSwipeBackEnabled
+    }
 }
 

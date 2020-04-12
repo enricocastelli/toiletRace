@@ -17,18 +17,17 @@ protocol BonusButtonDelegate {
 class BonusButton : UIButton {
     
     var circleLayer = CAShapeLayer()
-    var bonus: Bonus
+    var bonus = Bonus.NoBonus
     var delegate: BonusButtonDelegate?
     
-    init(frame: CGRect, bonus: Bonus, delegate: BonusButtonDelegate?) {
-        self.bonus = bonus
+    override init(frame: CGRect) {
         super.init(frame: frame)
-        self.delegate = delegate
         setup()
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
+        setup()
     }
     
     private func setup() {
@@ -65,12 +64,14 @@ class BonusButton : UIButton {
         if let bonus = SessionData.shared.selectedPlayer.bonus() {
             guard SessionData.shared.selectedPlayer.canUseBonus == true else { return }
             isEnabled = false
-            perform(#selector(recharge), with: nil, afterDelay: TimeInterval(bonus.duration()))
+            let _ = Timer.scheduledTimer(withTimeInterval: TimeInterval(bonus.duration()), repeats: false) { (_) in
+                self.recharge()
+            }
             delegate?.didTapButton(bonus: bonus)
         }
     }
     
-    @objc func recharge() {
+    func recharge() {
         delegate?.didFinishBonus(bonus: bonus)
         alpha = 0.2
         let animation = CABasicAnimation(keyPath: "strokeEnd")
@@ -79,10 +80,12 @@ class BonusButton : UIButton {
         animation.toValue = 1
         circleLayer.add(animation, forKey: "strokeCircle")
         // recharge
-        perform(#selector(ready), with: nil, afterDelay: TimeInterval(bonus.rechargeDuration()))
+        let _ = Timer.scheduledTimer(withTimeInterval: TimeInterval(bonus.rechargeDuration()), repeats: false) { (_) in
+            self.ready()
+        }
     }
     
-    @objc func ready() {
+    func ready() {
         isEnabled = true
         alpha = 0.6
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: [], animations: {

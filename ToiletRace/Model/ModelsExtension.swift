@@ -15,7 +15,7 @@ extension Player {
                 "position": ["xPos": position.x,
                                        "yPos": position.y,
                                        "zPos": position.z],
-        "status" : status.rawValue]
+        "status" : status.desc]
     }
 }
 
@@ -45,7 +45,7 @@ extension Dictionary where Key == String, Value == Any {
             let status = self["status"] as? String,
             let position = self["position"] as? [String: Float],
             let xPos = position["xPos"], let yPos = position["yPos"], let zPos = position["zPos"] else { return nil }
-        return Player(name: name, poo: PooName(rawValue: pooName) ?? PooName.GuanoStar, id: id, status: PlayerStatus(rawValue: status) ?? .Waiting, position: Position(x: xPos, y: yPos, z: zPos))
+        return Player(name: name, poo: PooName(rawValue: pooName) ?? PooName.GuanoStar, id: id, status: PlayerStatus(status), position: Position(x: xPos, y: yPos, z: zPos))
     }
     
     func toRoom() -> Room? {
@@ -102,7 +102,7 @@ extension Array where Element == Player {
     }
     
     func areReady() -> Bool {
-        return self.filter{ $0.status == .Ready }.count == self.count
+        return self.filter{ $0.status == PlayerStatus.Ready }.count == self.count
     }
 }
 

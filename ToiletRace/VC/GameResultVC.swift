@@ -37,8 +37,7 @@ class GameResultVC: UIViewController {
     }
     
     @IBAction func playTapped(_ sender: UIButton) {
-        let first = WelcomeVC()
-        navigation.viewControllers = [first]
+        navigation.push(WelcomeVC(), shouldRemove: true)
     }
 }
 

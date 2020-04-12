@@ -11,7 +11,7 @@ import FirebaseDatabase
 import Firebase
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, StoreProvider {
 
     var window: UIWindow?
 
@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         FirebaseApp.configure()
         self.window = UIWindow(frame: UIScreen.main.bounds)
+        isFirstTime()
         let firstVC = WelcomeVC()
         let nav = Navigation(rootViewController: firstVC)
         nav.navigationBar.isHidden = true

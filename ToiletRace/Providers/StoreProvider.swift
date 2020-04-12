@@ -9,14 +9,26 @@
 import UIKit
 
 enum StorageKeys {
-    static let Level = "Level"
+    static let firstTime = "firstTime"
+    static let level = "Level"
     static let ID = "ID"
     static let name = "name"
+    static let badges = "badges"
 }
 
 protocol StoreProvider {}
 
 extension StoreProvider {
+    
+    func isFirstTime() -> Bool {
+        if UserDefaults.standard.object(forKey: StorageKeys.firstTime) != nil {
+            return false
+        } else {
+            UserDefaults.standard.set(false, forKey: StorageKeys.firstTime)
+            UserDefaults.standard.set(["Guano Star", "Hole Runner"], forKey: StorageKeys.badges)
+            return true
+        }
+    }
         
     func setID(_ id: String) {
         UserDefaults.standard.set(id, forKey: StorageKeys.ID)
@@ -50,11 +62,16 @@ extension StoreProvider {
     }
     
     func saveLevel(_ level:Int) {
-        UserDefaults.standard.setValue(level, forKey: StorageKeys.Level)
+        UserDefaults.standard.setValue(level, forKey: StorageKeys.level)
     }
     
     func retrieveLevel() -> Int {
-        UserDefaults.standard.value(forKey: StorageKeys.Level) as? Int ?? 1
+        UserDefaults.standard.value(forKey: StorageKeys.level) as? Int ?? 1
+    }
+    
+    func isPooUnlocked(_ poo: Poo) -> Bool {
+        let badges = UserDefaults.standard.value(forKey: StorageKeys.badges) as? [String] ?? []
+        return badges.contains(poo.name.rawValue)
     }
 }
 

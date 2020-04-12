@@ -28,7 +28,7 @@ enum Style {
         case .thin: return "Lato-Thin"
         case .light: return "Lato-Light"
         case .medium: return "Lato-Medium"
-        case .bold: return "Lato-Bold"
+        case .bold: return "Lato-Semibold"
         }
     }
 }

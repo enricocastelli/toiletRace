@@ -52,6 +52,16 @@ class ShowroomVC: UIViewController, StoreProvider, PooNodeCreator {
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        navigation.isSwipeBackEnabled = false
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        navigation.isSwipeBackEnabled = true
+    }
+    
     private func setScene() {
         let scene = SCNScene()
         sceneView.scene = scene
@@ -149,12 +159,23 @@ class ShowroomVC: UIViewController, StoreProvider, PooNodeCreator {
             bonusImageView.changeImage(bonus.image())
             bonusLabel.text = bonus.description
         }
+        if !isPooUnlocked(poo) {
+            selectButton.imageView?.isHidden = false
+            selectButton.backgroundColor = UIColor.lightGray
+            nameLabel.textColor = UIColor.lightGray
+            selectButton.isEnabled = false
+        } else {
+            selectButton.imageView?.isHidden = true
+            selectButton.backgroundColor = UIColor(hex: "6F9C7A")
+            nameLabel.textColor = UIColor(hex: "303030")
+            selectButton.isEnabled = true
+        }
     }
     
     func goToRace(players: [Poo]) {
         DispatchQueue.main.async {
             let gameVC = GameViewController(players: players)
-            self.navigation.push(gameVC)
+            self.navigation.goTo(gameVC)
             self.navigation.startLoading()
         }
     }

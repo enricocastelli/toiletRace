@@ -45,6 +45,7 @@ class Poo: StoreProvider, Equatable {
         return id != getID()
     }
     var distance: Float {
+        guard let node = node else { return 0 }
         return node.presentation.position.z
     }
     var node: SCNNode!

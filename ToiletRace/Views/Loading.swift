@@ -16,7 +16,8 @@ class Loading: UIViewController {
     var animationCount = 0
     var label = UILabel()
     
-    func startAnimating() {
+    override func viewDidLoad() {
+        super.viewDidLoad()
         view.backgroundColor = UIColor(red: 247/255, green: 253/255, blue: 1, alpha: 1)
         pooImage.center = view.center
         label.bounds = CGRect(x: 0, y: 0, width: 100, height: 100)
@@ -25,15 +26,23 @@ class Loading: UIViewController {
         label.textColor = UIColor.brown
         view.addSubview(pooImage)
         view.addSubview(label)
-        startTimer()
+        view.alpha = 0
+    }
+    
+    func startAnimating() {
+        self.startTimer()
+        UIView.animate(withDuration: 0.4, animations: {
+            self.view.alpha = 1
+        }) { (_) in
+            
+        }
     }
     
     func stopAnimating() {
         UIView.animate(withDuration: 0.4, animations: {
             self.view.alpha = 0
-        }) { (done) in
+        }) { (_) in
             self.timer.invalidate()
-            self.view.removeFromSuperview()
             self.dismiss(animated: false, completion: nil)
         }
     }

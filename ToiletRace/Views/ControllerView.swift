@@ -5,98 +5,89 @@
 //  Created by Enrico Castelli on 17/12/2018.
 //  Copyright © 2018 Enrico Castelli. All rights reserved.
 //
-protocol ControllerViewDelegate {
-    
-}
 
-import Foundation
 import UIKit
 
-class ControllerView: UIView {
+class ControllerView: NibView {
     
     var gameVC: GameViewController
-    /// tableView showing the results in real time (updated every 0.3 sec)
-    var resultTable: UITableView!
-    /// color of text in table result
-    var cellTextColor = UIColor.black
-    /// color of layer background of cell text if poop has bonus enabled
-    var backgroundCellColor = UIColor.white
+    @IBOutlet weak var resultTableView: UITableView!
+    @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var blurView: UIView!
+    @IBOutlet weak var bonusButton: BonusButton!
+    @IBOutlet weak var stopButton: UIButton!
+    @IBOutlet weak var tableViewWidth: NSLayoutConstraint!
+
     /// timer that triggers update of the table result
     var tableTimer = Timer()
-    // UI: Label ready/Go, bonus button
-    var startLabel = UILabel()
-    var testLabel = UILabel()
-    var bonusButton : BonusButton?
     var touchLocation = CGPoint()
     var isPlaying = false
-
+    
+    var location: CGFloat = 0
+    var isTouching = false
     
     init(frame: CGRect, gameVC: GameViewController) {
         self.gameVC = gameVC
         super.init(frame: frame)
         setup()
     }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+
     func setup() {
         setupTable()
-        setupLabel()
         setupBonusButton()
-        setupStopButton()
-        resultTable.alpha = 0
-        bonusButton?.alpha = 0
+        preAnimation()
+        bonusButton.alpha = 0
     }
     
     func setupTable() {
-        resultTable = UITableView(frame: CGRect(x: 10, y: 10, width: 250, height: 400), style: .plain)
-        resultTable.dataSource = self
-        resultTable.backgroundColor = UIColor.clear
-        resultTable.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        resultTable.separatorStyle = .none
-        resultTable.rowHeight = 34
-        resultTable.isUserInteractionEnabled = false
-        self.addSubview(resultTable)
-    }
-    
-    func setupLabel() {
-        startLabel = UILabel(frame: CGRect(x: 300, y: 200, width: 400, height: 100))
-        startLabel.font = UIFont.boldSystemFont(ofSize: 50)
-        startLabel.text = "READY"
-        startLabel.textColor = UIColor.red
-        self.insertSubview(startLabel, at: 2)
+        resultTableView.backgroundColor = UIColor.clear
+        resultTableView.register(UINib(nibName: RankCell.id, bundle: nil), forCellReuseIdentifier: RankCell.id)
+        tableViewWidth.constant = UIScreen.main.bounds.width/1.8
     }
     
     func setupBonusButton() {
         guard let bonus = SessionData.shared.selectedPlayer.bonus() else { return }
-        bonusButton = BonusButton(frame: CGRect(x: frame.width - 100, y: frame.height - 100, width: 64, height: 64), bonus: bonus, delegate: gameVC)
-        addSubview(bonusButton!)
+        bonusButton.updateBonus(bonus: bonus)
+        bonusButton.delegate = gameVC
     }
     
-    func setupStopButton() {
-        let stopButton = UIButton(frame: CGRect(x: frame.width - 44, y: 36, width: 36, height: 36))
-        stopButton.setTitle("⏹", for: .normal)
-        stopButton.addTarget(self, action: #selector(stopped), for: .touchUpInside)
-        stopButton.alpha = 0.3
-        addSubview(stopButton)
+    private func preAnimation() {
+        resultTableView.alpha = 0
+        blurView.transform = CGAffineTransform(translationX: 0, y: -frame.height)
     }
     
-    func start() {
-        isPlaying = true
-        startUpdateTimer()
-        updateLabel()
+    func prepare(){
         DispatchQueue.main.async {
-            UIView.animate(withDuration: 0.3) {
-                self.resultTable.alpha = 1
-                self.bonusButton?.alpha = 1
+            self.label.text = self.gameVC.multiplayer == nil ? "READY?" : "WAITING FOR OTHER POOPS..."
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.8, options: [], animations: {
+                self.blurView.transform = CGAffineTransform.identity
+            }) { (_) in
             }
         }
     }
     
-    var location: CGFloat = 0
-    var isTouching = false
+    func start() {
+        DispatchQueue.main.async {
+            self.isPlaying = true
+            self.startUpdateTimer()
+            self.label.text = "GO!"
+            self.label.textColor = UIColor(hex: "1AD220")
+            UIView.animate(withDuration: 1) {
+                self.resultTableView.alpha = 1
+                self.label.transform = CGAffineTransform(scaleX: 3, y: 3)
+                self.blurView.transform = CGAffineTransform(translationX: 0, y: -self.frame.height)
+                self.bonusButton.alpha = 1
+            }
+        }
+    }
+    
+    func hideTable() {
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0.4) {
+                self.resultTableView.alpha = 0
+            }
+        }
+    }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
@@ -116,47 +107,32 @@ class ControllerView: UIView {
     }
         
     func startUpdateTimer() {
-        tableTimer = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(updateTable), userInfo: nil, repeats: true)
+        tableTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true, block: { (timer) in
+            self.updateTable()
+        })
     }
     
-    func updateLabel() {
-        DispatchQueue.main.async {
-            self.startLabel.text = "GO!!!"
-            self.startLabel.textColor = UIColor.green
-            self.perform(#selector(self.removeLabel), with: nil, afterDelay: 1)
-        }
-    }
-    
-    @objc func updateTable() {
+   func updateTable() {
         gameVC.ranking = gameVC.currentPlayers.sorted { (obj1, obj2) -> Bool in
             return obj1.distance < obj2.distance
         }
         DispatchQueue.main.async {
-            self.resultTable.reloadData()
+            self.resultTableView.reloadData()
         }
     }
-    
-    @objc func removeLabel() {
-        DispatchQueue.main.async {
-            UIView.animate(withDuration: 1, animations: {
-                self.startLabel.alpha = 0
-            }) { (done) in
-                self.startLabel.removeFromSuperview()
-            }
-        }
-    }
-    
-    func removeBonus() {
-        bonusButton?.removeFromSuperview()
-    }
-    
+
     func stop() {
         isPlaying = false
         tableTimer.invalidate()
     }
     
-    @objc func stopped() {
+    @IBAction func stopTapped() {
         gameVC.stopped()
+        stop()
+    }
+    
+    func removeBonus() {
+        bonusButton.isHidden = true
     }
     
     func addFinishView() {
@@ -171,6 +147,10 @@ class ControllerView: UIView {
             })
         }
     }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
 extension ControllerView: UITableViewDataSource {
@@ -180,43 +160,16 @@ extension ControllerView: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
-        cell.textLabel?.layer.cornerRadius = 10
-        if RaceResultManager.shared.finalResults.count > indexPath.row {
+        let cell = tableView.dequeueReusableCell(withIdentifier: RankCell.id, for: indexPath) as! RankCell
+        cell.index = indexPath.row
+        if gameVC.raceResultManager.finalResults.count > indexPath.row {
             // this poo finished the race
-            let poo = RaceResultManager.shared.finalResults[indexPath.row]
-            cell.textLabel?.text = "\(indexPath.row + 1)) \(poo.poo.displayName ?? poo.poo.name.rawValue)"
-            if indexPath.row != 0 {
-                // poo is not first. Detail text show's time to Winner in red
-                cell.detailTextLabel?.text = "\((poo.timeToWinner ?? 0).string())"
-                cell.detailTextLabel?.textColor = UIColor.red
-            } else {
-                // poo is first. Detail text show's time
-                cell.detailTextLabel?.text = poo.time == nil ? "NA" : "\(poo.time!.string())"
-                cell.detailTextLabel?.textColor = cellTextColor
-            }
+            let result = gameVC.raceResultManager.finalResults[indexPath.row]
+            cell.result = result
         } else {
             // this poo is in the race.
             let poo = gameVC.ranking[indexPath.row]
-            cell.textLabel?.text = " \(indexPath.row + 1)) \(poo.displayName ?? poo.name.rawValue) "
-            if poo.bonusEnabled == true {
-                cell.textLabel?.layer.backgroundColor = backgroundCellColor.cgColor
-            } else {
-                cell.textLabel?.layer.backgroundColor = UIColor.clear.cgColor
-            }
-        }
-        
-        // common config not depending on player or finishing race.
-        cell.textLabel?.textColor = cellTextColor
-        cell.backgroundColor = UIColor.clear
-        cell.imageView?.layer.masksToBounds = true
-        cell.imageView?.layer.cornerRadius = 10
-        if cell.textLabel?.text?.contains(SessionData.shared.selectedPlayer.displayName ?? SessionData.shared.selectedPlayer.name.rawValue) ?? false {
-            cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-            cell.contentView.alpha = 0.8
-        } else {
-            cell.textLabel?.font = UIFont.systemFont(ofSize: 16)
-            cell.contentView.alpha = 0.4
+            cell.poo = poo
         }
         return cell
     }

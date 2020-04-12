@@ -18,14 +18,39 @@ struct Player {
     let position: Position
 }
 
-enum PlayerStatus: String {
+enum PlayerStatus: Equatable {
     case Waiting // none
     case Confirmed // accepted owner push, is in the room
     case Refused // Didn't accept, can leave room
     case Loading // is loading game
     case Ready // game is prepared and ready for countdown
     case Active // user is currently playing
-    case Finish // user finish the race
+    case Finish(time: String) // user finish the race
+    
+    init(_ value: String) {
+        switch value.split(separator: ":").first {
+        case "Waiting": self = .Waiting
+        case "Confirmed": self = .Confirmed
+        case "Refused": self = .Refused
+        case "Loading": self = .Loading
+        case "Ready": self = .Ready
+        case "Active": self = .Active
+        case "Finish": self = .Finish(time: String(value.split(separator: ":").last!))
+        default: self = .Waiting
+        }
+    }
+    
+    var desc: String {
+        switch self {
+        case .Waiting: return "Waiting"
+        case .Confirmed: return "Confirmed"
+        case .Refused: return "Refused"
+        case .Loading: return "Loading"
+        case .Ready: return "Ready"
+        case .Active: return "Active"
+        case .Finish(let time):return "Finish:\(time)"
+        }
+    }
 }
 
 struct Room {

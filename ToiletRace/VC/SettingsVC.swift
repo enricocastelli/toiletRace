@@ -15,7 +15,6 @@ class SettingsVC: UIViewController, StoreProvider {
     override func viewDidLoad() {
         super.viewDidLoad()
         segmented.selectedSegmentIndex = retrieveLevel()
-        // Do any additional setup after loading the view.
     }
 
     @IBAction func segmentedTapped(_ sender: UISegmentedControl) {
@@ -24,8 +23,7 @@ class SettingsVC: UIViewController, StoreProvider {
     
     
     @IBAction func backTapped(_ sender: UIButton) {
-        navigation.pop()
-        
+        dismiss(animated: true, completion: nil)
     }
     
 }
