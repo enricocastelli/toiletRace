@@ -41,15 +41,23 @@ class ShowroomVC: UIViewController, StoreProvider, PooNodeCreator {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setScene()
+        nameLabel.text = " "
+        selectButton.isHidden = true
         setBarView()
         initialSetup()
-        addLight()
-        addBalls()
-        addSwipe()
-        prepare {
-            self.selectedItem = 0
+        sceneView.alpha = 0
+        DispatchQueue.global(qos: .background).async {
+            self.setScene()
+            self.addLight()
+            self.addBalls()
+            self.prepare {
+                self.selectedItem = 0
+                UIView.animate(withDuration: 0.3) {
+                    self.sceneView.alpha = 1
+                }
+            }
         }
+        addSwipe()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -64,6 +72,7 @@ class ShowroomVC: UIViewController, StoreProvider, PooNodeCreator {
     
     private func setScene() {
         let scene = SCNScene()
+        scene.background.contents = UIImage.tiles
         sceneView.scene = scene
         cameraNode = SCNNode()
         cameraNode.camera = SCNCamera()
@@ -83,7 +92,7 @@ class ShowroomVC: UIViewController, StoreProvider, PooNodeCreator {
     private func setBarView(){
         barView.onLeftTap = backTapped
         barView.rightImage = nil
-        barView.lineHidden = false
+        barView.lineHidden = true
     }
     
     private func initialSetup() {
@@ -91,22 +100,26 @@ class ShowroomVC: UIViewController, StoreProvider, PooNodeCreator {
         strengthLabel.text = "STRENGTH"
         driveLabel.text = "DRIVEABILITY"
         bonusLabel.text = "NO BONUS"
-        bonusView.layer.borderColor = UIColor(hex: "005CFF").cgColor
+        bonusView.layer.borderColor = UIColor.bonusBlue.cgColor
         bonusView.layer.borderWidth = 1.5
         bonusView.isHidden = true
     }
     
     func prepare(completion: @escaping () -> ()) {
-        sceneView.prepare([sceneView.scene as Any]) { (done) in
-           completion()
+        self.sceneView.prepare([self.sceneView.scene as Any]) { (done) in
+            completion()
         }
     }
     
     func addBalls() {
+        let mightyPoo = Poo(name: PooName.MightyPoop)
+        if isPooUnlocked(mightyPoo) && !Poo.players.contains(mightyPoo) {
+            Poo.players.append(Poo(name: PooName.MightyPoop))
+        }
         for poo in Poo.players {
             let index = Poo.players.firstIndex {$0.name == poo.name}!
             let pooNode = createOpponent(poo: poo, index: index)
-            pooNode.scale = SCNVector3(3, 3, 3)
+            pooNode.scale = SCNVector3(2.5, 2.5, 2.5)
             pooNode.position = SCNVector3(index*10, 0, -2)
             pooNode.physicsBody?.isAffectedByGravity = false
             sceneView.scene!.rootNode.addChildNode(pooNode)
@@ -114,18 +127,6 @@ class ShowroomVC: UIViewController, StoreProvider, PooNodeCreator {
             pooNode.name = poo.name.rawValue
             nodes.append(pooNode)
         }
-//        if shouldShowMighty {
-//            shouldShowMighty = false
-//            Poo.players.append(Poo(name: PooName.MightyPoop))
-//            let index = Poo.players.count - 1
-//            let pooNode = PooNodeCreator.createOpponent(index: index, postion: nil)
-//            pooNode.position = SCNVector3(index*10, 0, -2)
-//            pooNode.physicsBody?.isAffectedByGravity = false
-//            sceneView.scene!.rootNode.addChildNode(pooNode)
-//            pooNode.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 2, z: 0, duration: 1)))
-//            pooNode.name = Poo.players[index].name.rawValue
-//            nodes.append(pooNode)
-//        }
     }
     
     func addLight() {
@@ -147,6 +148,7 @@ class ShowroomVC: UIViewController, StoreProvider, PooNodeCreator {
     }
     
     func updateUI() {
+        selectButton.isHidden = false
         let poo = Poo.players[selectedItem]
         nameLabel.text = poo.name.rawValue
         UIView.animate(withDuration: 0.5) {
@@ -160,14 +162,16 @@ class ShowroomVC: UIViewController, StoreProvider, PooNodeCreator {
             bonusLabel.text = bonus.description
         }
         if !isPooUnlocked(poo) {
-            selectButton.imageView?.isHidden = false
+            selectButton.setImage(UIImage(systemName: "lock.fill"), for: .normal)
+            selectButton.setNeedsDisplay()
             selectButton.backgroundColor = UIColor.lightGray
             nameLabel.textColor = UIColor.lightGray
             selectButton.isEnabled = false
         } else {
-            selectButton.imageView?.isHidden = true
-            selectButton.backgroundColor = UIColor(hex: "6F9C7A")
-            nameLabel.textColor = UIColor(hex: "303030")
+            selectButton.setImage(nil, for: .normal)
+            selectButton.setNeedsDisplay()
+            selectButton.backgroundColor = UIColor.aqua
+            nameLabel.textColor = UIColor.labelBlack
             selectButton.isEnabled = true
         }
     }
@@ -221,12 +225,21 @@ class ShowroomVC: UIViewController, StoreProvider, PooNodeCreator {
             return }
         nodes[selectedItem].addParticleSystem(trail)
         SessionData.shared.selectedPlayer = Poo(name: PooName(index: selectedItem), id: getID())
-        var players = Poo.players
-        players[selectedItem] = SessionData.shared.selectedPlayer
+        SessionData.shared.selectedPlayer.displayName = getName()
         let action = SCNAction.move(to: SCNVector3(Float(selectedItem*10), 0, -1), duration: 1.5)
         nodes[selectedItem].runAction(action) {
-            self.goToRace(players: players)
+            self.goToRace(players: self.getPlayers())
         }
+    }
+    
+    private func getPlayers() -> [Poo] {
+        var players = Poo.players
+        players[selectedItem] = SessionData.shared.selectedPlayer
+        // remove mightyPoo if is not user
+        if players[selectedItem].name != .MightyPoop && players.contains(Poo(name: .MightyPoop)) {
+            players.removeAll { $0.name == .MightyPoop }
+        }
+        return players
     }
     
 

@@ -141,6 +141,19 @@ extension UIImage {
     static var redLight: UIImage {
         return  UIImage(named: "red")!
     }
+    
+    static var flags: UIImage {
+        return  UIImage(named: "flags")!
+    }
+    
+    static var tiles: UIImage {
+        return  UIImage(named: "tiles")!
+    }
+    
+    static func pooImage(_ pooName: PooName) -> (UIImage) {
+        return  UIImage(named: pooName.rawValue)!
+    }
+    
 }
 
 
@@ -168,20 +181,6 @@ extension SCNNode {
     }
 }
 
-extension Float {
-    
-    func string() -> String {
-        return String(format: "%.2f", self)
-    }
-}
-
-extension String {
-
-    func float() -> Float? {
-        return Float(self)
-    }
-    
-}
 
 extension UILayoutPriority {
     
@@ -190,22 +189,6 @@ extension UILayoutPriority {
 
 }
 
-extension UIColor {
-    
-    convenience init(hex: String) {
-        var hexFormatted: String = hex.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).uppercased()
-        if hexFormatted.hasPrefix("#") {
-            hexFormatted = String(hexFormatted.dropFirst())
-        }
-        assert(hexFormatted.count == 6, "Invalid hex code used.")
-        var rgbValue: UInt64 = 0
-        Scanner(string: hexFormatted).scanHexInt64(&rgbValue)
-        self.init(red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
-                  green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
-                  blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
-                  alpha: 1)
-    }
-}
 
 extension UIImageView {
     
@@ -242,5 +225,35 @@ extension UIPanGestureRecognizer {
         case (false, let x, _) where x < 0: return .Left
         default: return nil
         }
+    }
+}
+
+extension TimeInterval{
+    
+    func string() -> String {
+        let time = NSInteger(self)
+        let ms = Int((self.truncatingRemainder(dividingBy: 1)) * 100)
+        let seconds = time % 60
+        let minutes = (time / 60) % 60
+        return String(format: "%0.2d:%0.2d.%0.2d",minutes,seconds,ms)
+    }
+    func stringAbs() -> String {
+        let time = NSInteger(self)
+        let ms = abs(Int((self.truncatingRemainder(dividingBy: 1)) * 100))
+        let seconds = abs(time % 60)
+        return String(format: "%0.2d:%0.2d",seconds,ms)
+    }
+}
+
+extension String {
+
+    func timeInterval() -> TimeInterval? {
+        guard !self.isEmpty else { return 0 }
+        var interval: Double = 0
+        let parts = self.components(separatedBy: ":")
+        for (index, part) in parts.reversed().enumerated() {
+            interval += (Double(part) ?? 0) * pow(Double(60), Double(index))
+        }
+        return interval
     }
 }

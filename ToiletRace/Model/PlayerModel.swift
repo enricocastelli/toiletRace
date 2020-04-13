@@ -28,14 +28,14 @@ enum PlayerStatus: Equatable {
     case Finish(time: String) // user finish the race
     
     init(_ value: String) {
-        switch value.split(separator: ":").first {
+        switch value.split(separator: "/").first {
         case "Waiting": self = .Waiting
         case "Confirmed": self = .Confirmed
         case "Refused": self = .Refused
         case "Loading": self = .Loading
         case "Ready": self = .Ready
         case "Active": self = .Active
-        case "Finish": self = .Finish(time: String(value.split(separator: ":").last!))
+        case "Finish": self = .Finish(time: String(value.split(separator: "/").last!))
         default: self = .Waiting
         }
     }
@@ -48,7 +48,7 @@ enum PlayerStatus: Equatable {
         case .Loading: return "Loading"
         case .Ready: return "Ready"
         case .Active: return "Active"
-        case .Finish(let time):return "Finish:\(time)"
+        case .Finish(let time):return "Finish/\(time)"
         }
     }
 }

@@ -14,12 +14,12 @@ class BarView: UIView {
     var onRightTap: (() -> ())?
     var leftImage: UIImage? {
         didSet {
-            leftButton.setBackgroundImage(leftImage, for: .normal)
+            leftButton.setImage(leftImage, for: .normal)
         }
     }
     var rightImage: UIImage? {
         didSet {
-            rightButton.setBackgroundImage(rightImage, for: .normal)
+            rightButton.setImage(rightImage, for: .normal)
         }
     }
     var lineHidden = false {
@@ -37,26 +37,29 @@ class BarView: UIView {
         setLeftButton()
         setRightButton()
         setLine()
+        clipsToBounds = true
     }
     
     private func setLeftButton() {
-        leftButton.setBackgroundImage(UIImage(systemName: "arrow.left.circle.fill"), for: .normal)
+        leftButton.setImage(UIImage(systemName: "arrow.left.circle.fill"), for: .normal)
         leftButton.tintColor = UIColor.lightGray
         addSubview(leftButton)
+        leftButton.contentMode = .scaleAspectFit
         leftButton.setConstraint(constraint: .leading, constant: 16)
         leftButton.setConstraint(constraint: .centerY, constant: 16)
-        leftButton.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        leftButton.contentEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
         leftButton.setAspectRatio(1, 1)
         leftButton.addTarget(self, action: #selector(leftTapped), for: .touchUpInside)
     }
     
     private func setRightButton() {
-        rightButton.setBackgroundImage(UIImage(systemName: "arrow.right.circle.fill"), for: .normal)
+        rightButton.setImage(UIImage(systemName: "arrow.right.circle.fill"), for: .normal)
         rightButton.tintColor = UIColor.lightGray
         addSubview(rightButton)
+        rightButton.contentMode = .scaleAspectFit
         rightButton.setConstraint(constraint: .trailing, constant: -16)
         rightButton.setConstraint(constraint: .centerY, constant: 16)
-        rightButton.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        rightButton.contentEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
         rightButton.setAspectRatio(1, 1)
         rightButton.addTarget(self, action: #selector(rightTapped), for: .touchUpInside)
     }

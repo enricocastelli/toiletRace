@@ -11,6 +11,8 @@
 		1C03B3A4217E658F003CD652 /* Loading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C03B3A3217E658F003CD652 /* Loading.swift */; };
 		1C0EEBC4217F56DE008EE331 /* spluff.scnp in Resources */ = {isa = PBXBuildFile; fileRef = 1C0EEBC2217F56DE008EE331 /* spluff.scnp */; };
 		1C0EEBC5217F56DE008EE331 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C0EEBC3217F56DE008EE331 /* spark.png */; };
+		1C1FB9FB2444789200028E29 /* ScreenshotProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C1FB9FA2444789200028E29 /* ScreenshotProvider.swift */; };
+		1C1FB9FD244494BD00028E29 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C1FB9FC244494BD00028E29 /* Colors.swift */; };
 		1C27D24921CA899E00E3C322 /* MultiplayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C27D24821CA899E00E3C322 /* MultiplayerManager.swift */; };
 		1C27D34721CA992200E3C322 /* MultiplayerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C27D34621CA992200E3C322 /* MultiplayerVC.swift */; };
 		1C27D34921CB947A00E3C322 /* MultiplayerVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C27D34821CB947A00E3C322 /* MultiplayerVC.xib */; };
@@ -79,6 +81,8 @@
 		1C03B3A3217E658F003CD652 /* Loading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loading.swift; sourceTree = "<group>"; };
 		1C0EEBC2217F56DE008EE331 /* spluff.scnp */ = {isa = PBXFileReference; lastKnownFileType = file.scp; path = spluff.scnp; sourceTree = "<group>"; };
 		1C0EEBC3217F56DE008EE331 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
+		1C1FB9FA2444789200028E29 /* ScreenshotProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotProvider.swift; sourceTree = "<group>"; };
+		1C1FB9FC244494BD00028E29 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		1C27D24821CA899E00E3C322 /* MultiplayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplayerManager.swift; sourceTree = "<group>"; };
 		1C27D34621CA992200E3C322 /* MultiplayerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplayerVC.swift; sourceTree = "<group>"; };
 		1C27D34821CB947A00E3C322 /* MultiplayerVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MultiplayerVC.xib; sourceTree = "<group>"; };
@@ -186,6 +190,7 @@
 				1CA23A3F243F791B00F8872C /* ErrorHandling.swift */,
 				1CA23A47243FB6C700F8872C /* DateExtension.swift */,
 				1CB8D79C2176168200B38BA2 /* Common.swift */,
+				1C1FB9FC244494BD00028E29 /* Colors.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -302,6 +307,7 @@
 				1C7C1C1821C7B2E400D47FC8 /* ContactProvider.swift */,
 				1C27D35D21CCF6C000E3C322 /* StoreProvider.swift */,
 				1CA23A37243EF9F500F8872C /* BonusProvider.swift */,
+				1C1FB9FA2444789200028E29 /* ScreenshotProvider.swift */,
 			);
 			path = Providers;
 			sourceTree = "<group>";
@@ -472,6 +478,7 @@
 				1C7C1C1B21C7B79200D47FC8 /* Navigation.swift in Sources */,
 				1C27D34721CA992200E3C322 /* MultiplayerVC.swift in Sources */,
 				1CA23A48243FB6C700F8872C /* DateExtension.swift in Sources */,
+				1C1FB9FB2444789200028E29 /* ScreenshotProvider.swift in Sources */,
 				1CBD9E692178A29900109DC3 /* NodeCreator.swift in Sources */,
 				1CA23A43243F7BBE00F8872C /* BathroomVC.swift in Sources */,
 				1C034D00218CA06E001C5694 /* BonusButton.swift in Sources */,
@@ -493,6 +500,7 @@
 				1C7C1C1D21C7B85A00D47FC8 /* ControllerView.swift in Sources */,
 				1CFE97082191D942007F837A /* Bonus.swift in Sources */,
 				1C03B3A4217E658F003CD652 /* Loading.swift in Sources */,
+				1C1FB9FD244494BD00028E29 /* Colors.swift in Sources */,
 				1CCE07E124424FCC00C43C73 /* NibView.swift in Sources */,
 				1C27D35E21CCF6C000E3C322 /* StoreProvider.swift in Sources */,
 				1CB8D7A42176168300B38BA2 /* Extension.swift in Sources */,

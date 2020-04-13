@@ -103,12 +103,17 @@
                                     <color key="textColor" red="0.1137254902" green="0.1137254902" blue="0.1137254902" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BIh-yo-gT6">
+                                <progressView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BIh-yo-gT6">
                                     <rect key="frame" x="175.5" y="7.5" width="167.5" height="4"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="4" id="wcR-PN-RgN"/>
                                     </constraints>
                                     <color key="progressTintColor" red="0.54810918330000002" green="0.426608033" blue="0.17384217490000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                            <integer key="value" value="2"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
                                 </progressView>
                             </subviews>
                         </stackView>
@@ -121,12 +126,17 @@
                                     <color key="textColor" red="0.1137254902" green="0.1137254902" blue="0.1137254902" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CnV-JV-vSz">
+                                <progressView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CnV-JV-vSz">
                                     <rect key="frame" x="175.5" y="7.5" width="167.5" height="4"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="4" id="fwK-J4-HJq"/>
                                     </constraints>
                                     <color key="progressTintColor" red="0.54810918330000002" green="0.426608033" blue="0.17384217490000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                            <integer key="value" value="2"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
                                 </progressView>
                             </subviews>
                         </stackView>
@@ -139,12 +149,17 @@
                                     <color key="textColor" red="0.1137254902" green="0.1137254902" blue="0.1137254902" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SOp-oM-va6">
+                                <progressView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SOp-oM-va6">
                                     <rect key="frame" x="175.5" y="7.5" width="167.5" height="4"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="4" id="tHu-9t-zF3"/>
                                     </constraints>
                                     <color key="progressTintColor" red="0.54901960780000003" green="0.42745098040000001" blue="0.17254901959999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                            <integer key="value" value="2"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
                                 </progressView>
                             </subviews>
                         </stackView>
@@ -193,7 +208,7 @@
                     </subviews>
                 </stackView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m22-xF-3SW" userLabel="Separator">
-                    <rect key="frame" x="16" y="275" width="343" height="1"/>
+                    <rect key="frame" x="16" y="279" width="343" height="1"/>
                     <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="9Xz-6j-JUS"/>
@@ -203,7 +218,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="krx-2Z-uxn">
-                    <rect key="frame" x="8" y="292" width="36" height="38"/>
+                    <rect key="frame" x="8" y="296" width="36" height="38"/>
                     <color key="tintColor" red="0.43422997219999998" green="0.61122969159999996" blue="0.47900890839999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                     <state key="normal" image="arrow.left.circle.fill" catalog="system"/>
@@ -212,7 +227,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rXr-bd-a8N">
-                    <rect key="frame" x="331" y="292" width="36" height="38"/>
+                    <rect key="frame" x="331" y="296" width="36" height="38"/>
                     <color key="tintColor" red="0.43422997219999998" green="0.61122969159999996" blue="0.47900890839999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                     <state key="normal" image="arrow.right.circle.fill" catalog="system"/>
@@ -244,7 +259,7 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ZfL-ln-i07" secondAttribute="trailing" constant="16" id="lh5-Ew-k4N"/>
                 <constraint firstItem="ZfL-ln-i07" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="lj5-u6-V6k"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="RX4-Rv-F96" secondAttribute="trailing" constant="16" id="q0b-MT-05U"/>
-                <constraint firstItem="m22-xF-3SW" firstAttribute="top" secondItem="cNU-kC-iR8" secondAttribute="bottom" id="tF9-yO-9q2"/>
+                <constraint firstItem="m22-xF-3SW" firstAttribute="top" secondItem="cNU-kC-iR8" secondAttribute="bottom" constant="4" id="tF9-yO-9q2"/>
                 <constraint firstItem="fts-cP-Z0l" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="tnR-ap-kiA"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>

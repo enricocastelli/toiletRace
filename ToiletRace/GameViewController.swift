@@ -183,6 +183,7 @@ class GameViewController: UIViewController, BonusProvider, PooNodeCreator, Conta
         SessionData.shared.selectedPlayer = poo
         SessionData.shared.selectedPlayer.node = pooNode
         SessionData.shared.selectedPlayer.reset()
+        SessionData.shared.selectedPlayer.displayName = getName()
         self.currentPlayers[index] = SessionData.shared.selectedPlayer
     }
     
@@ -408,7 +409,7 @@ extension GameViewController : MultiplayerDelegate {
         guard !started else { return }
         start()
         multiplayerTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { (timer) in
-            guard !self.gameOver && self.sceneView.isPlaying else {
+            guard !self.gameOver else {
                 timer.invalidate()
                 return
             }

@@ -8,8 +8,8 @@
 
 struct Result {
     var poo: Poo
-    var time: Float?
-    var timeToWinner: Float?
+    var time: TimeInterval?
+    var timeToWinner: TimeInterval?
 }
 
 import Foundation
@@ -42,8 +42,8 @@ class RaceResultManager {
     }
     
     private func createResult(poo: Poo, timeString: String? = nil) -> Result {
-        let totalTime = timeString?.float() ?? calculateTime(firstDate: startDate)
-        let toWinner = timeToWinner(totalTime)
+        let totalTime = timeString?.timeInterval() ?? calculateTime()
+        let toWinner = timeToWinner(calculateTime())
         let result = Result(poo: poo, time: totalTime, timeToWinner: toWinner)
         return result
     }
@@ -57,7 +57,7 @@ class RaceResultManager {
             guard !finalResults.containsPoo(poo: opponent) && !opponent.isMultiplayer else { continue }
             // opponent's result is not in final results, so didn't finish yet, i have to calculate a simulated time
             let distance = abs(length) + opponent.node.presentation.position.z
-            let totalTime = calculateTime(firstDate: startDate) + distance/10
+            let totalTime = calculateTime() + TimeInterval(distance/10)
             let toWinner = timeToWinner(totalTime)
             let res = Result(poo: opponent, time: totalTime, timeToWinner: toWinner)
             finalResults.append(res)
@@ -65,18 +65,18 @@ class RaceResultManager {
         return finalResults
     }
     
-    func userTime() -> Float? {
+    func userTime() -> TimeInterval? {
         return finalResults.filter { $0.poo == SessionData.shared.selectedPlayer }.first?.time
     }
     
-    private func timeToWinner(_ time: Float) -> Float {
+    private func timeToWinner(_ time: TimeInterval) -> TimeInterval {
         if let winner = finalResults.first?.time {
             return winner - time
         }
         return 0
     }
     
-    private func calculateTime(firstDate: Date) -> Float {
-        return Float(Date().timeIntervalSince(firstDate))
+    private func calculateTime() -> TimeInterval {
+        return Date().timeIntervalSince(startDate)
     }
 }

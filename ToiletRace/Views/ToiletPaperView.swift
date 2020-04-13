@@ -32,8 +32,8 @@ class ToiletPaperView: UIView {
     private func setWhiteView() {
         addSubview(whiteView)
         whiteView.alpha = 0
-        whiteView.backgroundColor = UIColor(hex: "E8E8EA")
-        whiteView.layer.borderColor = UIColor(hex: "374D62").cgColor
+        whiteView.backgroundColor = UIColor.paperWhite
+        whiteView.layer.borderColor = UIColor.oceanBlue.cgColor
         whiteView.layer.borderWidth = 2.5
         whiteView.setConstraint(constraint: .leading, constant: 16)
         whiteView.setConstraint(constraint: .top, constant: 4)

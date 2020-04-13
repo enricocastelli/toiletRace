@@ -27,7 +27,7 @@ class RankCell: UITableViewCell {
             setForPoo(result.poo)
             if index != 0 {
                 // poo is not first. Detail text show's time to Winner in red
-                subtitleLabel.text = "\((result.timeToWinner ?? 0).string())"
+                subtitleLabel.text = "\((result.timeToWinner ?? 0).stringAbs())"
                 subtitleLabel.textColor = UIColor.red
             } else {
                 // poo is first. Detail text show's time (or multiplayer not arrived yet)

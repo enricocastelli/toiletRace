@@ -71,7 +71,7 @@ class ControllerView: NibView {
             self.isPlaying = true
             self.startUpdateTimer()
             self.label.text = "GO!"
-            self.label.textColor = UIColor(hex: "1AD220")
+            self.label.textColor = UIColor.goGreen
             UIView.animate(withDuration: 1) {
                 self.resultTableView.alpha = 1
                 self.label.transform = CGAffineTransform(scaleX: 3, y: 3)

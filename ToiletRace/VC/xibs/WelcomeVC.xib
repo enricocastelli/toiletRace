@@ -61,11 +61,16 @@
                         <userDefinedRuntimeAttribute type="string" keyPath="title" value=" "/>
                     </userDefinedRuntimeAttributes>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PdK-sm-bXH">
-                    <rect key="frame" x="16" y="596" width="57.5" height="55"/>
+                <button opaque="NO" contentMode="scaleAspectFit" semanticContentAttribute="spatial" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PdK-sm-bXH">
+                    <rect key="frame" x="16" y="594.5" width="56.5" height="56.5"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="PdK-sm-bXH" secondAttribute="height" multiplier="1:1" id="Ym2-x4-cNn"/>
+                    </constraints>
                     <color key="tintColor" red="0.5490196078431373" green="0.42745098039215684" blue="0.17254901960784313" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <inset key="contentEdgeInsets" minX="16" minY="16" maxX="16" maxY="16"/>
-                    <state key="normal" image="hammer.fill" catalog="system"/>
+                    <state key="normal" image="hammer.fill" catalog="system">
+                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="17" scale="default" weight="ultraLight"/>
+                    </state>
                     <connections>
                         <action selector="settingsTapped:" destination="-1" eventType="touchUpInside" id="I5f-b5-b7M"/>
                     </connections>
@@ -78,7 +83,7 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s6l-ZA-Kjb">
-                    <rect key="frame" x="16" y="523" width="343" height="57"/>
+                    <rect key="frame" x="16" y="521.5" width="343" height="57"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <fontDescription key="fontDescription" name="Lato-Medium" family="Lato" pointSize="23"/>
                     <color key="tintColor" red="0.0" green="0.36078431370000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -90,7 +95,7 @@
                             <integer key="value" value="8"/>
                         </userDefinedRuntimeAttribute>
                         <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
-                            <integer key="value" value="1"/>
+                            <integer key="value" value="2"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                     <connections>
@@ -98,7 +103,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cwJ-I8-KnC">
-                    <rect key="frame" x="16" y="449.5" width="343" height="57.5"/>
+                    <rect key="frame" x="16" y="448" width="343" height="57.5"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <fontDescription key="fontDescription" name="Lato-Medium" family="Lato" pointSize="23"/>
                     <color key="tintColor" red="0.0" green="0.36078431370000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -110,7 +115,7 @@
                             <integer key="value" value="8"/>
                         </userDefinedRuntimeAttribute>
                         <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
-                            <integer key="value" value="1"/>
+                            <integer key="value" value="2"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                     <connections>

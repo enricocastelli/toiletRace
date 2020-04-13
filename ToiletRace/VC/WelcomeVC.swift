@@ -29,8 +29,8 @@ class WelcomeVC: UIViewController, TextPresenter {
         toiletPaperView.animatePaper(1)
         preAnimation()
         animation()
-        startButton.layer.borderColor = UIColor.black.withAlphaComponent(0.8).cgColor
-        multiplayerButton.layer.borderColor = UIColor.black.withAlphaComponent(0.8).cgColor
+        startButton.layer.borderColor = UIColor.oceanBlue.cgColor
+        multiplayerButton.layer.borderColor = UIColor.oceanBlue.cgColor
     }
     
     private func preAnimation() {
@@ -53,10 +53,23 @@ class WelcomeVC: UIViewController, TextPresenter {
     }
 
     @IBAction func start() {
-        navigation.push(ShowroomVC())
+        DispatchQueue.main.async {
+            self.navigation.push(ShowroomVC())
+        }
     }
     
      @IBAction func multiplayerTapped() {
+//        navigation.push(GameResultVC(results: [Result(poo: Poo(name: .ApolloPoo), time: 13.05, timeToWinner: nil),
+//                                               Result(poo: Poo(name: .BrownTornado), time: 16.05, timeToWinner: 3.0),
+//                                               Result(poo: Poo(name: .FecalRaider), time: 17.05, timeToWinner: 4.0),
+//                                               Result(poo: Poo(name: .IndianSurprise), time: 20.06, timeToWinner: 7.01),
+//                                               Result(poo: Poo(name: .HoleRunner), time: 21.07, timeToWinner: 7.02),
+//                                               Result(poo: Poo(name: .GarganTurd), time: 22.04, timeToWinner: 7.59),
+//                                               Result(poo: Poo(name: .GuanoStar), time: 22.05, timeToWinner: 8.00),
+//                                               Result(poo: Poo(name: .MightyPoop), time: 22.06, timeToWinner: 8.01)
+//
+//
+//        ]))
         navigation.push(MultiplayerVC())
     }
     

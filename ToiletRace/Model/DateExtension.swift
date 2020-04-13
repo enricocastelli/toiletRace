@@ -35,6 +35,10 @@ extension Date {
         return Calendar.current.component(.minute, from: self)
     }
     
+    var seconds: Int {
+        return Calendar.current.component(.second, from: self)
+    }
+    
     // not Int otherwise 09 == 9, 08 == 8 etc
     var hoursString: String {
         var stringHour = String(describing: Calendar.current.component(.hour, from: self))

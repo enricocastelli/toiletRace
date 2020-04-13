@@ -33,10 +33,12 @@ class BathroomVC: UIViewController, AlertProvider {
     }
     
     func goToRace() {
-        let gameVC = GameViewController(players: players.toPoos())
-        gameVC.room = room
-        navigation.push(gameVC)
-        navigation.startLoading()
+        DispatchQueue.main.async {
+            let gameVC = GameViewController(players: self.players.toPoos())
+            gameVC.room = self.room
+            self.navigation.goTo(gameVC)
+            self.navigation.startLoading()
+        }
     }
     
     @IBAction func backTapped(_ sender: UIButton) {

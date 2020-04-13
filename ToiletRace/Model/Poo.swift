@@ -29,7 +29,7 @@ enum PooName : String {
 
 class Poo: StoreProvider, Equatable {
     
-    static let players : [Poo] = [
+    static var players : [Poo] = [
         Poo(name: .GuanoStar),
         Poo(name: .HoleRunner),
         Poo(name: .IndianSurprise),
@@ -103,14 +103,14 @@ class Poo: StoreProvider, Equatable {
         case .ApolloPoo:
             return -0.041
         case .MightyPoop:
-            return -0.050
+            return -0.048
         }
     }
     
     // returns value of speed from 0 to 1
     func speed() -> Float {
         let basedValue = abs(velocity())*1000 - 30
-        let maxValue: Float = 15
+        let maxValue: Float = 13
         return basedValue/maxValue
     }
     
@@ -132,7 +132,7 @@ class Poo: StoreProvider, Equatable {
         case .ApolloPoo:
             return 0.28
         case .MightyPoop:
-            return 0.45
+            return 0.42
         }
     }
     
@@ -184,14 +184,14 @@ class Poo: StoreProvider, Equatable {
         case .ApolloPoo:
             return 1.4
         case .MightyPoop:
-            return 3
+            return 2.8
         }
     }
     
     // returns value of driveability from 0 to 1
     func driveability() -> Float {
         let basedValue = Float(turningForce())
-        let maxValue: Float = 3
+        let maxValue: Float = 1.5
         return basedValue/maxValue
     }
     
