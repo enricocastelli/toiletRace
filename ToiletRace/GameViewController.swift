@@ -97,6 +97,7 @@ class GameViewController: UIViewController, BonusProvider, PooNodeCreator, Conta
         let supersafeEnd = abs(length) - 40
         let safeStart = UInt32(abs(length) - 40)
         let supersafeStart = UInt32(abs(length) - 70)
+        setBaseRandomNum(room?.idNum())
         for index in 0...Int(abs(length)/3) {
             let random = Float(index) * 2.7
             let zedRand = safeEnd - random
@@ -107,13 +108,8 @@ class GameViewController: UIViewController, BonusProvider, PooNodeCreator, Conta
             let zedRand = safeEnd - random
             scene.rootNode.addChildNode(createSponge(zed: (0 - zedRand)))
         }
-        
-        let randomPill = Float(arc4random_uniform(supersafeStart))
-        let zedRandPill = supersafeEnd - randomPill
-        scene.rootNode.addChildNode(createPill(zed: 0 - zedRandPill))
-        let random = Float(arc4random_uniform(supersafeStart))
-        let zedRand = supersafeEnd - random
-        scene.rootNode.addChildNode(createTunnel(zed: 0 - zedRand))
+        scene.rootNode.addChildNode(createPill(safeEnd: supersafeEnd))
+        scene.rootNode.addChildNode(createTunnel(safeEnd: supersafeEnd))
     }
 
     /// create scene, user's node, floor and add opponents
@@ -380,6 +376,9 @@ extension GameViewController : BonusButtonDelegate {
 extension GameViewController: SCNPhysicsContactDelegate {
    
     func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
+        if contact.nodeA == pooNode || contact.nodeB == pooNode {
+            UIImpactFeedbackGenerator.init(style: .light).impactOccurred()
+        }
         contactStarted(world, contact)
     }
 }

@@ -67,7 +67,8 @@ extension RoomsProvider {
 
     
     func createRoom(_ name: String) -> Room {
-        let uuid = UUID().uuidString.prefix(5).lowercased()
+        let random = String(Int(arc4random_uniform(99)))
+        let uuid = UUID().uuidString.prefix(5).lowercased() + "-" + random
         let room = Room(name: name, id: "\(testName())\(uuid)", players: [createSelf()], status: .Waiting, date: Date().toString())
         guard let data = room.toData() else { return room }
         let childUpdates = [room.id: data]

@@ -45,7 +45,7 @@ class ResultCell: UITableViewCell {
             if result.poo == SessionData.shared.selectedPlayer {
                 contentView.layer.borderColor = UIColor.labelBlack.cgColor
                 contentView.layer.borderWidth = 1.4
-                nameLabel.font = index <= 3 ? Font.with(.bold, 23) : Font.with(.bold, 16)
+                nameLabel.font = index <= 2 ? Font.with(.bold, 23) : Font.with(.bold, 16)
                 bounce()
             } else {
                 contentView.layer.borderWidth = 0
@@ -100,6 +100,7 @@ class ResultCell: UITableViewCell {
         topConstraint.constant = 2
         bottomConstraint.constant = 2
         midConstraint.constant = 0
+        backgroundColor = .white
     }
     
     private func dropShadow() {

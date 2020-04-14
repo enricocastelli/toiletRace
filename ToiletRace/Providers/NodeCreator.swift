@@ -2,10 +2,20 @@
 
 import SceneKit
 import UIKit
-
+fileprivate var totLeft = 0
+fileprivate var totRight = 0
+fileprivate var center = 0
 protocol NodeCreator {}
 
 extension NodeCreator {
+    
+    func setBaseRandomNum(_ num: Int?) {
+        if let num = num {
+            baseNum = num
+        } else {
+            baseNum = Int(arc4random_uniform(99))
+        }
+    }
     
     func createBound(zed: Float) -> [SCNNode] {
         let geoOb = SCNBox(width: 1, height: CGFloat((zed - 1)*2), length: 5, chamferRadius: 0)
@@ -81,7 +91,7 @@ extension NodeCreator {
         geo.materials.first?.emission.contents = UIColor.black
         geo.materials.first?.displacement.contents = UIImage(named: "foamDisp")
         geo.materials.first?.displacement.intensity = 0.1
-        let randomX = 4 - Float(arc4random_uniform(+8))
+        let randomX = 4 - random(positions)
         let randomCol = Int(arc4random_uniform(2))
         let colorArray = [UIColor.yellow.withAlphaComponent(0.3), UIColor.cyan.withAlphaComponent(0.3), UIColor.white]
         let col = colorArray[randomCol]
@@ -99,20 +109,24 @@ extension NodeCreator {
     func createPaper(zed : Float) -> SCNNode {
         let paperScene = SCNScene(named: "art.scnassets/Nodes/ToiletPaper.scn")
         let paperNode = paperScene!.rootNode.childNodes.first!
-        let randomX = 6.5 - Float(arc4random_uniform(14))
+        let randomX = 6.5 - random(positions)
         paperNode.position = SCNVector3(randomX, 0, Float(zed))
         paperNode.physicsBody = SCNPhysicsBody(type: SCNPhysicsBodyType.kinematic, shape: nil)
         paperNode.physicsBody?.categoryBitMask = Collider.obstacle
-        // i want put more papers at limit
-        if arc4random_uniform(10) == 5 {
-            let xPos: Float = arc4random_uniform(2) == 1 ? -6.5 : 6.5
+        // i want to put more papers at limit
+        if  maxArray[index] {
+            let xPos: Float = minArray[index] ? -6.5 : 6.5
             paperNode.position = SCNVector3(xPos, 0, Float(zed))
         }
         paperNode.name = "paper"
         return paperNode
     }
     
-    func createPill(zed: Float) -> SCNNode {
+    func createPill(safeEnd: Float) -> SCNNode {
+        print(center, totLeft, totRight)
+        let randomZ = random(superSafe)
+        let zedRandPill = safeEnd - randomZ
+        let zed = 0 - zedRandPill
         let pillScene = SCNScene(named: "art.scnassets/Nodes/pill.scn")
         let pillNode = pillScene!.rootNode.childNodes.first!
         pillNode.position = SCNVector3(0, 0.5, Float(zed))
@@ -126,8 +140,10 @@ extension NodeCreator {
         return pillNode
     }
     
-    func createTunnel(zed: Float) -> SCNNode {
-//        let zed = -45.0
+    func createTunnel(safeEnd: Float) -> SCNNode {
+        let randomZ = random(superSafe)
+        let zedRand = safeEnd - randomZ
+        let zed = 0 - zedRand
         let geoTunnel = SCNTube(innerRadius: 1.2, outerRadius: 1.3, height: 8)
         geoTunnel.materials.first?.diffuse.contents = UIColor.init(red: 185/255, green: 140/255, blue: 61/255, alpha: 1)
         geoTunnel.materials.first?.roughness.contents = 0.4
@@ -136,7 +152,6 @@ extension NodeCreator {
         let tunnelNode = SCNNode(geometry: geoTunnel)
         tunnelNode.name = "bath"
         tunnelNode.eulerAngles = SCNVector3(x: Float.pi/2, y: 0, z: 0)
-//        let tunnelX : Float = 5 - Float(arc4random_uniform(+10))
         let tunnelX : Float = 0
         tunnelNode.position = SCNVector3(tunnelX, 0.2, Float(zed))
         let shape = SCNPhysicsShape(geometry: geoTunnel,
@@ -215,10 +230,23 @@ extension NodeCreator {
 
 }
 
-fileprivate var testImp : [Float] = [-6.7, -6.7, -5.7, -5.7, 5.3, 0.3000002, -1.6999998, 6.3, -3.6999998, -3.6999998, -4.7, -5.7, 2.3000002, 4.3, 0.3000002, 4.3, 3.3000002, -1.6999998, -6.7, -4.7, -3.6999998, -0.6999998, -4.7, -1.6999998, 3.3000002, 6.3, 1.3000002, 5.3, -5.7, -2.6999998, -1.6999998, 2.3000002, 4.3, -0.6999998, -1.6999998, -5.7, -1.6999998, -1.6999998, -3.6999998, -1.6999998, 0.3000002, 6.3, 3.3000002, 3.3000002, 5.3, 0.3000002, 3.3000002, 4.3, 4.3, 1.3000002, 0.3000002, -4.7, 5.3, 3.3000002, -6.7, -3.6999998, -3.6999998, -2.6999998, 4.3, -0.6999998, -4.7, -5.7, -6.7, 0.3000002, -6.7, 4.3, 5.3, -3.6999998, 2.3000002, 2.3000002, -4.7, -5.7, -0.6999998, 2.3000002, 2.3000002, -5.7, -5.7, 5.3, 2.3000002, 0.3000002, -6.7, -0.6999998, -3.6999998, 0.3000002]
-fileprivate var index = 0
+fileprivate let positions: [Float] = [1.5, 3.5, 4.5, 6.5, 4.0, 6.5, 6.0, 5.5, 4.0, 0.0, 1.5, 3.5, 0.5, 0.0, 6.5, 1.0, 2.5, 0.0, 2.0, 0.0, 3.5, 6.0, 3.5, 0.0, 7.0, 1.0, 5.0, 7.5, 5.5, 3.5, 7.0, 3.0, 5.0, 6.0, 2.5, 2.0, 5.5, 3.5, 4.0, 2.0, 5.0, 2.0, 2.0, 6.5, 0.0, 6.0, 3.0, 5.0, 0.0, 1.0, 7.0, 3.0, 4.5, 7.5, 0.5, 0.0, 4.0, 1.5, 5.5, 4.5, 4.5, 2.0, 5.0, 7.5, 2.0, 5.0, 5.0, 3.0, 3.0, 4.5, 3.5, 0.0, 3.0, 7.5, 6.0, 4.5, 7.5, 0.0, 6.5, 1.5, 0.5, 7.5, 0.5, 3.0, 4.5]
+fileprivate let superSafe: [Float] = [135.0, 156.0, 114.0, 14.0, 200.0, 232.0, 216.0, 233.0, 22.0, 166.0, 318.0, 68.0, 16.0, 203.0, 310.0, 317.0, 58.0, 316.0, 75.0, 274.0, 103.0, 107.0, 54.0, 34.0, 205.0, 87.0, 256.0, 246.0, 301.0, 247.0, 304.0, 185.0, 221.0, 223.0, 30.0, 129.0, 48.0, 102.0, 11.0, 174.0, 99.0, 313.0, 272.0, 43.0, 127.0, 26.0, 181.0, 38.0, 313.0, 136.0, 7.0, 239.0, 123.0, 9.0, 55.0, 315.0, 307.0, 40.0, 218.0, 52.0, 148.0]
+fileprivate let maxArray: [Bool] = [false, false, false, false, false, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, true, false, false, false, false, false, false, true, false, false, false, false, true, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, true, false, true, false, false, false, false, false, false, false, false, false, false, false, true, false, false, true, false, true, true, false, false, false, true, false, false]
+fileprivate let minArray: [Bool] = [false, true, true, true, true, true, true, false, true, false, true, true, true, false, false, false, false, true, false, true, true, false, false, true, true, false, true, false, true, false, false, true, true, true, false, true, true, false, false, false, false, false, false, true, true, false, false, true, false, false, true, false, true, true, false, false, true, true, false, false, true, true, true, true, false, false, true, false, true, false, false, true, false, true, true, true, false, true, false, false, false, true, false, true, true, false, true, false, true, false, true]
+fileprivate var index: Int!
 
 fileprivate var boundsLength : Float = 15
+fileprivate var baseNum = 5
 
-fileprivate let spongeArr : [Float] = [173.0, -24, -65, -108, -121]
-fileprivate var spongeIndex = 0
+fileprivate func random(_ from: [Float]) -> Float {
+    if index == nil {
+        index = baseNum
+    }
+    index += 1
+    if index >= from.count {
+        index = 0
+    }
+    return from[index]*1.5
+}
+

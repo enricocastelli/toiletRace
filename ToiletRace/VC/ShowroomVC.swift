@@ -209,6 +209,7 @@ class ShowroomVC: UIViewController, StoreProvider, PooNodeCreator {
     }
     
     @IBAction func selectTapped(_ sender: UIButton) {
+        UIImpactFeedbackGenerator.init(style: .rigid).impactOccurred()
         view.isUserInteractionEnabled = false
         var delay = 0.0
         for object in fallingObjects.shuffled() {

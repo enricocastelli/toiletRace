@@ -241,7 +241,7 @@ extension TimeInterval{
         let time = NSInteger(self)
         let ms = abs(Int((self.truncatingRemainder(dividingBy: 1)) * 100))
         let seconds = abs(time % 60)
-        return String(format: "%0.2d:%0.2d",seconds,ms)
+        return String(format: "-%0.2d:%0.2d",seconds,ms)
     }
 }
 

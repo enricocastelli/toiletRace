@@ -33,6 +33,11 @@ extension Room: StoreProvider {
         guard let date = date.toDate() else { return true }
         return Date() > date.addingTimeInterval(600)
     }
+    
+    func idNum() -> Int? {
+        guard let intID = self.id.split(separator: "-").last else { return nil }
+        return Int(intID)
+    }
 }
 
 
