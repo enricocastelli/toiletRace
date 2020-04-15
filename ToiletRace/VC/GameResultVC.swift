@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GameResultVC: UIViewController, StoreProvider, AlertProvider {
+class GameResultVC: UIViewController, StoreProvider, AlertProvider, RematchProvider {
 
     @IBOutlet weak var barView: BarView!
     @IBOutlet weak var homeButton: UIButton!
@@ -108,16 +108,18 @@ class GameResultVC: UIViewController, StoreProvider, AlertProvider {
             return
         }
         resultTimer.invalidate()
-        let bathroom = BathroomVC(room)
-        bathroom.isRematch = true
-        if room.imOwner() {
-            self.multiplayer?.sendStatus(PlayerStatus.Confirmed)
-            updateRoomStatus(room.id, .Waiting) {
+        getRoom(room.id) { (updatedRoom) in
+        let bathroom = BathroomVC(updatedRoom)
+            bathroom.isRematch = true
+            if updatedRoom.imOwner() {
+                self.multiplayer?.sendStatus(PlayerStatus.Confirmed)
+                self.updateRoomStatus(updatedRoom.id, .Waiting) {
+                    self.navigation.push(bathroom, shouldRemove: true)
+                }
+            } else {
+                self.multiplayer?.sendStatus(PlayerStatus.Confirmed)
                 self.navigation.push(bathroom, shouldRemove: true)
             }
-        } else {
-            self.multiplayer?.sendStatus(PlayerStatus.Confirmed)
-            navigation.push(bathroom, shouldRemove: true)
         }
     }
     
@@ -215,25 +217,4 @@ extension GameResultVC: ScreenshotProvider {
         view.layoutIfNeeded()
     }
     
-}
-
-
-extension GameResultVC: RoomsProvider {
-    func didChangePlayer(_ player: Player) {
-    }
-    
-    func didAddedPlayer(_ player: Player) {
-    }
-    
-    func didRemovedPlayer(_ player: Player) {
-    }
-    
-    func didAddedRoom(_ room: Room) {
-    }
-    
-    func didRemovedRoom(_ room: Room) {
-    }
-    
-    func roomIsReady() {
-    }
 }

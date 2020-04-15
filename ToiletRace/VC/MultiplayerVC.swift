@@ -110,12 +110,7 @@ extension MultiplayerVC: UITableViewDataSource {
 
 
 extension MultiplayerVC: RoomsProvider {
-    
-    
-    func roomIsReady() {}
-    func didAddedPlayer(_ player: Player) {}
-    func didRemovedPlayer(_ player: Player) {}
-    func didChangePlayer(_ player: Player) {}
+
     
     func didAddedRoom(_ room: Room) {
         self.rooms.append(room)

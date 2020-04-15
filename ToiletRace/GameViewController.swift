@@ -202,6 +202,7 @@ class GameViewController: UIViewController, BonusProvider, PooNodeCreator, Conta
     func isReadyToStart() {
         if let multiplayer = multiplayer {
             multiplayer.sendStatus(.Ready)
+            multiplayer.addStartObserver()
             controllerView.prepare()
         } else {
             start()

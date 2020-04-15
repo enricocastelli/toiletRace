@@ -48,6 +48,7 @@
 		1CA23A4A243FBE6400F8872C /* RoomsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA23A49243FBE6400F8872C /* RoomsProvider.swift */; };
 		1CB5F96724474FA00056FAD4 /* PlayersProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB5F96624474FA00056FAD4 /* PlayersProvider.swift */; };
 		1CB5F96924474FB00056FAD4 /* DatabaseProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB5F96824474FB00056FAD4 /* DatabaseProvider.swift */; };
+		1CB5F96B244753CF0056FAD4 /* RematchProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB5F96A244753CF0056FAD4 /* RematchProvider.swift */; };
 		1CB8D77D217615C000B38BA2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8D77C217615C000B38BA2 /* AppDelegate.swift */; };
 		1CB8D77F217615C000B38BA2 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 1CB8D77E217615C000B38BA2 /* art.scnassets */; };
 		1CB8D781217615C000B38BA2 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8D780217615C000B38BA2 /* GameViewController.swift */; };
@@ -120,6 +121,7 @@
 		1CA23A49243FBE6400F8872C /* RoomsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomsProvider.swift; sourceTree = "<group>"; };
 		1CB5F96624474FA00056FAD4 /* PlayersProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayersProvider.swift; sourceTree = "<group>"; };
 		1CB5F96824474FB00056FAD4 /* DatabaseProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseProvider.swift; sourceTree = "<group>"; };
+		1CB5F96A244753CF0056FAD4 /* RematchProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RematchProvider.swift; sourceTree = "<group>"; };
 		1CB8D779217615C000B38BA2 /* The Toilet Race.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "The Toilet Race.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CB8D77C217615C000B38BA2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1CB8D77E217615C000B38BA2 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -307,9 +309,10 @@
 				1C27D35921CBDB8300E3C322 /* PooNodeCreator.swift */,
 				1CBD9E682178A29900109DC3 /* NodeCreator.swift */,
 				1CA23A3D243F78A900F8872C /* AlertProvider.swift */,
-				1CA23A49243FBE6400F8872C /* RoomsProvider.swift */,
 				1CB5F96824474FB00056FAD4 /* DatabaseProvider.swift */,
+				1CA23A49243FBE6400F8872C /* RoomsProvider.swift */,
 				1CB5F96624474FA00056FAD4 /* PlayersProvider.swift */,
+				1CB5F96A244753CF0056FAD4 /* RematchProvider.swift */,
 				1C7C1C1821C7B2E400D47FC8 /* ContactProvider.swift */,
 				1C27D35D21CCF6C000E3C322 /* StoreProvider.swift */,
 				1CA23A37243EF9F500F8872C /* BonusProvider.swift */,
@@ -493,6 +496,7 @@
 				1CB8D77D217615C000B38BA2 /* AppDelegate.swift in Sources */,
 				1CA23A3C243F6ED200F8872C /* PlayerModel.swift in Sources */,
 				1C7C1C1921C7B2E400D47FC8 /* ContactProvider.swift in Sources */,
+				1CB5F96B244753CF0056FAD4 /* RematchProvider.swift in Sources */,
 				1CE146D823AB7D8E00CCC356 /* SettingsVC.swift in Sources */,
 				1C903E862441BA5F00952C80 /* ShowroomVC.swift in Sources */,
 				1C76170721CA3D7B0085FCB8 /* WelcomeVC.swift in Sources */,

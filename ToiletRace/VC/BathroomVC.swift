@@ -17,6 +17,7 @@ class BathroomVC: UIViewController, AlertProvider {
     var room: Room
     var players: [Player] = []
     var isRematch = false
+    var confirmed = false
     
     init(_ room: Room) {
         self.room = room
@@ -51,6 +52,14 @@ class BathroomVC: UIViewController, AlertProvider {
             }, secondCompletion: nil)
         }
     }
+    
+    private func setConfirmed() {
+        confirmed = true
+        startButton.setTitle("Waiting...", for: .normal)
+        startButton.setImage(UIImage(systemName: "slowmo"), for: .normal)
+        startButton.backgroundColor = UIColor.lightGray
+        startButton.isEnabled = false
+    }
             
     private func goToRace() {
         DispatchQueue.main.async {
@@ -66,12 +75,12 @@ class BathroomVC: UIViewController, AlertProvider {
         if room.imOwner() {
             presentAlert("Wait...", subtitle: "You are the owner of this room...if you leave the room will be deleted!", firstButtonTitle: "Delete it", secondButtonTitle: "Keep it", firstCompletion: {
                 self.deleteRoom(self.room.id)
-                self.isRematch ? self.navigation.pop(WelcomeVC()) : self.navigation.pop()
+                self.isRematch ? self.navigation.goTo(WelcomeVC()) : self.navigation.pop()
             }, secondCompletion: nil)
         } else {
             unsubscribeFromRoom(room) {
                 self.removePlayerObservers(self.room.id)
-                self.isRematch ? self.navigation.pop(WelcomeVC()) : self.navigation.pop()
+                self.isRematch ? self.navigation.goTo(WelcomeVC()) : self.navigation.pop()
             }
         }
     }
@@ -83,10 +92,7 @@ class BathroomVC: UIViewController, AlertProvider {
             }
         } else {
             updatePlayerStatus(room.id, status: .Confirmed) {
-                self.startButton.setTitle("Waiting...", for: .normal)
-                self.startButton.setImage(UIImage(systemName: "slowmo"), for: .normal)
-                self.startButton.backgroundColor = UIColor.lightGray
-                self.startButton.isEnabled = false
+                self.setConfirmed()
             }
         }
     }
@@ -115,12 +121,19 @@ extension BathroomVC: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension BathroomVC: RoomsProvider {
-   
+extension BathroomVC: PlayersProvider {
+    
     func roomIsReady() {
-        removePlayerObservers(room.id)
         guard !room.imOwner() else { return }
-        goToRace()
+        if confirmed {
+            // user is ready to play
+            removePlayerObservers(room.id)
+            goToRace()
+        } else {
+            presentAlert("OPS!", subtitle: "This room started without you!", firstButtonTitle: "OK", secondButtonTitle: nil, firstCompletion: {
+                self.navigation.pop()
+            }, secondCompletion: nil)
+        }
     }
     
     func didAddedPlayer(_ player: Player) {
@@ -143,8 +156,4 @@ extension BathroomVC: RoomsProvider {
         self.players.replace(player)
         self.tableView.reloadData()
     }
-    
-    func didAddedRoom(_ room: Room) {}
-    func didRemovedRoom(_ room: Room) {}
-    
 }

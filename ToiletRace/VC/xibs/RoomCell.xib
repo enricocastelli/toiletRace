@@ -43,8 +43,8 @@
                             <constraint firstAttribute="height" constant="32" id="ngG-Q0-RRx"/>
                         </constraints>
                     </imageView>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="ZUC-oi-yg2">
-                        <rect key="frame" x="318" y="33" width="16" height="15"/>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZUC-oi-yg2">
+                        <rect key="frame" x="318" y="32.5" width="16" height="16"/>
                         <color key="tintColor" red="0.43529411759999997" green="0.61176470589999998" blue="0.47843137250000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="16" id="N0Y-90-AYY"/>
@@ -81,7 +81,4 @@
             <point key="canvasLocation" x="153.62318840579712" y="155.02232142857142"/>
         </tableViewCell>
     </objects>
-    <resources>
-        <image name="person.circle.fill" catalog="system" width="64" height="60"/>
-    </resources>
 </document>

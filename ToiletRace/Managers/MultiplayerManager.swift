@@ -34,7 +34,6 @@ class MultiplayerManager: StoreProvider {
     
     func sendStatus(_ status: PlayerStatus) {
          updateSelf(Player(name: getName(), poo: SessionData.shared.selectedPlayer.name, id: getID(), status: status, position: Position.empty()))
-        addStartObserver()
     }
 
     func sendPosition(x: Float, y: Float, z: Float) {
@@ -50,7 +49,7 @@ class MultiplayerManager: StoreProvider {
         }
     }
     
-    private func addStartObserver() {
+    func addStartObserver() {
         rooms().child(room.id).child("players").observe(.value) { (snapshot) in
             let players = snapshot.toPlayers()
             if players.areReady() {

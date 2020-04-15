@@ -32,9 +32,11 @@ class RoomCell: UITableViewCell {
             subtitleLabel.text = player.poo.rawValue
             iconView.image = UIImage.pooImage(player.poo)
             switch player.status {
-            case .Confirmed: statusView.image = UIImage(systemName: "checkmark.circle.fill")
-            case .Waiting: statusView.image = UIImage(systemName: "slowmo")
-            default: break
+            case .Confirmed:
+                statusView.image = UIImage(systemName: "checkmark.circle.fill")
+            case .Waiting:
+                statusView.image = UIImage(systemName: "slowmo")
+            default: statusView.image = nil
             }
         }
     }
@@ -50,6 +52,7 @@ class RoomCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         selectionStyle = .none
+        statusView.image = nil
     }
     
 }
