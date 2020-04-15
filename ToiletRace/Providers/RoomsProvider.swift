@@ -81,7 +81,8 @@ extension RoomsProvider {
     }
     
     func updateRoomStatus(_ id: String, _ status: RoomStatus, _ completion: (()->())?) {
-        let childUpdates = [id + "/status": status.rawValue]
+        let childUpdates = [id + "/status": status.rawValue,
+                            id + "/date": Date().toString()]
         rooms().updateChildValues(childUpdates) { (error, ref) in
             if error == nil {
                 completion?()
@@ -108,13 +109,19 @@ extension RoomsProvider {
         }
     }
     
+    func roomExist(_ roomID: String, completion: @escaping(Bool) ->()) {
+        rooms().child(roomID).observeSingleEvent(of: .value) { (snapshot) in
+            completion(snapshot.exists())
+        }
+    }
+    
     func unsubscribeFromRoom(_ room: Room, completion: @escaping() ->()) {
         var room = room
         guard room.players.contains(where: { $0.id == getID() }) else { return }
         room.players.removeAll(where: { $0.id == getID() })
         let childUpdates = [room.id: room.toData()]
-        rooms().child(room.id).observe(.value) { (snapshot) in
-            if snapshot.exists() {
+        roomExist(room.id) { (exist) in
+            if exist {
                 self.rooms().updateChildValues(childUpdates as [AnyHashable : Any]) { (_, _) in
                     completion()
                 }

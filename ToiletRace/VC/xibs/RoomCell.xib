@@ -44,6 +44,7 @@
                         </constraints>
                     </imageView>
                 </subviews>
+                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstItem="QmY-p5-axh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="1X0-DB-1qW"/>
                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="jPE-fD-DHp" secondAttribute="bottom" constant="8" id="5H6-9T-4zK"/>

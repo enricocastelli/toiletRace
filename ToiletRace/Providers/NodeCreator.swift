@@ -2,18 +2,16 @@
 
 import SceneKit
 import UIKit
-fileprivate var totLeft = 0
-fileprivate var totRight = 0
-fileprivate var center = 0
+
 protocol NodeCreator {}
 
 extension NodeCreator {
     
     func setBaseRandomNum(_ num: Int?) {
         if let num = num {
-            baseNum = num
+            Matrix.baseNum = num
         } else {
-            baseNum = Int(arc4random_uniform(99))
+            Matrix.baseNum = Int(arc4random_uniform(99))
         }
     }
     
@@ -91,7 +89,7 @@ extension NodeCreator {
         geo.materials.first?.emission.contents = UIColor.black
         geo.materials.first?.displacement.contents = UIImage(named: "foamDisp")
         geo.materials.first?.displacement.intensity = 0.1
-        let randomX = 4 - random(positions)
+        let randomX = 4 - Matrix.random(Matrix.positions)
         let randomCol = Int(arc4random_uniform(2))
         let colorArray = [UIColor.yellow.withAlphaComponent(0.3), UIColor.cyan.withAlphaComponent(0.3), UIColor.white]
         let col = colorArray[randomCol]
@@ -109,13 +107,13 @@ extension NodeCreator {
     func createPaper(zed : Float) -> SCNNode {
         let paperScene = SCNScene(named: "art.scnassets/Nodes/ToiletPaper.scn")
         let paperNode = paperScene!.rootNode.childNodes.first!
-        let randomX = 6.5 - random(positions)
+        let randomX = 6.5 - Matrix.random(Matrix.positions)
         paperNode.position = SCNVector3(randomX, 0, Float(zed))
         paperNode.physicsBody = SCNPhysicsBody(type: SCNPhysicsBodyType.kinematic, shape: nil)
         paperNode.physicsBody?.categoryBitMask = Collider.obstacle
         // i want to put more papers at limit
-        if  maxArray[index] {
-            let xPos: Float = minArray[index] ? -6.5 : 6.5
+        if  Matrix.maxArray[Matrix.index] {
+            let xPos: Float = Matrix.minArray[Matrix.index] ? -6.5 : 6.5
             paperNode.position = SCNVector3(xPos, 0, Float(zed))
         }
         paperNode.name = "paper"
@@ -123,8 +121,7 @@ extension NodeCreator {
     }
     
     func createPill(safeEnd: Float) -> SCNNode {
-        print(center, totLeft, totRight)
-        let randomZ = random(superSafe)
+        let randomZ = Matrix.random(Matrix.superSafe)
         let zedRandPill = safeEnd - randomZ
         let zed = 0 - zedRandPill
         let pillScene = SCNScene(named: "art.scnassets/Nodes/pill.scn")
@@ -141,7 +138,7 @@ extension NodeCreator {
     }
     
     func createTunnel(safeEnd: Float) -> SCNNode {
-        let randomZ = random(superSafe)
+        let randomZ = Matrix.random(Matrix.superSafe)
         let zedRand = safeEnd - randomZ
         let zed = 0 - zedRand
         let geoTunnel = SCNTube(innerRadius: 1.2, outerRadius: 1.3, height: 8)
@@ -158,7 +155,7 @@ extension NodeCreator {
                                     options: [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.concavePolyhedron])
         tunnelNode.physicsBody = SCNPhysicsBody(type: .static, shape: shape)
         tunnelNode.physicsBody?.categoryBitMask = Collider.bounds
-        let geoOB = SCNBox(width: (CGFloat(boundsLength/2) - geoTunnel.outerRadius), height: 5, length: 2, chamferRadius: 1)
+        let geoOB = SCNBox(width: (CGFloat(Matrix.boundsLength/2) - geoTunnel.outerRadius), height: 5, length: 2, chamferRadius: 1)
         geoOB.materials.first?.diffuse.contents = UIImage(named: "bath1")
         geoOB.materials.first?.roughness.contents = 1
         geoOB.materials.first?.roughness.intensity = 0
@@ -171,7 +168,7 @@ extension NodeCreator {
         boxNode.physicsBody?.categoryBitMask = Collider.bounds
         boxNode.position = SCNVector3(-(geoOB.width/2) - geoTunnel.outerRadius, 0.0, CGFloat(zed + 4))
         let geoOB2 = geoOB.copy() as! SCNBox
-        geoOB2.width = (CGFloat(boundsLength/2) - geoTunnel.outerRadius)
+        geoOB2.width = (CGFloat(Matrix.boundsLength/2) - geoTunnel.outerRadius)
         let boxNode2 = SCNNode(geometry: geoOB2)
         boxNode2.physicsBody = SCNPhysicsBody(type: SCNPhysicsBodyType.kinematic, shape: nil)
         boxNode2.physicsBody?.categoryBitMask = Collider.bounds
@@ -230,23 +227,25 @@ extension NodeCreator {
 
 }
 
-fileprivate let positions: [Float] = [1.5, 3.5, 4.5, 6.5, 4.0, 6.5, 6.0, 5.5, 4.0, 0.0, 1.5, 3.5, 0.5, 0.0, 6.5, 1.0, 2.5, 0.0, 2.0, 0.0, 3.5, 6.0, 3.5, 0.0, 7.0, 1.0, 5.0, 7.5, 5.5, 3.5, 7.0, 3.0, 5.0, 6.0, 2.5, 2.0, 5.5, 3.5, 4.0, 2.0, 5.0, 2.0, 2.0, 6.5, 0.0, 6.0, 3.0, 5.0, 0.0, 1.0, 7.0, 3.0, 4.5, 7.5, 0.5, 0.0, 4.0, 1.5, 5.5, 4.5, 4.5, 2.0, 5.0, 7.5, 2.0, 5.0, 5.0, 3.0, 3.0, 4.5, 3.5, 0.0, 3.0, 7.5, 6.0, 4.5, 7.5, 0.0, 6.5, 1.5, 0.5, 7.5, 0.5, 3.0, 4.5]
-fileprivate let superSafe: [Float] = [135.0, 156.0, 114.0, 14.0, 200.0, 232.0, 216.0, 233.0, 22.0, 166.0, 318.0, 68.0, 16.0, 203.0, 310.0, 317.0, 58.0, 316.0, 75.0, 274.0, 103.0, 107.0, 54.0, 34.0, 205.0, 87.0, 256.0, 246.0, 301.0, 247.0, 304.0, 185.0, 221.0, 223.0, 30.0, 129.0, 48.0, 102.0, 11.0, 174.0, 99.0, 313.0, 272.0, 43.0, 127.0, 26.0, 181.0, 38.0, 313.0, 136.0, 7.0, 239.0, 123.0, 9.0, 55.0, 315.0, 307.0, 40.0, 218.0, 52.0, 148.0]
-fileprivate let maxArray: [Bool] = [false, false, false, false, false, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, true, false, false, false, false, false, false, true, false, false, false, false, true, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, true, false, true, false, false, false, false, false, false, false, false, false, false, false, true, false, false, true, false, true, true, false, false, false, true, false, false]
-fileprivate let minArray: [Bool] = [false, true, true, true, true, true, true, false, true, false, true, true, true, false, false, false, false, true, false, true, true, false, false, true, true, false, true, false, true, false, false, true, true, true, false, true, true, false, false, false, false, false, false, true, true, false, false, true, false, false, true, false, true, true, false, false, true, true, false, false, true, true, true, true, false, false, true, false, true, false, false, true, false, true, true, true, false, true, false, false, false, true, false, true, true, false, true, false, true, false, true]
-fileprivate var index: Int!
-
-fileprivate var boundsLength : Float = 15
-fileprivate var baseNum = 5
-
-fileprivate func random(_ from: [Float]) -> Float {
-    if index == nil {
-        index = baseNum
+fileprivate enum Matrix {
+    
+    static let positions: [Float] = [1.5, 3.5, 4.5, 6.5, 4.0, 6.5, 6.0, 5.5, 4.0, 0.0, 1.5, 3.5, 0.5, 0.0, 6.5, 1.0, 2.5, 0.0, 2.0, 0.0, 3.5, 6.0, 3.5, 0.0, 7.0, 1.0, 5.0, 7.5, 5.5, 3.5, 7.0, 3.0, 5.0, 6.0, 2.5, 2.0, 5.5, 3.5, 4.0, 2.0, 5.0, 2.0, 2.0, 6.5, 0.0, 6.0, 3.0, 5.0, 0.0, 1.0, 7.0, 3.0, 4.5, 7.5, 0.5, 0.0, 4.0, 1.5, 5.5, 4.5, 4.5, 2.0, 5.0, 7.5, 2.0, 5.0, 5.0, 3.0, 3.0, 4.5, 3.5, 0.0, 3.0, 7.5, 6.0, 4.5, 7.5, 0.0, 6.5, 1.5, 0.5, 7.5, 0.5, 3.0, 4.5]
+    static let superSafe: [Float] = [135.0, 156.0, 114.0, 14.0, 200.0, 232.0, 216.0, 233.0, 22.0, 166.0, 318.0, 68.0, 16.0, 203.0, 310.0, 317.0, 58.0, 316.0, 75.0, 274.0, 103.0, 107.0, 54.0, 34.0, 205.0, 87.0, 256.0, 246.0, 301.0, 247.0, 304.0, 185.0, 221.0, 223.0, 30.0, 129.0, 48.0, 102.0, 11.0, 174.0, 99.0, 313.0, 272.0, 43.0, 127.0, 26.0, 181.0, 38.0, 313.0, 136.0, 7.0, 239.0, 123.0, 9.0, 55.0, 315.0, 307.0, 40.0, 218.0, 52.0, 148.0]
+    static let maxArray: [Bool] = [false, false, false, false, false, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, true, false, false, false, false, false, false, true, false, false, false, false, true, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, true, false, true, false, false, false, false, false, false, false, false, false, false, false, true, false, false, true, false, true, true, false, false, false, true, false, false]
+    static let minArray: [Bool] = [false, true, true, true, true, true, true, false, true, false, true, true, true, false, false, false, false, true, false, true, true, false, false, true, true, false, true, false, true, false, false, true, true, true, false, true, true, false, false, false, false, false, false, true, true, false, false, true, false, false, true, false, true, true, false, false, true, true, false, false, true, true, true, true, false, false, true, false, true, false, false, true, false, true, true, true, false, true, false, false, false, true, false, true, true, false, true, false, true, false, true]
+    static var index: Int!
+    static var boundsLength : Float = 15
+    static var baseNum = 5
+    
+    static func random(_ from: [Float]) -> Float {
+        if index == nil {
+            index = baseNum
+        }
+        index += 1
+        if index >= from.count {
+            index = 0
+        }
+        return from[index]*1.5
     }
-    index += 1
-    if index >= from.count {
-        index = 0
-    }
-    return from[index]*1.5
 }
 

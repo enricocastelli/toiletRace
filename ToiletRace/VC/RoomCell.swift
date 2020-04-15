@@ -24,6 +24,15 @@ class RoomCell: UITableViewCell {
         }
     }
     
+    var player: Player? {
+        didSet {
+            guard let player = player else { return }
+            titleLabel.text = player.name
+            subtitleLabel.text = player.poo.rawValue
+            iconView.image = UIImage.pooImage(player.poo)
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         selectionStyle = .none

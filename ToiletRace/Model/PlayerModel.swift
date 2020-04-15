@@ -53,7 +53,12 @@ enum PlayerStatus: Equatable {
     }
 }
 
-struct Room {
+struct Room: Equatable {
+   
+    static func == (lhs: Room, rhs: Room) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
     let name: String
     let id: String
     var players: [Player]
@@ -66,6 +71,7 @@ enum RoomStatus: String {
     case Pushing // owner pushed, room is about to start
     case Ready // room has players confirmed
     case Active // room is currently playing
+    case Finished // room is over
 }
 
 struct Position: Codable {

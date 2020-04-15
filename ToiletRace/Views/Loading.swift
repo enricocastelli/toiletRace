@@ -9,30 +9,31 @@
 import Foundation
 import UIKit
 
-class Loading: UIViewController {
+class Loading: UIView {
     
     var pooImage = UIImageView(image: UIImage(named: "poo0"))
     var timer = Timer()
     var animationCount = 0
     var label = UILabel()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = UIColor(red: 247/255, green: 253/255, blue: 1, alpha: 1)
-        pooImage.center = view.center
+    init() {
+        super.init(frame: UIScreen.main.bounds)
+        backgroundColor = UIColor(red: 247/255, green: 253/255, blue: 1, alpha: 1)
+        pooImage.center = center
         label.bounds = CGRect(x: 0, y: 0, width: 100, height: 100)
-        label.center = CGPoint(x: view.center.x, y: view.frame.height - 80)
+        label.center = CGPoint(x: center.x, y: frame.height - 80)
         label.text = "LOADING..."
         label.textColor = UIColor.brown
-        view.addSubview(pooImage)
-        view.addSubview(label)
-        view.alpha = 0
+        addSubview(pooImage)
+        addSubview(label)
+        alpha = 0
     }
+    
     
     func startAnimating() {
         self.startTimer()
         UIView.animate(withDuration: 0.4, animations: {
-            self.view.alpha = 1
+            self.alpha = 1
         }) { (_) in
             
         }
@@ -40,10 +41,10 @@ class Loading: UIViewController {
     
     func stopAnimating() {
         UIView.animate(withDuration: 0.4, animations: {
-            self.view.alpha = 0
+            self.alpha = 0
         }) { (_) in
             self.timer.invalidate()
-            self.dismiss(animated: false, completion: nil)
+            self.removeFromSuperview()
         }
     }
     
@@ -59,5 +60,9 @@ class Loading: UIViewController {
                 self.animationCount = 0
             }
         }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

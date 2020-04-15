@@ -29,7 +29,7 @@
                 </tableView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SLr-DC-Iyy" customClass="BarView" customModule="The_Toilet_Race" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="75"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="SLr-DC-Iyy" secondAttribute="height" multiplier="5:1" id="gHP-A0-BVT"/>
                     </constraints>

@@ -17,6 +17,12 @@ extension Player {
                                        "zPos": position.z],
         "status" : status.desc]
     }
+    
+    func toPoo() -> Poo {
+        let poo = Poo(name: self.poo, id: self.id)
+        poo.displayName = self.name
+        return poo
+    }
 }
 
 extension Room: StoreProvider {
@@ -100,14 +106,21 @@ extension Array where Element == Player {
     
     func toPoos() -> [Poo] {
         return self.map { (pl) -> Poo in
-            let poo = Poo(name: pl.poo, id: pl.id)
-            poo.displayName = pl.name
-            return poo
+            return pl.toPoo()
         }
     }
     
     func areReady() -> Bool {
         return self.filter{ $0.status == PlayerStatus.Ready }.count == self.count
+    }
+    
+    func areFinish() -> Bool {
+        return self.filter { (pl) -> Bool in
+            if case .Finish(_) = pl.status {
+                return true
+            }
+            return false
+        }.count == self.count
     }
 }
 

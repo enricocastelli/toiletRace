@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GameResultVC: UIViewController {
+class GameResultVC: UIViewController, StoreProvider, AlertProvider {
 
     @IBOutlet weak var barView: BarView!
     @IBOutlet weak var homeButton: UIButton!
@@ -19,13 +19,18 @@ class GameResultVC: UIViewController {
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
 
 
-    
+    var multiplayer: MultiplayerManager?
+    var room: Room?
     var finalResults: [Result]
     var animationEnabled = true
+    var resultTimer = Timer()
 
-    init(results: [Result]) {
+    init(results: [Result], room: Room? = nil) {
         finalResults = results
+        self.room = room
         super.init(nibName: String(describing: GameResultVC.self), bundle: nil)
+        guard let room = room else { return }
+        self.multiplayer = MultiplayerManager(room: room, indexSelf: 0)
     }
     
     override func viewDidLoad() {
@@ -37,6 +42,11 @@ class GameResultVC: UIViewController {
             return time1 < time2
         }
         setBarView()
+        if let _ = multiplayer {
+            resultTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true, block: { (_) in
+                self.updatePlayers()
+            })
+        }
     }
     
     private func setTableView() {
@@ -48,10 +58,15 @@ class GameResultVC: UIViewController {
     }
     
     private func setBarView() {
-        barView.onLeftTap = nil
         barView.rightImage = UIImage(systemName: "camera.fill")
         barView.onRightTap = share
         barView.lineHidden = false
+        if let room = room {
+            barView.leftImage = UIImage(systemName: "goforward")
+            barView.onLeftTap = { self.refresh(room) }
+        } else {
+            barView.leftImage = nil
+        }
     }
     
     private func share() {
@@ -60,12 +75,51 @@ class GameResultVC: UIViewController {
         navigation.present(activityViewController, animated: true, completion: nil)
     }
     
+    private func refresh(_ room: Room) {
+        guard room.players.count == finalResults.count else {
+            presentAlert("Wait", subtitle: "Not every player finished the race yet!", firstButtonTitle: "Ok", secondButtonTitle: nil, firstCompletion: {}, secondCompletion: nil)
+            return
+        }
+        resultTimer.invalidate()
+        if room.imOwner() {
+            updateRoomStatus(room.id, .Waiting) {
+                self.navigation.push(BathroomVC(room), shouldRemove: true)
+            }
+        } else {
+            navigation.push(BathroomVC(room), shouldRemove: true)
+        }
+    }
+    
     @IBAction func homeTapped(_ sender: UIButton) {
         navigation.push(WelcomeVC(), shouldRemove: true)
+        resultTimer.invalidate()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func updatePlayers() {
+        multiplayer?.updatePlayers({ (players) in
+            for pl in players {
+                let poo = pl.toPoo()
+                guard pl.id != self.getID(), !self.finalResults.containsPoo(poo: poo), case .Finish(let time) = pl.status else { continue }
+                let timeInterval = time.timeInterval()
+                self.finalResults.append(Result(poo: poo, time: timeInterval, timeToWinner: self.timeToWinner(timeInterval ?? 0)))
+                DispatchQueue.main.async {
+                    self.tableView.beginUpdates()
+                    self.tableView.insertRows(at: [IndexPath(item: self.finalResults.count - 1, section: 0)], with: .right)
+                    self.tableView.endUpdates()
+                }
+            }
+        })
+    }
+    
+    private func timeToWinner(_ time: TimeInterval) -> TimeInterval {
+        if let winner = finalResults.first?.time {
+            return winner - time
+        }
+        return 0
     }
 }
 
@@ -134,3 +188,20 @@ extension GameResultVC: ScreenshotProvider {
     
 }
 
+
+extension GameResultVC: RoomsProvider {
+    func didAddedPlayer(_ player: Player) {
+    }
+    
+    func didRemovedPlayer(_ player: Player) {
+    }
+    
+    func didAddedRoom(_ room: Room) {
+    }
+    
+    func didRemovedRoom(_ room: Room) {
+    }
+    
+    func roomIsReady() {
+    }
+}

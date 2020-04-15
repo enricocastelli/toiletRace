@@ -46,9 +46,7 @@ class Navigation: UINavigationController, AlertProvider {
     func startLoading() {
         guard loading == nil else { return }
         loading = Loading()
-        loading!.modalPresentationStyle = .overCurrentContext
-        self.present(loading!, animated: false) {
-        }
+        UIApplication.shared.windows.first?.addContentView(loading!)
         loading!.startAnimating()
     }
     
@@ -185,3 +183,13 @@ extension Navigation: UIGestureRecognizerDelegate {
     }
 }
 
+extension UIWindow {
+    
+    override open func didAddSubview(_ subview: UIView) {
+        super.didAddSubview(subview)
+        // this keeps loading view always on top even there's view changing
+        if let loading = subviews.filter({ $0.isKind(of: Loading.self)}).first as? Loading {
+            bringSubviewToFront(loading)
+        }
+    }
+}

@@ -33,6 +33,7 @@ class MultiplayerVC: UIViewController, StoreProvider, AlertProvider {
         barView.onLeftTap = backTapped
         barView.onRightTap = addTapped
         barView.rightImage = UIImage(systemName: "plus.app.fill")
+        barView.rightButton.tintColor = UIColor.aqua
         barView.lineHidden = false
     }
         
@@ -41,8 +42,10 @@ class MultiplayerVC: UIViewController, StoreProvider, AlertProvider {
     }
     
     private func addTapped() {
-        let room = createRoom("testami")
-        navigation.push(BathroomVC(room))
+        presentFieldAlert("Create a new Room", subtitle: "Type a name...", textPlaceholder: "The Bathroom", firstButtonTitle: "OK", secondButtonTitle: "Cancel", firstCompletion: { text in
+            let room = self.createRoom(text)
+            self.navigation.push(BathroomVC(room))
+        }, secondCompletion: nil)
     }
     
     @objc func handleRefreshControl() {
@@ -54,15 +57,25 @@ class MultiplayerVC: UIViewController, StoreProvider, AlertProvider {
             self.tableView.refreshControl?.endRefreshing()
         }
     }
+    
+    private func subscribe(_ room: Room) {
+        guard room.players.count < 8 else {
+            presentAlert("Ops!", subtitle: "Too many poops in here!", firstButtonTitle: "Ok", secondButtonTitle: nil, firstCompletion: {}, secondCompletion: nil)
+            return }
+        removeRoomObservers()
+        subscribeToRoom(room.id) { (room) in
+            self.navigation.push(BathroomVC(room))
+        }
+    }
 }
 
 
 extension MultiplayerVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        removeRoomObservers()
-        subscribeToRoom(rooms[indexPath.row].id) { (room) in
-            self.navigation.push(BathroomVC(room))
+        let room = rooms[indexPath.row]
+        roomExist(room.id) { (exist) in
+            exist ? self.subscribe(room) : self.handleRefreshControl()
         }
     }
 }

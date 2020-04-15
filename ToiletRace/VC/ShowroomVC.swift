@@ -29,6 +29,7 @@ class ShowroomVC: UIViewController, StoreProvider, PooNodeCreator {
     
     @IBOutlet var fallingObjects: [UIView]!
     
+    var isMultiplayer: Bool
     var nodes: [SCNNode] = []
     var cameraNode: SCNNode!
     
@@ -37,7 +38,11 @@ class ShowroomVC: UIViewController, StoreProvider, PooNodeCreator {
             updateUI()
         }
     }
-
+    
+    init(_ isMultiplayer: Bool) {
+        self.isMultiplayer = isMultiplayer
+        super.init(nibName: String(describing: ShowroomVC.self), bundle: nil)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +57,7 @@ class ShowroomVC: UIViewController, StoreProvider, PooNodeCreator {
             self.addBalls()
             self.prepare {
                 self.selectedItem = 0
+                self.navigation.stopLoading()
                 UIView.animate(withDuration: 0.3) {
                     self.sceneView.alpha = 1
                 }
@@ -68,6 +74,7 @@ class ShowroomVC: UIViewController, StoreProvider, PooNodeCreator {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         navigation.isSwipeBackEnabled = true
+        backToDefault()
     }
     
     private func setScene() {
@@ -176,12 +183,20 @@ class ShowroomVC: UIViewController, StoreProvider, PooNodeCreator {
         }
     }
     
-    func goToRace(players: [Poo]) {
+    func advance() {
         DispatchQueue.main.async {
-            let gameVC = GameViewController(players: players)
-            self.navigation.goTo(gameVC)
-            self.navigation.startLoading()
+            if self.isMultiplayer {
+                self.navigation.push(MultiplayerVC())
+            } else {
+                self.goToRace()
+            }
         }
+    }
+    
+    func goToRace() {
+        let gameVC = GameViewController(players: getPlayers())
+        navigation.startLoading()
+        navigation.goTo(gameVC)
     }
     
     @objc func swiped(_ sender: UISwipeGestureRecognizer) {
@@ -227,10 +242,23 @@ class ShowroomVC: UIViewController, StoreProvider, PooNodeCreator {
         nodes[selectedItem].addParticleSystem(trail)
         SessionData.shared.selectedPlayer = Poo(name: PooName(index: selectedItem), id: getID())
         SessionData.shared.selectedPlayer.displayName = getName()
-        let action = SCNAction.move(to: SCNVector3(Float(selectedItem*10), 0, -1), duration: 1.5)
+        let action = SCNAction.move(to: SCNVector3(Float(selectedItem*10), 0, -1), duration: 1)
         nodes[selectedItem].runAction(action) {
-            self.goToRace(players: self.getPlayers())
+            self.advance()
         }
+    }
+    
+    private func backToDefault() {
+        view.isUserInteractionEnabled = true
+        for object in fallingObjects.shuffled() {
+            object.transform = CGAffineTransform.identity
+        }
+        self.nameLabel.transform = CGAffineTransform.identity
+        nodes[selectedItem].removeAllParticleSystems()
+        SessionData.shared.selectedPlayer = Poo(name: PooName(index: selectedItem), id: getID())
+        SessionData.shared.selectedPlayer.displayName = getName()
+        let action = SCNAction.move(to: SCNVector3(Float(selectedItem*10), 0, -2), duration: 0.1)
+        nodes[selectedItem].runAction(action)
     }
     
     private func getPlayers() -> [Poo] {
@@ -243,6 +271,10 @@ class ShowroomVC: UIViewController, StoreProvider, PooNodeCreator {
         return players
     }
     
-
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     
 }

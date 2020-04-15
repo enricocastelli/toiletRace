@@ -96,7 +96,6 @@ class GameViewController: UIViewController, BonusProvider, PooNodeCreator, Conta
         let safeEnd = abs(length) - 20
         let supersafeEnd = abs(length) - 40
         let safeStart = UInt32(abs(length) - 40)
-        let supersafeStart = UInt32(abs(length) - 70)
         setBaseRandomNum(room?.idNum())
         for index in 0...Int(abs(length)/3) {
             let random = Float(index) * 2.7
@@ -239,6 +238,7 @@ class GameViewController: UIViewController, BonusProvider, PooNodeCreator, Conta
     
     /// called from controllerView, user tapped the screen
     func shouldTurn(force: CGFloat) {
+        self.handleFinish(pooNode)
         let turningForce = SessionData.shared.selectedPlayer.turningForce()*force
         let right = force > 0
         let force = SCNVector3(turningForce, 0, 0)
@@ -339,7 +339,7 @@ class GameViewController: UIViewController, BonusProvider, PooNodeCreator, Conta
         controllerView.addFinishView()
         let _ = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { (_) in
             DispatchQueue.main.async {
-                let resultVC = GameResultVC(results: self.raceResultManager.getResults(opponents: self.currentPlayers.filter({$0.id != self.getID()})))
+                let resultVC = GameResultVC(results: self.raceResultManager.getResults(opponents: self.currentPlayers.filter({$0.id != self.getID()})), room: self.room)
                 self.navigation.goTo(resultVC)
             }
 

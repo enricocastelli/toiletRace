@@ -80,6 +80,8 @@ func testName() -> String {
         return "test-6s"
     } else if UIDevice.current.name == "iPhone di Enrico" {
         return "test-7"
+    } else if UIDevice.current.name == "iPhone 11 Pro Max" {
+        return "test-sim-max"
     } else {
         return "test-sim"
     }

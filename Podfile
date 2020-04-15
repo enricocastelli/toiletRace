@@ -10,6 +10,7 @@ target 'ToiletRace' do
   pod 'Firebase/Analytics'
   pod 'Firebase/Crashlytics'
   pod 'Firebase/Database'
+  pod 'Firebase/DynamicLinks'
   # Pods for ToiletRace
 
 end

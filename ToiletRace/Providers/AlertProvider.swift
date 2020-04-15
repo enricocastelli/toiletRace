@@ -42,4 +42,25 @@ extension AlertProvider where Self: UIViewController {
             self.present(alert, animated: true, completion: nil)
         }
     }
+    
+    func presentFieldAlert(_ title: String, subtitle: String, textPlaceholder: String, firstButtonTitle: String, secondButtonTitle: String?, firstCompletion: @escaping (String) -> (), secondCompletion: (() -> ())?) {
+        let alert = UIAlertController(title: title,
+                                      message: subtitle, preferredStyle: .alert)
+        alert.addTextField { (textField) in
+            textField.placeholder = textPlaceholder
+        }
+        let firstAction = UIAlertAction(title: firstButtonTitle, style: .default) { (_) in
+            firstCompletion(alert.textFields?.first?.text ?? "Room\(testName())")
+        }
+        alert.addAction(firstAction)
+        if let secondButtonTitle = secondButtonTitle {
+            let firstAction = UIAlertAction(title: secondButtonTitle, style: .default) { (_) in
+                secondCompletion?()
+            }
+            alert.addAction(firstAction)
+        }
+        DispatchQueue.main.async {
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
 }
