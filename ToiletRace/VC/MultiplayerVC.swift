@@ -13,13 +13,21 @@ class MultiplayerVC: UIViewController, StoreProvider, AlertProvider {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var barView: BarView!
-    var rooms: [Room] = []
+    @IBOutlet weak var roomsLabel: UILabel!
+    @IBOutlet weak var openButton: UIButton!
+    
+    var rooms: [Room] = [] {
+        didSet {
+            roomsLabel.text = "\(rooms.count) ROOMS OPEN"
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTable()
         setBarView()
         addRoomsObserver()
+        roomsLabel.text = "\(rooms.count) ROOMS OPEN"
     }
     
     private func setupTable() {
@@ -36,15 +44,21 @@ class MultiplayerVC: UIViewController, StoreProvider, AlertProvider {
         barView.rightButton.tintColor = UIColor.aqua
         barView.lineHidden = false
     }
-        
+    
+    
+    @IBAction func createTapped(_ sender: UIButton) {
+        addTapped()
+    }
+    
     private func backTapped() {
         navigation.pop()
     }
     
     private func addTapped() {
         presentFieldAlert("Create a new Room", subtitle: "Type a name...", textPlaceholder: "The Bathroom", firstButtonTitle: "OK", secondButtonTitle: "Cancel", firstCompletion: { text in
-            let room = self.createRoom(text)
-            self.navigation.push(BathroomVC(room))
+            self.createRoom(text) { (room) in
+                self.navigation.push(BathroomVC(room))
+            }
         }, secondCompletion: nil)
     }
     
@@ -97,9 +111,11 @@ extension MultiplayerVC: UITableViewDataSource {
 
 extension MultiplayerVC: RoomsProvider {
     
+    
     func roomIsReady() {}
     func didAddedPlayer(_ player: Player) {}
     func didRemovedPlayer(_ player: Player) {}
+    func didChangePlayer(_ player: Player) {}
     
     func didAddedRoom(_ room: Room) {
         self.rooms.append(room)

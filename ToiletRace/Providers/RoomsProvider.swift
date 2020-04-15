@@ -15,6 +15,7 @@ protocol RoomsProvider: StoreProvider {
     func didAddedRoom(_ room: Room)
     func didRemovedRoom(_ room: Room)
     func roomIsReady()
+    func didChangePlayer(_ player: Player)
 }
 
 extension RoomsProvider {
@@ -47,6 +48,10 @@ extension RoomsProvider {
             guard let pl = snapshot.toPlayer() else { return }
             self.didRemovedPlayer(pl)
         }
+        rooms().child(roomID).child("players").observe(DataEventType.childChanged) { (snapshot) in
+            guard let pl = snapshot.toPlayer() else { return }
+            self.didChangePlayer(pl)
+        }
         rooms().child(roomID).observe(DataEventType.childChanged) { (snapshot) in
             guard let status = snapshot.toRoomStatus() else { return }
             if status == .Pushing {
@@ -66,14 +71,15 @@ extension RoomsProvider {
     }
 
     
-    func createRoom(_ name: String) -> Room {
+    func createRoom(_ name: String, completion: @escaping(Room) ->()) {
         let random = String(Int(arc4random_uniform(99)))
         let uuid = UUID().uuidString.prefix(5).lowercased() + "-" + random
-        let room = Room(name: name, id: "\(testName())\(uuid)", players: [createSelf()], status: .Waiting, date: Date().toString())
-        guard let data = room.toData() else { return room }
+        let room = Room(name: name, id: "\(testName())\(uuid)", players: [createSelf(.Confirmed)], status: .Waiting, date: Date().toString())
+        guard let data = room.toData() else { return }
         let childUpdates = [room.id: data]
-        rooms().updateChildValues(childUpdates)
-        return room
+        rooms().updateChildValues(childUpdates) { (_,_) in
+            completion(room)
+        }
     }
     
     func sendStartRoom(_ roomID: String, completion: @escaping() ->()) {
@@ -89,6 +95,10 @@ extension RoomsProvider {
             }
         }
     }
+    
+    func updatePlayerStatus(_ roomID: String, status: PlayerStatus, completion: @escaping() ->()) {
+        updateSelf(roomID, player: Player(name: getName(), poo: SessionData.shared.selectedPlayer.name, id: getID(), status: status, position: Position.empty()), completion: completion)
+     }
     
     func deleteRoom(_ id: String) {
         rooms().child(id).removeValue()
@@ -129,7 +139,18 @@ extension RoomsProvider {
         }
     }
     
-    private func createSelf() -> Player {
-        return Player(name: getName(), poo: PooName.GuanoStar, id: getID(), status: .Waiting, position: Position.empty())
+    private func createSelf(_ status: PlayerStatus = .Waiting) -> Player {
+        return Player(name: getName(), poo: SessionData.shared.selectedPlayer.name, id: getID(), status: status, position: Position.empty())
+    }
+    
+    private func updateSelf(_ roomID: String, player: Player, completion: @escaping() ->()) {
+        guard let data = player.toData() else { return }
+        rooms().child(roomID).observeSingleEvent(of: .value) { (snapshot) in
+        guard let room = snapshot.toRoom(), let indexSelf = room.players.firstIndex(where: { $0.id == self.getID() }) else { return  }
+        let childUpdates = ["\(room.id)/players/\(indexSelf)": data]
+            self.rooms().updateChildValues(childUpdates) { (_, _) in
+                completion()
+            }
+        }
     }
 }

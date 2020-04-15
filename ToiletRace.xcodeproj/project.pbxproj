@@ -46,6 +46,8 @@
 		1CA23A46243F95F400F8872C /* ModelsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA23A45243F95F400F8872C /* ModelsExtension.swift */; };
 		1CA23A48243FB6C700F8872C /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA23A47243FB6C700F8872C /* DateExtension.swift */; };
 		1CA23A4A243FBE6400F8872C /* RoomsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA23A49243FBE6400F8872C /* RoomsProvider.swift */; };
+		1CB5F96724474FA00056FAD4 /* PlayersProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB5F96624474FA00056FAD4 /* PlayersProvider.swift */; };
+		1CB5F96924474FB00056FAD4 /* DatabaseProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB5F96824474FB00056FAD4 /* DatabaseProvider.swift */; };
 		1CB8D77D217615C000B38BA2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8D77C217615C000B38BA2 /* AppDelegate.swift */; };
 		1CB8D77F217615C000B38BA2 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 1CB8D77E217615C000B38BA2 /* art.scnassets */; };
 		1CB8D781217615C000B38BA2 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8D780217615C000B38BA2 /* GameViewController.swift */; };
@@ -116,6 +118,8 @@
 		1CA23A45243F95F400F8872C /* ModelsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelsExtension.swift; sourceTree = "<group>"; };
 		1CA23A47243FB6C700F8872C /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		1CA23A49243FBE6400F8872C /* RoomsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomsProvider.swift; sourceTree = "<group>"; };
+		1CB5F96624474FA00056FAD4 /* PlayersProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayersProvider.swift; sourceTree = "<group>"; };
+		1CB5F96824474FB00056FAD4 /* DatabaseProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseProvider.swift; sourceTree = "<group>"; };
 		1CB8D779217615C000B38BA2 /* The Toilet Race.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "The Toilet Race.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CB8D77C217615C000B38BA2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1CB8D77E217615C000B38BA2 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -302,8 +306,10 @@
 			children = (
 				1C27D35921CBDB8300E3C322 /* PooNodeCreator.swift */,
 				1CBD9E682178A29900109DC3 /* NodeCreator.swift */,
-				1CA23A49243FBE6400F8872C /* RoomsProvider.swift */,
 				1CA23A3D243F78A900F8872C /* AlertProvider.swift */,
+				1CA23A49243FBE6400F8872C /* RoomsProvider.swift */,
+				1CB5F96824474FB00056FAD4 /* DatabaseProvider.swift */,
+				1CB5F96624474FA00056FAD4 /* PlayersProvider.swift */,
 				1C7C1C1821C7B2E400D47FC8 /* ContactProvider.swift */,
 				1C27D35D21CCF6C000E3C322 /* StoreProvider.swift */,
 				1CA23A37243EF9F500F8872C /* BonusProvider.swift */,
@@ -466,6 +472,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1CB5F96924474FB00056FAD4 /* DatabaseProvider.swift in Sources */,
 				1CA23A38243EF9F500F8872C /* BonusProvider.swift in Sources */,
 				1C27D24921CA899E00E3C322 /* MultiplayerManager.swift in Sources */,
 				1CB8D781217615C000B38BA2 /* GameViewController.swift in Sources */,
@@ -477,6 +484,7 @@
 				1CB8D7A92176168300B38BA2 /* Poo.swift in Sources */,
 				1C7C1C1B21C7B79200D47FC8 /* Navigation.swift in Sources */,
 				1C27D34721CA992200E3C322 /* MultiplayerVC.swift in Sources */,
+				1CB5F96724474FA00056FAD4 /* PlayersProvider.swift in Sources */,
 				1CA23A48243FB6C700F8872C /* DateExtension.swift in Sources */,
 				1C1FB9FB2444789200028E29 /* ScreenshotProvider.swift in Sources */,
 				1CBD9E692178A29900109DC3 /* NodeCreator.swift in Sources */,

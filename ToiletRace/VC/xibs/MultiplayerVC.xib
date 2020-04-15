@@ -6,10 +6,20 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Lato-Bold.ttf">
+            <string>Lato-Semibold</string>
+        </array>
+        <array key="Lato-Light.ttf">
+            <string>Lato-Light</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MultiplayerVC" customModule="The_Toilet_Race" customModuleProvider="target">
             <connections>
                 <outlet property="barView" destination="SLr-DC-Iyy" id="Owr-9O-Jm8"/>
+                <outlet property="openButton" destination="nQv-P5-4XP" id="gxC-Oi-RHx"/>
+                <outlet property="roomsLabel" destination="8Eb-bv-p2P" id="Y1t-Ml-FaI"/>
                 <outlet property="tableView" destination="WbS-7B-pEw" id="eX7-m5-BFC"/>
                 <outlet property="view" destination="iN0-l3-epB" id="NPo-js-TGa"/>
             </connections>
@@ -20,13 +30,30 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="WbS-7B-pEw">
-                    <rect key="frame" x="0.0" y="75" width="375" height="528"/>
+                    <rect key="frame" x="0.0" y="128" width="375" height="475"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="lc0-XT-vzu"/>
                         <outlet property="delegate" destination="-1" id="J69-Xb-AY0"/>
                     </connections>
                 </tableView>
+                <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nQv-P5-4XP">
+                    <rect key="frame" x="16" y="602" width="343" height="49"/>
+                    <color key="backgroundColor" red="0.43529411759999997" green="0.61176470589999998" blue="0.47843137250000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <inset key="imageEdgeInsets" minX="16" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <state key="normal" title="OPEN A ROOM" image="person.3.fill" catalog="system">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="8"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="createTapped:" destination="-1" eventType="touchUpInside" id="EPF-Bu-l1R"/>
+                    </connections>
+                </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SLr-DC-Iyy" customClass="BarView" customModule="The_Toilet_Race" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="75"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -34,13 +61,39 @@
                         <constraint firstAttribute="width" secondItem="SLr-DC-Iyy" secondAttribute="height" multiplier="5:1" id="gHP-A0-BVT"/>
                     </constraints>
                 </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Eb-bv-p2P">
+                    <rect key="frame" x="16" y="91" width="343" height="28"/>
+                    <fontDescription key="fontDescription" name="Lato-Light" family="Lato" pointSize="23"/>
+                    <color key="textColor" red="0.18823529410000001" green="0.18823529410000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tm8-pz-4JY">
+                    <rect key="frame" x="16" y="127" width="343" height="1"/>
+                    <color key="backgroundColor" red="0.18823529410000001" green="0.18823529410000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="FJZ-JV-JWC"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Lato-Semibold" family="Lato" pointSize="23"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="Tm8-pz-4JY" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="52C-WM-mxL"/>
+                <constraint firstItem="WbS-7B-pEw" firstAttribute="top" secondItem="Tm8-pz-4JY" secondAttribute="bottom" id="58Z-TC-tB3"/>
                 <constraint firstAttribute="trailing" secondItem="SLr-DC-Iyy" secondAttribute="trailing" id="5u8-th-m0m"/>
-                <constraint firstItem="WbS-7B-pEw" firstAttribute="top" secondItem="SLr-DC-Iyy" secondAttribute="bottom" id="7pV-cM-i6c"/>
                 <constraint firstItem="SLr-DC-Iyy" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="RRc-Rn-iyo"/>
+                <constraint firstItem="Tm8-pz-4JY" firstAttribute="top" secondItem="8Eb-bv-p2P" secondAttribute="bottom" constant="8" id="YFq-jC-E4X"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="WbS-7B-pEw" secondAttribute="bottom" constant="64" id="ZBo-3k-Gj5"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="nQv-P5-4XP" secondAttribute="bottom" constant="16" id="bN8-0Q-hab"/>
+                <constraint firstItem="nQv-P5-4XP" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="c71-1G-ILS"/>
+                <constraint firstItem="nQv-P5-4XP" firstAttribute="width" secondItem="nQv-P5-4XP" secondAttribute="height" multiplier="7:1" id="fhi-L6-hy7"/>
+                <constraint firstItem="8Eb-bv-p2P" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="hW1-Bz-pAz"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="8Eb-bv-p2P" secondAttribute="trailing" constant="16" id="k3C-JJ-rRO"/>
+                <constraint firstAttribute="trailing" secondItem="nQv-P5-4XP" secondAttribute="trailing" constant="16" id="sn8-z7-459"/>
+                <constraint firstAttribute="trailing" secondItem="Tm8-pz-4JY" secondAttribute="trailing" constant="16" id="swf-DP-CxN"/>
+                <constraint firstItem="8Eb-bv-p2P" firstAttribute="top" secondItem="SLr-DC-Iyy" secondAttribute="bottom" constant="16" id="tWy-M0-5GC"/>
                 <constraint firstItem="WbS-7B-pEw" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="tXA-2V-q3u"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="WbS-7B-pEw" secondAttribute="trailing" id="tnl-CI-83C"/>
                 <constraint firstItem="SLr-DC-Iyy" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="vgp-eP-yOd"/>
@@ -49,4 +102,7 @@
             <point key="canvasLocation" x="-168.80000000000001" y="85.907046476761622"/>
         </view>
     </objects>
+    <resources>
+        <image name="person.3.fill" catalog="system" width="71" height="34"/>
+    </resources>
 </document>

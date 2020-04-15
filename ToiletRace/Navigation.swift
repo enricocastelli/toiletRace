@@ -116,12 +116,12 @@ class Navigation: UINavigationController, AlertProvider {
         self.viewControllers = [toVC]
     }
     
-    func pop() {
+    func pop(_ forcedVC: UIViewController? = nil) {
         guard let window = UIApplication.shared.delegate?.window,
             self.viewControllers.count > 1,
             let fromVC = lastVC,
             let index = self.viewControllers.firstIndex(of: fromVC) else { return }
-        let toVC = self.viewControllers[index - 1]
+        let toVC = forcedVC ?? self.viewControllers[index - 1]
         let preanimationPosition: CGFloat = -8.0
         let previousPagePosition = view.frame.width
         let nextPagePosition = -view.frame.width

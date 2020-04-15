@@ -170,13 +170,11 @@ class ShowroomVC: UIViewController, StoreProvider, PooNodeCreator {
         }
         if !isPooUnlocked(poo) {
             selectButton.setImage(UIImage(systemName: "lock.fill"), for: .normal)
-            selectButton.setNeedsDisplay()
             selectButton.backgroundColor = UIColor.lightGray
             nameLabel.textColor = UIColor.lightGray
             selectButton.isEnabled = false
         } else {
             selectButton.setImage(nil, for: .normal)
-            selectButton.setNeedsDisplay()
             selectButton.backgroundColor = UIColor.aqua
             nameLabel.textColor = UIColor.labelBlack
             selectButton.isEnabled = true

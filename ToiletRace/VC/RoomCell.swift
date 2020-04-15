@@ -15,6 +15,7 @@ class RoomCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var iconView: UIImageView!
+    @IBOutlet weak var statusView: UIImageView!
     
     var room: Room? {
         didSet {
@@ -30,6 +31,19 @@ class RoomCell: UITableViewCell {
             titleLabel.text = player.name
             subtitleLabel.text = player.poo.rawValue
             iconView.image = UIImage.pooImage(player.poo)
+            switch player.status {
+            case .Confirmed: statusView.image = UIImage(systemName: "checkmark.circle.fill")
+            case .Waiting: statusView.image = UIImage(systemName: "slowmo")
+            default: break
+            }
+        }
+    }
+    
+    var isOwner = false {
+        didSet {
+            if isOwner {
+                statusView.image = UIImage(systemName: "person.circle.fill")
+            }
         }
     }
     

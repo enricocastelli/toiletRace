@@ -61,42 +61,8 @@ class GameResultVC: UIViewController, StoreProvider, AlertProvider {
         barView.rightImage = UIImage(systemName: "camera.fill")
         barView.onRightTap = share
         barView.lineHidden = false
-        if let room = room {
-            barView.leftImage = UIImage(systemName: "goforward")
-            barView.onLeftTap = { self.refresh(room) }
-        } else {
-            barView.leftImage = nil
-        }
-    }
-    
-    private func share() {
-        guard let img = takeScreenshot() else { return }
-        let activityViewController = UIActivityViewController(activityItems: [img], applicationActivities: nil)
-        navigation.present(activityViewController, animated: true, completion: nil)
-    }
-    
-    private func refresh(_ room: Room) {
-        guard room.players.count == finalResults.count else {
-            presentAlert("Wait", subtitle: "Not every player finished the race yet!", firstButtonTitle: "Ok", secondButtonTitle: nil, firstCompletion: {}, secondCompletion: nil)
-            return
-        }
-        resultTimer.invalidate()
-        if room.imOwner() {
-            updateRoomStatus(room.id, .Waiting) {
-                self.navigation.push(BathroomVC(room), shouldRemove: true)
-            }
-        } else {
-            navigation.push(BathroomVC(room), shouldRemove: true)
-        }
-    }
-    
-    @IBAction func homeTapped(_ sender: UIButton) {
-        navigation.push(WelcomeVC(), shouldRemove: true)
-        resultTimer.invalidate()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        barView.leftImage = UIImage(systemName: "goforward")
+        barView.onLeftTap = { self.rematch(self.room) }
     }
     
     private func updatePlayers() {
@@ -120,6 +86,69 @@ class GameResultVC: UIViewController, StoreProvider, AlertProvider {
             return winner - time
         }
         return 0
+    }
+    
+    private func share() {
+        guard let img = takeScreenshot() else { return }
+        let activityViewController = UIActivityViewController(activityItems: [img], applicationActivities: nil)
+        navigation.present(activityViewController, animated: true, completion: nil)
+    }
+    
+    private func rematch(_ room: Room?) {
+        if let room = room {
+            multiplayerRematch(room)
+        } else {
+            goToRace()
+        }
+    }
+    
+    private func multiplayerRematch(_ room: Room) {
+        guard room.players.count == finalResults.count else {
+            presentAlert("Wait", subtitle: "Not every player finished the race yet!", firstButtonTitle: "Ok", secondButtonTitle: nil, firstCompletion: {}, secondCompletion: nil)
+            return
+        }
+        resultTimer.invalidate()
+        let bathroom = BathroomVC(room)
+        bathroom.isRematch = true
+        if room.imOwner() {
+            self.multiplayer?.sendStatus(PlayerStatus.Confirmed)
+            updateRoomStatus(room.id, .Waiting) {
+                self.navigation.push(bathroom, shouldRemove: true)
+            }
+        } else {
+            self.multiplayer?.sendStatus(PlayerStatus.Confirmed)
+            navigation.push(bathroom, shouldRemove: true)
+        }
+    }
+    
+    private func getPlayers() -> [Poo] {
+        var players = finalResults.map { $0.poo }
+        guard let selfIndex = players.selfIndex(getID()) else { return [] }
+         let selfPoo = players[selfIndex]
+        players[selfIndex] = SessionData.shared.selectedPlayer
+        // remove mightyPoo if is not user
+        if selfPoo.name != .MightyPoop && players.contains(Poo(name: .MightyPoop)) {
+            players.removeAll { $0.name == .MightyPoop }
+        }
+        return players
+    }
+    
+    private func goToRace() {
+        DispatchQueue.main.async {
+            let gameVC = GameViewController(players: self.getPlayers())
+            gameVC.room = self.room
+            self.navigation.startLoading()
+            self.navigation.goTo(gameVC)
+        }
+    }
+    
+    @IBAction func homeTapped(_ sender: UIButton) {
+        navigation.push(WelcomeVC(), shouldRemove: true)
+        resultTimer.invalidate()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 
@@ -190,6 +219,9 @@ extension GameResultVC: ScreenshotProvider {
 
 
 extension GameResultVC: RoomsProvider {
+    func didChangePlayer(_ player: Player) {
+    }
+    
     func didAddedPlayer(_ player: Player) {
     }
     

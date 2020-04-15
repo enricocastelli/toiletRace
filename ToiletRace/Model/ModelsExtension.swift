@@ -44,6 +44,10 @@ extension Room: StoreProvider {
         guard let intID = self.id.split(separator: "-").last else { return nil }
         return Int(intID)
     }
+    
+    func owner() -> Player? {
+        return players.filter{ self.id.starts(with: $0.name) }.first
+    }
 }
 
 
@@ -121,6 +125,13 @@ extension Array where Element == Player {
             }
             return false
         }.count == self.count
+    }
+    
+    mutating func replace(_ player: Player) {
+        guard let index = self.firstIndex(where: { (pl) -> Bool in
+            return pl.id == player.id
+        }) else { return }
+        self[index] = player
     }
 }
 
