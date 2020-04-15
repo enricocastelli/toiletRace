@@ -406,6 +406,7 @@ extension GameViewController : MultiplayerDelegate {
     
     func shouldStart() {
         multiplayer?.removeObservers()
+        multiplayer?.updateRoomStatus(room?.id ?? "", .Active, {}, { (_) in })
         guard !started else { return }
         start()
         multiplayerTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { (timer) in

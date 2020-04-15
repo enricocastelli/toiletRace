@@ -104,11 +104,19 @@ extension UIView {
 }
 
 
-extension UIViewController {
+extension UIViewController: AlertProvider {
     
     var navigation: Navigation {
         return self.navigationController as? Navigation ??
             UIApplication.shared.windows.first?.rootViewController as! Navigation
+    }
+    
+    func disableInteraction() {
+        view.isUserInteractionEnabled = false
+    }
+    
+    func enableInteraction() {
+        view.isUserInteractionEnabled = true
     }
 }
 

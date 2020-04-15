@@ -9,7 +9,7 @@
 import UIKit
 import MultipeerConnectivity
 
-class MultiplayerVC: UIViewController, StoreProvider, AlertProvider {
+class MultiplayerVC: UIViewController, StoreProvider {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var barView: BarView!
@@ -56,8 +56,11 @@ class MultiplayerVC: UIViewController, StoreProvider, AlertProvider {
     
     private func addTapped() {
         presentFieldAlert("Create a new Room", subtitle: "Type a name...", textPlaceholder: "The Bathroom", firstButtonTitle: "OK", secondButtonTitle: "Cancel", firstCompletion: { text in
-            self.createRoom(text) { (room) in
+            self.createRoom(text, completion: { (room) in
+                self.removeRoomObservers()
                 self.navigation.push(BathroomVC(room))
+            }) { (error) in
+                self.presentGeneralError(error)
             }
         }, secondCompletion: nil)
     }
@@ -77,8 +80,10 @@ class MultiplayerVC: UIViewController, StoreProvider, AlertProvider {
             presentAlert("Ops!", subtitle: "Too many poops in here!", firstButtonTitle: "Ok", secondButtonTitle: nil, firstCompletion: {}, secondCompletion: nil)
             return }
         removeRoomObservers()
-        subscribeToRoom(room.id) { (room) in
+        subscribeToRoom(room.id, completion: { (room) in
             self.navigation.push(BathroomVC(room))
+        }) { (error) in
+            self.presentGeneralError(error)
         }
     }
 }

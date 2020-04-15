@@ -18,7 +18,7 @@ extension RoomsProvider {
         rooms().observe(DataEventType.childAdded) { (snapshot) in
             guard let room = snapshot.toRoom() else { return }
             if room.isExpired() {
-                self.deleteRoom(room.id)
+                self.deleteRoom(room.id, completion: {}) { (_) in }
             } else if room.status != .Active {
                 self.didAddedRoom(room)
             }
@@ -33,28 +33,32 @@ extension RoomsProvider {
         rooms().removeAllObservers()
     }
     
-    func createRoom(_ name: String, completion: @escaping(Room) ->()) {
+    func createRoom(_ name: String, completion: @escaping(Room) ->(), failure: @escaping(Error) ->()) {
         let random = String(Int(arc4random_uniform(99)))
         let uuid = UUID().uuidString.prefix(5).lowercased() + "-" + random
         let room = Room(name: name, id: "\(testName())\(uuid)", players: [createSelf(.Confirmed)], status: .Waiting, date: Date().toString())
-        guard let data = room.toData() else { return }
+        guard let data = room.toData() else {
+            failure(PooError.GeneralError)
+            return }
         let childUpdates = [room.id: data]
-        rooms().updateChildValues(childUpdates) { (_,_) in
-            completion(room)
+        rooms().updateChildValues(childUpdates) { (error,_) in
+            error == nil ? completion(room) : failure(error!)
         }
     }
     
-    func subscribeToRoom(_ roomID: String, completion: @escaping(Room) ->()) {
+    func subscribeToRoom(_ roomID: String, completion: @escaping(Room) ->(), failure: @escaping(Error) ->()) {
         rooms().child(roomID).observeSingleEvent(of: .value) { (snapshot) in
-            guard var room = snapshot.toRoom() else { return }
+            guard var room = snapshot.toRoom() else {
+                failure(PooError.GeneralError)
+                return }
             guard !room.players.contains(where: { $0.id == self.getID() }) else {
                 completion(room)
                 return
             }
             room.players.append(self.createSelf())
             let childUpdates = [room.id: room.toData()]
-            self.rooms().updateChildValues(childUpdates as [AnyHashable : Any]) { (_, _) in
-                completion(room)
+            self.rooms().updateChildValues(childUpdates as [AnyHashable : Any]) { (error,_) in
+                error == nil ? completion(room) : failure(error!)
             }
         }
     }

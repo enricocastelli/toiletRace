@@ -18,7 +18,7 @@ protocol DetailPresentable where Self: UIViewController {
 }
 
 
-class Navigation: UINavigationController, AlertProvider {
+class Navigation: UINavigationController {
     
     fileprivate var detailOpeningFrame: CGRect?
     var isPresentingDetail: Bool {

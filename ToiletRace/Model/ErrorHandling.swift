@@ -12,6 +12,8 @@ extension Error {
 
     var message: String {
         switch self as? PooError {
+        case .RoomDeleted: return "This room was deleted!"
+        case .GeneralError: return "Some poo got stuck somewhere...sorry for that"
         default:
             return "Something went wrong. We are too lazy to find out what."
         }
@@ -19,5 +21,6 @@ extension Error {
 }
 
 enum PooError: Error {
-    
+    case RoomDeleted
+    case GeneralError
 }

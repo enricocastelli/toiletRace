@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BathroomVC: UIViewController, AlertProvider {
+class BathroomVC: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var startButton: UIButton!
@@ -48,7 +48,7 @@ class BathroomVC: UIViewController, AlertProvider {
     private func roomWasDeleted() {
         if room == self.room && !self.room.imOwner() {
             presentAlert("OPS!", subtitle: "This room was closed!", firstButtonTitle: "OK", secondButtonTitle: nil, firstCompletion: {
-                self.navigation.pop()
+                self.isRematch ? self.navigation.goTo(WelcomeVC()) : self.navigation.pop()
             }, secondCompletion: nil)
         }
     }
@@ -72,27 +72,45 @@ class BathroomVC: UIViewController, AlertProvider {
     }
     
     func backTapped() {
+        barView.leftButton.isEnabled = false
         if room.imOwner() {
             presentAlert("Wait...", subtitle: "You are the owner of this room...if you leave the room will be deleted!", firstButtonTitle: "Delete it", secondButtonTitle: "Keep it", firstCompletion: {
-                self.deleteRoom(self.room.id)
-                self.isRematch ? self.navigation.goTo(WelcomeVC()) : self.navigation.pop()
+                self.deleteRoom(self.room.id, completion: {
+                    self.barView.leftButton.isEnabled = true
+                    self.isRematch ? self.navigation.goTo(WelcomeVC()) : self.navigation.pop()
+                }) { (error) in
+                    self.barView.leftButton.isEnabled = true
+                    self.presentGeneralError(error)
+                }
             }, secondCompletion: nil)
         } else {
-            unsubscribeFromRoom(room) {
+            unsubscribeFromRoom(room, completion: {
+                self.barView.leftButton.isEnabled = true
                 self.removePlayerObservers(self.room.id)
                 self.isRematch ? self.navigation.goTo(WelcomeVC()) : self.navigation.pop()
+            }) { (error) in
+                self.barView.leftButton.isEnabled = true
+                self.presentGeneralError(error)
             }
         }
     }
     
     @IBAction func startTapped(_ sender: UIButton) {
+        sender.isEnabled = false
         if room.imOwner() {
-            sendStartRoom(room.id) {
+            sendStartRoom(room.id, completion: {
                 self.goToRace()
+            }) { (error) in
+                sender.isEnabled = true
+                self.presentGeneralError(error)
             }
         } else {
-            updatePlayerStatus(room.id, status: .Confirmed) {
+            sender.isEnabled = false
+            updatePlayerStatus(room.id, status: .Confirmed, completion: {
                 self.setConfirmed()
+            }) { (error) in
+                sender.isEnabled = true
+                self.presentGeneralError(error)
             }
         }
     }
@@ -131,7 +149,7 @@ extension BathroomVC: PlayersProvider {
             goToRace()
         } else {
             presentAlert("OPS!", subtitle: "This room started without you!", firstButtonTitle: "OK", secondButtonTitle: nil, firstCompletion: {
-                self.navigation.pop()
+                self.isRematch ? self.navigation.goTo(WelcomeVC()) : self.navigation.pop()
             }, secondCompletion: nil)
         }
     }

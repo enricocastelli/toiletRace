@@ -57,9 +57,6 @@
                     <constraints>
                         <constraint firstAttribute="width" secondItem="MjI-Tl-Nl9" secondAttribute="height" multiplier="13:2" id="9eh-fO-UfI"/>
                     </constraints>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="string" keyPath="title" value=" "/>
-                    </userDefinedRuntimeAttributes>
                 </view>
                 <button opaque="NO" contentMode="scaleAspectFit" semanticContentAttribute="spatial" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PdK-sm-bXH">
                     <rect key="frame" x="16" y="594.5" width="56.5" height="56.5"/>

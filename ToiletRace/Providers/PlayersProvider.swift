@@ -30,10 +30,9 @@ extension PlayersProvider {
          rooms().child(roomID).observe(DataEventType.childChanged) { (snapshot) in
              guard let status = snapshot.toRoomStatus() else { return }
              if status == .Pushing {
-                 self.roomIsReady()
-                 self.updateRoomStatus(roomID, .Active, nil)
-                 self.removePlayerObservers(roomID)
-             }
+                self.roomIsReady()
+                self.removePlayerObservers(roomID)
+            }
          }
      }
     
@@ -41,36 +40,38 @@ extension PlayersProvider {
         rooms().child(roomID).child("players").removeAllObservers()
     }
     
-    func updatePlayerStatus(_ roomID: String, status: PlayerStatus, completion: @escaping() ->()) {
-        updateSelf(roomID, player: Player(name: getName(), poo: SessionData.shared.selectedPlayer.name, id: getID(), status: status, position: Position.empty()), completion: completion)
+    func updatePlayerStatus(_ roomID: String, status: PlayerStatus, completion: @escaping() ->(), failure: @escaping(Error) ->()) {
+        updateSelf(roomID, player: Player(name: getName(), poo: SessionData.shared.selectedPlayer.name, id: getID(), status: status, position: Position.empty()), completion: completion, failure: failure)
     }
     
-    func unsubscribeFromRoom(_ room: Room, completion: @escaping() ->()) {
+    func unsubscribeFromRoom(_ room: Room, completion: @escaping() ->(), failure: @escaping(Error) ->()) {
         var room = room
-        guard room.players.contains(where: { $0.id == getID() }) else { return }
+        guard room.players.contains(where: { $0.id == getID() }) else {
+            completion()
+            return }
         room.players.removeAll(where: { $0.id == getID() })
         let childUpdates = [room.id: room.toData()]
         roomExist(room.id) { (exist) in
             if exist {
-                self.rooms().updateChildValues(childUpdates as [AnyHashable : Any]) { (_, _) in
-                    completion()
+                self.rooms().updateChildValues(childUpdates as [AnyHashable : Any]) { (error, _) in
+                    error == nil ? completion() : failure(error!)
                 }
+            } else {
+                failure(PooError.RoomDeleted)
             }
         }
     }
     
-    func sendStartRoom(_ roomID: String, completion: @escaping() ->()) {
-        updateRoomStatus(roomID, .Pushing, completion)
+    func sendStartRoom(_ roomID: String, completion: @escaping() ->(), failure: @escaping(Error) ->()) {
+        updateRoomStatus(roomID, .Pushing, completion, failure)
     }
     
     // game result
-    func updateRoomStatus(_ id: String, _ status: RoomStatus, _ completion: (()->())?) {
+    func updateRoomStatus(_ id: String, _ status: RoomStatus, _ completion: @escaping() ->(), _ failure: @escaping(Error) ->()) {
         let childUpdates = [id + "/status": status.rawValue,
                             id + "/date": Date().toString()]
         rooms().updateChildValues(childUpdates) { (error, ref) in
-            if error == nil {
-                completion?()
-            }
+            error == nil ? completion() : failure(error!)
         }
     }
     

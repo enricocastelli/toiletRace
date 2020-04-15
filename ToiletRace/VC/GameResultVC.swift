@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GameResultVC: UIViewController, StoreProvider, AlertProvider, RematchProvider {
+class GameResultVC: UIViewController, StoreProvider, RematchProvider {
 
     @IBOutlet weak var barView: BarView!
     @IBOutlet weak var homeButton: UIButton!
@@ -17,14 +17,14 @@ class GameResultVC: UIViewController, StoreProvider, AlertProvider, RematchProvi
     @IBOutlet weak var barHeight: NSLayoutConstraint!
     @IBOutlet weak var barRatio: NSLayoutConstraint!
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
-
-
+    
+    
     var multiplayer: MultiplayerManager?
     var room: Room?
     var finalResults: [Result]
     var animationEnabled = true
     var resultTimer = Timer()
-
+    
     init(results: [Result], room: Room? = nil) {
         finalResults = results
         self.room = room
@@ -62,7 +62,7 @@ class GameResultVC: UIViewController, StoreProvider, AlertProvider, RematchProvi
         barView.onRightTap = share
         barView.lineHidden = false
         barView.leftImage = UIImage(systemName: "goforward")
-        barView.onLeftTap = { self.rematch(self.room) }
+        barView.onLeftTap = rematch
     }
     
     private func updatePlayers() {
@@ -94,7 +94,7 @@ class GameResultVC: UIViewController, StoreProvider, AlertProvider, RematchProvi
         navigation.present(activityViewController, animated: true, completion: nil)
     }
     
-    private func rematch(_ room: Room?) {
+    private func rematch() {
         if let room = room {
             multiplayerRematch(room)
         } else {
@@ -103,23 +103,32 @@ class GameResultVC: UIViewController, StoreProvider, AlertProvider, RematchProvi
     }
     
     private func multiplayerRematch(_ room: Room) {
-        guard room.players.count == finalResults.count else {
-            presentAlert("Wait", subtitle: "Not every player finished the race yet!", firstButtonTitle: "Ok", secondButtonTitle: nil, firstCompletion: {}, secondCompletion: nil)
-            return
-        }
-        resultTimer.invalidate()
-        getRoom(room.id) { (updatedRoom) in
-        let bathroom = BathroomVC(updatedRoom)
+        barView.leftButton.isEnabled = false
+        // first update room to get latest updates
+        getRoom(room.id, completion: { (updatedRoom) in
+            guard updatedRoom.players.count == self.finalResults.count else {
+                self.presentAlert("Wait", subtitle: "Not every player finished the race yet!", firstButtonTitle: "Ok", secondButtonTitle: nil, firstCompletion: {}, secondCompletion: nil)
+                self.barView.leftButton.isEnabled = true
+                return
+            }
+            self.resultTimer.invalidate()
+            let bathroom = BathroomVC(updatedRoom)
             bathroom.isRematch = true
             if updatedRoom.imOwner() {
                 self.multiplayer?.sendStatus(PlayerStatus.Confirmed)
-                self.updateRoomStatus(updatedRoom.id, .Waiting) {
+                self.updateRoomStatus(updatedRoom.id, .Waiting, {
                     self.navigation.push(bathroom, shouldRemove: true)
+                }) { (error) in
+                    self.barView.leftButton.isEnabled = true
+                    self.presentGeneralError(error)
                 }
             } else {
                 self.multiplayer?.sendStatus(PlayerStatus.Confirmed)
                 self.navigation.push(bathroom, shouldRemove: true)
             }
+        }) { (error) in
+            self.barView.leftButton.isEnabled = true
+            self.presentGeneralError(error)
         }
     }
     

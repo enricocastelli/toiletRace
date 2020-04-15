@@ -13,9 +13,6 @@ import FirebaseDatabase
 protocol RematchProvider: PlayersProvider {}
 
 extension RematchProvider {
-
-    
-    
     
     // Unused database methods
     func roomIsReady() {}

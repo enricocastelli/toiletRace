@@ -13,7 +13,7 @@ protocol MultiplayerDelegate {
     func shouldStart()
 }
 
-class MultiplayerManager: StoreProvider {
+class MultiplayerManager: StoreProvider, RematchProvider {
     
     var room: Room
     var indexSelf: Int
