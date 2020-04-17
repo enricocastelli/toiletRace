@@ -12,6 +12,7 @@ class WelcomeVC: UIViewController, TextPresenter {
 
 
     @IBOutlet weak var settingsButton: UIButton!
+    @IBOutlet weak var badgeButton: UIButton!
     @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var multiplayerButton: UIButton!
     @IBOutlet weak var toiletPaperView: ToiletPaperView!
@@ -37,6 +38,7 @@ class WelcomeVC: UIViewController, TextPresenter {
         startButton.transform = CGAffineTransform(translationX: 0, y: view.frame.width)
         multiplayerButton.transform = CGAffineTransform(translationX: 0, y: view.frame.width)
         settingsButton.transform = CGAffineTransform(translationX: 0, y: view.frame.width)
+        badgeButton.transform = CGAffineTransform(translationX: 0, y: view.frame.width)
         UIView.animate(withDuration: 0.3, animations: {
             self.launchView.transform = CGAffineTransform(scaleX: 0.2, y: 0.2)
         }) { (_) in
@@ -49,6 +51,7 @@ class WelcomeVC: UIViewController, TextPresenter {
             self.startButton.transform = CGAffineTransform.identity
             self.multiplayerButton.transform = CGAffineTransform.identity
             self.settingsButton.transform = CGAffineTransform.identity
+            self.badgeButton.transform = CGAffineTransform.identity
         }, completion: nil)
     }
 
@@ -69,6 +72,11 @@ class WelcomeVC: UIViewController, TextPresenter {
     @IBAction func settingsTapped(_ sender: UIButton) {
         navigation.present(SettingsVC(), animated: true, completion: nil)
     }
+    
+    @IBAction func badgeTapped(_ sender: UIButton) {
+        navigation.present(BadgesVC(), animated: true, completion: nil)
+    }
+    
     
     func testResult() {
                 navigation.push(GameResultVC(results: [Result(poo: Poo(name: .ApolloPoo), time: 13.05, timeToWinner: nil),

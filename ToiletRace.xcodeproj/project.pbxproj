@@ -11,8 +11,11 @@
 		1C03B3A4217E658F003CD652 /* Loading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C03B3A3217E658F003CD652 /* Loading.swift */; };
 		1C0EEBC4217F56DE008EE331 /* spluff.scnp in Resources */ = {isa = PBXBuildFile; fileRef = 1C0EEBC2217F56DE008EE331 /* spluff.scnp */; };
 		1C0EEBC5217F56DE008EE331 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C0EEBC3217F56DE008EE331 /* spark.png */; };
+		1C13B10C24489EEE0007415B /* BadgesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C13B10A24489EEE0007415B /* BadgesVC.swift */; };
+		1C13B10D24489EEE0007415B /* BadgesVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C13B10B24489EEE0007415B /* BadgesVC.xib */; };
 		1C1FB9FB2444789200028E29 /* ScreenshotProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C1FB9FA2444789200028E29 /* ScreenshotProvider.swift */; };
 		1C1FB9FD244494BD00028E29 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C1FB9FC244494BD00028E29 /* Colors.swift */; };
+		1C2696062448B14C007B3C0C /* CounterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C2696052448B14C007B3C0C /* CounterView.swift */; };
 		1C27D24921CA899E00E3C322 /* MultiplayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C27D24821CA899E00E3C322 /* MultiplayerManager.swift */; };
 		1C27D34721CA992200E3C322 /* MultiplayerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C27D34621CA992200E3C322 /* MultiplayerVC.swift */; };
 		1C27D34921CB947A00E3C322 /* MultiplayerVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C27D34821CB947A00E3C322 /* MultiplayerVC.xib */; };
@@ -34,7 +37,6 @@
 		1C903E862441BA5F00952C80 /* ShowroomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C903E842441BA5F00952C80 /* ShowroomVC.swift */; };
 		1C903E872441BA5F00952C80 /* ShowroomVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C903E852441BA5F00952C80 /* ShowroomVC.xib */; };
 		1C903E892441CF7900952C80 /* BarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C903E882441CF7900952C80 /* BarView.swift */; };
-		1C903E8B24421CB800952C80 /* WhirlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C903E8A24421CB700952C80 /* WhirlView.swift */; };
 		1C903E8D2442248A00952C80 /* TextPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C903E8C2442248A00952C80 /* TextPresenter.swift */; };
 		1CA23A38243EF9F500F8872C /* BonusProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA23A37243EF9F500F8872C /* BonusProvider.swift */; };
 		1CA23A3A243F041A00F8872C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1CA23A39243F041A00F8872C /* GoogleService-Info.plist */; };
@@ -84,8 +86,11 @@
 		1C03B3A3217E658F003CD652 /* Loading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loading.swift; sourceTree = "<group>"; };
 		1C0EEBC2217F56DE008EE331 /* spluff.scnp */ = {isa = PBXFileReference; lastKnownFileType = file.scp; path = spluff.scnp; sourceTree = "<group>"; };
 		1C0EEBC3217F56DE008EE331 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
+		1C13B10A24489EEE0007415B /* BadgesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgesVC.swift; sourceTree = "<group>"; };
+		1C13B10B24489EEE0007415B /* BadgesVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BadgesVC.xib; sourceTree = "<group>"; };
 		1C1FB9FA2444789200028E29 /* ScreenshotProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotProvider.swift; sourceTree = "<group>"; };
 		1C1FB9FC244494BD00028E29 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		1C2696052448B14C007B3C0C /* CounterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterView.swift; sourceTree = "<group>"; };
 		1C27D24821CA899E00E3C322 /* MultiplayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplayerManager.swift; sourceTree = "<group>"; };
 		1C27D34621CA992200E3C322 /* MultiplayerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplayerVC.swift; sourceTree = "<group>"; };
 		1C27D34821CB947A00E3C322 /* MultiplayerVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MultiplayerVC.xib; sourceTree = "<group>"; };
@@ -107,7 +112,6 @@
 		1C903E842441BA5F00952C80 /* ShowroomVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowroomVC.swift; sourceTree = "<group>"; };
 		1C903E852441BA5F00952C80 /* ShowroomVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShowroomVC.xib; sourceTree = "<group>"; };
 		1C903E882441CF7900952C80 /* BarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarView.swift; sourceTree = "<group>"; };
-		1C903E8A24421CB700952C80 /* WhirlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhirlView.swift; sourceTree = "<group>"; };
 		1C903E8C2442248A00952C80 /* TextPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextPresenter.swift; sourceTree = "<group>"; };
 		1CA23A37243EF9F500F8872C /* BonusProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonusProvider.swift; sourceTree = "<group>"; };
 		1CA23A39243F041A00F8872C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -210,8 +214,8 @@
 				1C7C1C1C21C7B85A00D47FC8 /* ControllerView.swift */,
 				1C034CFF218CA06E001C5694 /* BonusButton.swift */,
 				1C903E75244136BB00952C80 /* ToiletPaperView.swift */,
-				1C903E8A24421CB700952C80 /* WhirlView.swift */,
 				1C903E8C2442248A00952C80 /* TextPresenter.swift */,
+				1C2696052448B14C007B3C0C /* CounterView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -225,6 +229,7 @@
 				1CE146D623AB7D8E00CCC356 /* SettingsVC.swift */,
 				1CB8D7912176168200B38BA2 /* GameResultVC.swift */,
 				1C903E842441BA5F00952C80 /* ShowroomVC.swift */,
+				1C13B10A24489EEE0007415B /* BadgesVC.swift */,
 				1CB8D7A02176168200B38BA2 /* ResultCell.swift */,
 				1CDC22CA24436B1A004BBEA2 /* RankCell.swift */,
 				1CBEC03124423B4B003C82C8 /* RoomCell.swift */,
@@ -255,6 +260,7 @@
 				1CA23A42243F7BBE00F8872C /* BathroomVC.xib */,
 				1CE146D723AB7D8E00CCC356 /* SettingsVC.xib */,
 				1CCE07E22442500500C43C73 /* ControllerView.xib */,
+				1C13B10B24489EEE0007415B /* BadgesVC.xib */,
 				1CB8D79E2176168200B38BA2 /* GameResultVC.xib */,
 				1CB8D79F2176168200B38BA2 /* ResultCell.xib */,
 				1CBEC03224423B4B003C82C8 /* RoomCell.xib */,
@@ -398,6 +404,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C13B10D24489EEE0007415B /* BadgesVC.xib in Resources */,
 				1CBD9E6721775A7000109DC3 /* smoke.scnp in Resources */,
 				1C903E7F2441B6F500952C80 /* Lato-Thin.ttf in Resources */,
 				1C903E7E2441B6F500952C80 /* Lato-Italic.ttf in Resources */,
@@ -478,10 +485,10 @@
 				1CB5F96924474FB00056FAD4 /* DatabaseProvider.swift in Sources */,
 				1CA23A38243EF9F500F8872C /* BonusProvider.swift in Sources */,
 				1C27D24921CA899E00E3C322 /* MultiplayerManager.swift in Sources */,
+				1C13B10C24489EEE0007415B /* BadgesVC.swift in Sources */,
 				1CB8D781217615C000B38BA2 /* GameViewController.swift in Sources */,
 				1CBEC03324423B4B003C82C8 /* RoomCell.swift in Sources */,
 				1CDC22CC24436B1A004BBEA2 /* RankCell.swift in Sources */,
-				1C903E8B24421CB800952C80 /* WhirlView.swift in Sources */,
 				1CA23A40243F791B00F8872C /* ErrorHandling.swift in Sources */,
 				1CB8D7B22176168300B38BA2 /* ResultCell.swift in Sources */,
 				1CB8D7A92176168300B38BA2 /* Poo.swift in Sources */,
@@ -513,6 +520,7 @@
 				1CFE97082191D942007F837A /* Bonus.swift in Sources */,
 				1C03B3A4217E658F003CD652 /* Loading.swift in Sources */,
 				1C1FB9FD244494BD00028E29 /* Colors.swift in Sources */,
+				1C2696062448B14C007B3C0C /* CounterView.swift in Sources */,
 				1CCE07E124424FCC00C43C73 /* NibView.swift in Sources */,
 				1C27D35E21CCF6C000E3C322 /* StoreProvider.swift in Sources */,
 				1CB8D7A42176168300B38BA2 /* Extension.swift in Sources */,

@@ -47,6 +47,7 @@ class GameResultVC: UIViewController, StoreProvider, RematchProvider {
                 self.updatePlayers()
             })
         }
+        recordCheck()
     }
     
     private func setTableView() {
@@ -63,6 +64,14 @@ class GameResultVC: UIViewController, StoreProvider, RematchProvider {
         barView.lineHidden = false
         barView.leftImage = UIImage(systemName: "goforward")
         barView.onLeftTap = rematch
+    }
+    
+    private func recordCheck() {
+        // test
+        setBadge(.flushWinner)
+        if let time = finalResults.filter({$0.poo == SessionData.shared.selectedPlayer}).first?.time {
+            storeRecord(time)
+        }
     }
     
     private func updatePlayers() {

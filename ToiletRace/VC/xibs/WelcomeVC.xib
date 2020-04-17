@@ -14,6 +14,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WelcomeVC" customModule="The_Toilet_Race" customModuleProvider="target">
             <connections>
+                <outlet property="badgeButton" destination="aIh-A3-Mcx" id="suY-F5-vUG"/>
                 <outlet property="launchView" destination="qRR-wO-obr" id="H4X-zo-Gn8"/>
                 <outlet property="multiplayerButton" destination="s6l-ZA-Kjb" id="20B-TX-DU9"/>
                 <outlet property="settingsButton" destination="PdK-sm-bXH" id="XZP-j9-x64"/>
@@ -70,6 +71,21 @@
                     </state>
                     <connections>
                         <action selector="settingsTapped:" destination="-1" eventType="touchUpInside" id="I5f-b5-b7M"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleAspectFit" semanticContentAttribute="spatial" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aIh-A3-Mcx">
+                    <rect key="frame" x="88.5" y="597" width="54" height="54"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="aIh-A3-Mcx" secondAttribute="height" multiplier="1:1" id="2hs-pC-BTh"/>
+                    </constraints>
+                    <color key="tintColor" red="0.54901960780000003" green="0.42745098040000001" blue="0.17254901959999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <inset key="contentEdgeInsets" minX="16" minY="16" maxX="16" maxY="16"/>
+                    <state key="normal" image="circle.grid.hex.fill" catalog="system">
+                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="17" scale="default" weight="ultraLight"/>
+                    </state>
+                    <connections>
+                        <action selector="badgeTapped:" destination="-1" eventType="touchUpInside" id="uiy-xH-kCU"/>
+                        <action selector="settingsTapped:" destination="-1" eventType="touchUpInside" id="zeC-94-DBR"/>
                     </connections>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5qZ-PG-XTR">
@@ -137,7 +153,9 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="5qZ-PG-XTR" secondAttribute="trailing" constant="16" id="U0M-L1-PPI"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="qRR-wO-obr" secondAttribute="trailing" id="UI6-g5-WeQ"/>
                 <constraint firstItem="s6l-ZA-Kjb" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="VUJ-vq-glm"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="aIh-A3-Mcx" secondAttribute="bottom" constant="16" id="WD2-wb-kKO"/>
                 <constraint firstItem="pDF-9t-iPo" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="blI-HC-Ws8"/>
+                <constraint firstItem="aIh-A3-Mcx" firstAttribute="leading" secondItem="PdK-sm-bXH" secondAttribute="trailing" constant="16" id="f4p-4f-5Uq"/>
                 <constraint firstItem="MjI-Tl-Nl9" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="fIc-NC-QC7"/>
                 <constraint firstItem="pDF-9t-iPo" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="gT0-Kx-PGK"/>
                 <constraint firstItem="PdK-sm-bXH" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" constant="-16" id="gwy-bf-M6U"/>
@@ -152,6 +170,7 @@
         </view>
     </objects>
     <resources>
+        <image name="circle.grid.hex.fill" catalog="system" width="64" height="56"/>
         <image name="hammer.fill" catalog="system" width="64" height="56"/>
         <image name="icon" width="1920" height="1611"/>
     </resources>

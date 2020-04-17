@@ -25,7 +25,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QmY-p5-axh">
-                        <rect key="frame" x="16" y="8" width="246" height="28"/>
+                        <rect key="frame" x="16" y="8" width="242" height="28"/>
                         <fontDescription key="fontDescription" name="Lato-Medium" family="Lato" pointSize="23"/>
                         <color key="textColor" red="0.1137254902" green="0.1137254902" blue="0.1137254902" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <nil key="highlightedColor"/>
@@ -37,20 +37,29 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7UH-FA-1Qq">
-                        <rect key="frame" x="278" y="24.5" width="32" height="32"/>
+                        <rect key="frame" x="274" y="24.5" width="32" height="32"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="7UH-FA-1Qq" secondAttribute="height" multiplier="1:1" id="gdJ-ap-Rhw"/>
                             <constraint firstAttribute="height" constant="32" id="ngG-Q0-RRx"/>
                         </constraints>
                     </imageView>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZUC-oi-yg2">
-                        <rect key="frame" x="318" y="32.5" width="16" height="16"/>
+                        <rect key="frame" x="314" y="30.5" width="20" height="20"/>
                         <color key="tintColor" red="0.43529411759999997" green="0.61176470589999998" blue="0.47843137250000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="16" id="N0Y-90-AYY"/>
-                            <constraint firstAttribute="width" secondItem="ZUC-oi-yg2" secondAttribute="height" multiplier="1:1" id="ohO-hE-Hzo"/>
+                            <constraint firstAttribute="height" constant="20" id="N0Y-90-AYY"/>
                         </constraints>
                     </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qeX-EE-P1b">
+                        <rect key="frame" x="16" y="80" width="310" height="1"/>
+                        <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="dtC-Wx-yth"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
@@ -61,11 +70,14 @@
                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ZUC-oi-yg2" secondAttribute="bottom" constant="8" id="GfQ-na-se1"/>
                     <constraint firstAttribute="trailing" secondItem="ZUC-oi-yg2" secondAttribute="trailing" constant="8" id="I6z-9a-Hwm"/>
                     <constraint firstItem="jPE-fD-DHp" firstAttribute="top" secondItem="QmY-p5-axh" secondAttribute="bottom" constant="8" id="K5W-Yr-LW0"/>
+                    <constraint firstItem="qeX-EE-P1b" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="LE1-z3-RYh"/>
                     <constraint firstItem="ZUC-oi-yg2" firstAttribute="width" secondItem="ZUC-oi-yg2" secondAttribute="height" multiplier="1:1" id="Lyu-JO-MwV"/>
                     <constraint firstItem="QmY-p5-axh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="Oya-ZM-esM"/>
                     <constraint firstItem="ZUC-oi-yg2" firstAttribute="leading" secondItem="7UH-FA-1Qq" secondAttribute="trailing" constant="8" id="Q6T-ZT-Xwi"/>
                     <constraint firstItem="7UH-FA-1Qq" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="chL-Zf-dE8"/>
                     <constraint firstItem="7UH-FA-1Qq" firstAttribute="leading" secondItem="QmY-p5-axh" secondAttribute="trailing" constant="16" id="fS1-Yd-Zlr"/>
+                    <constraint firstAttribute="trailing" secondItem="qeX-EE-P1b" secondAttribute="trailing" constant="16" id="ffx-1d-8dB"/>
+                    <constraint firstAttribute="bottom" secondItem="qeX-EE-P1b" secondAttribute="bottom" id="gwd-lz-yta"/>
                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="7UH-FA-1Qq" secondAttribute="bottom" constant="8" id="hxT-AB-pA1"/>
                     <constraint firstItem="7UH-FA-1Qq" firstAttribute="top" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="i6c-yV-Vr5"/>
                     <constraint firstItem="ZUC-oi-yg2" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="qpR-h4-1hX"/>

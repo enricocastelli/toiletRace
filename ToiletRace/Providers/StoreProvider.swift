@@ -10,9 +10,10 @@ import UIKit
 
 enum StorageKeys {
     static let firstTime = "firstTime"
-    static let level = "Level"
+    static let level = "level"
     static let ID = "ID"
     static let name = "name"
+    static let record = "record"
     static let badges = "badges"
 }
 
@@ -25,7 +26,7 @@ extension StoreProvider {
             return false
         } else {
             UserDefaults.standard.set(false, forKey: StorageKeys.firstTime)
-            UserDefaults.standard.set(["Guano Star", "Hole Runner"], forKey: StorageKeys.badges)
+            UserDefaults.standard.set([], forKey: StorageKeys.badges)
             return true
         }
     }
@@ -70,8 +71,41 @@ extension StoreProvider {
     }
     
     func isPooUnlocked(_ poo: Poo) -> Bool {
-        let badges = UserDefaults.standard.value(forKey: StorageKeys.badges) as? [String] ?? []
-        return badges.contains(poo.name.rawValue)
+        guard poo.name != .GuanoStar && poo.name != .HoleRunner else { return true }
+        if let int = UserDefaults.standard.value(forKey: StorageKeys.badges) as? [Int] {
+            return !int.map { ( Badge($0)) }.filter { (badge) -> Bool in
+                return badge.poo == poo.name
+            }.isEmpty
+        }
+        return false
+    }
+    
+    func storeRecord(_ record: TimeInterval) {
+        if let savedRecord = getRecord() {
+            if record > savedRecord {
+                UserDefaults.standard.setValue(record, forKey: StorageKeys.record)
+            }
+        } else {
+            UserDefaults.standard.setValue(record, forKey: StorageKeys.record)
+        }
+    }
+    
+    func getRecord() -> TimeInterval? {
+        UserDefaults.standard.value(forKey: StorageKeys.record) as? TimeInterval
+    }
+    
+    func setBadge(_ badge: Badge) {
+        var arr = getBadges()
+        arr.append(badge)
+        let mapped = arr.map {$0.index}
+        UserDefaults.standard.setValue(mapped, forKey: StorageKeys.badges)
+    }
+    
+    func getBadges() -> [Badge] {
+        if let badges = UserDefaults.standard.value(forKey: StorageKeys.badges) as? [Int] {
+            return badges.map { ( Badge($0)) }
+        }
+        return []
     }
 }
 

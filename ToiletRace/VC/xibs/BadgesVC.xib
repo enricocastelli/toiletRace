@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Lato-Medium.ttf">
+            <string>Lato-Medium</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BadgesVC" customModule="The_Toilet_Race" customModuleProvider="target">
+            <connections>
+                <outlet property="badgesCollectionView" destination="A9L-qB-cX5" id="73a-wD-TAX"/>
+                <outlet property="badgesLabel" destination="S39-Sl-7nE" id="cYi-N1-6HX"/>
+                <outlet property="decimalCounterView" destination="0Cp-u3-dGw" id="Bwe-C7-ARh"/>
+                <outlet property="lapLabel" destination="whs-SS-vm5" id="a8W-Fm-vIM"/>
+                <outlet property="minuteCounterView" destination="hjs-if-pqA" id="qZ3-gA-9qA"/>
+                <outlet property="recordContainerView" destination="1fI-xJ-H9F" id="2nM-MX-Rif"/>
+                <outlet property="secondsCounterView" destination="P8X-9g-p08" id="r28-60-xnQ"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="A9L-qB-cX5">
+                    <rect key="frame" x="16" y="310.5" width="382" height="535.5"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="16" minimumInteritemSpacing="16" id="Lwu-wr-Gh1">
+                        <size key="itemSize" width="80" height="80"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="8yx-8i-ytx"/>
+                        <outlet property="delegate" destination="-1" id="pek-rr-CUQ"/>
+                    </connections>
+                </collectionView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FASTEST LAP" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zx1-kZ-2zz">
+                    <rect key="frame" x="16" y="114" width="382" height="24"/>
+                    <fontDescription key="fontDescription" name="Lato-Medium" family="Lato" pointSize="20"/>
+                    <color key="textColor" red="0.1137254902" green="0.1137254902" blue="0.1137254902" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1fI-xJ-H9F">
+                    <rect key="frame" x="16" y="154" width="382" height="76.5"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P8X-9g-p08" customClass="CounterView" customModule="The_Toilet_Race" customModuleProvider="target">
+                            <rect key="frame" x="153" y="0.0" width="76" height="76.5"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="P8X-9g-p08" secondAttribute="height" multiplier="1:1" id="170-ZB-9ac"/>
+                            </constraints>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=":" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="whs-SS-vm5">
+                            <rect key="frame" x="233" y="0.0" width="4.5" height="76.5"/>
+                            <fontDescription key="fontDescription" name="Lato-Medium" family="Lato" pointSize="16"/>
+                            <color key="textColor" red="0.1137254902" green="0.1137254902" blue="0.1137254902" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=":" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L1n-JO-HPf">
+                            <rect key="frame" x="144.5" y="0.0" width="4.5" height="76.5"/>
+                            <fontDescription key="fontDescription" name="Lato-Medium" family="Lato" pointSize="16"/>
+                            <color key="textColor" red="0.1137254902" green="0.1137254902" blue="0.1137254902" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Cp-u3-dGw" customClass="CounterView" customModule="The_Toilet_Race" customModuleProvider="target">
+                            <rect key="frame" x="241.5" y="0.0" width="77.5" height="76.5"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="0Cp-u3-dGw" secondAttribute="height" multiplier="1:1" constant="1" id="uzy-Ef-X66"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hjs-if-pqA" customClass="CounterView" customModule="The_Toilet_Race" customModuleProvider="target">
+                            <rect key="frame" x="64" y="0.0" width="76.5" height="76.5"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="hjs-if-pqA" secondAttribute="height" multiplier="1:1" id="MjK-g5-Bsx"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="L1n-JO-HPf" firstAttribute="leading" secondItem="hjs-if-pqA" secondAttribute="trailing" constant="4" id="0Y3-df-np1"/>
+                        <constraint firstItem="hjs-if-pqA" firstAttribute="top" secondItem="1fI-xJ-H9F" secondAttribute="top" id="0vi-6M-wdJ"/>
+                        <constraint firstItem="L1n-JO-HPf" firstAttribute="top" secondItem="1fI-xJ-H9F" secondAttribute="top" id="2pl-xL-ydS"/>
+                        <constraint firstItem="P8X-9g-p08" firstAttribute="leading" secondItem="L1n-JO-HPf" secondAttribute="trailing" constant="4" id="G0K-CZ-EPC"/>
+                        <constraint firstItem="P8X-9g-p08" firstAttribute="top" secondItem="1fI-xJ-H9F" secondAttribute="top" id="GIR-KM-Rxg"/>
+                        <constraint firstAttribute="bottom" secondItem="L1n-JO-HPf" secondAttribute="bottom" id="GnO-P2-Sy5"/>
+                        <constraint firstItem="whs-SS-vm5" firstAttribute="leading" secondItem="P8X-9g-p08" secondAttribute="trailing" constant="4" id="Mkw-I2-2u0"/>
+                        <constraint firstItem="P8X-9g-p08" firstAttribute="centerX" secondItem="1fI-xJ-H9F" secondAttribute="centerX" id="PVO-N6-AaB"/>
+                        <constraint firstAttribute="bottom" secondItem="P8X-9g-p08" secondAttribute="bottom" id="U5c-YV-OBw"/>
+                        <constraint firstAttribute="width" secondItem="1fI-xJ-H9F" secondAttribute="height" multiplier="5:1" id="cmf-QW-LEZ"/>
+                        <constraint firstItem="0Cp-u3-dGw" firstAttribute="top" secondItem="1fI-xJ-H9F" secondAttribute="top" id="hSf-aI-9z8"/>
+                        <constraint firstItem="0Cp-u3-dGw" firstAttribute="leading" secondItem="whs-SS-vm5" secondAttribute="trailing" constant="4" id="hu6-Rl-XOm"/>
+                        <constraint firstAttribute="bottom" secondItem="whs-SS-vm5" secondAttribute="bottom" id="l2o-kl-q8I"/>
+                        <constraint firstItem="whs-SS-vm5" firstAttribute="top" secondItem="1fI-xJ-H9F" secondAttribute="top" id="maI-02-3uu"/>
+                        <constraint firstAttribute="bottom" secondItem="0Cp-u3-dGw" secondAttribute="bottom" id="tWz-Nv-xWc"/>
+                        <constraint firstAttribute="bottom" secondItem="hjs-if-pqA" secondAttribute="bottom" id="wMa-JP-8zc"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BADGES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S39-Sl-7nE">
+                    <rect key="frame" x="16" y="270.5" width="382" height="24"/>
+                    <fontDescription key="fontDescription" name="Lato-Medium" family="Lato" pointSize="20"/>
+                    <color key="textColor" red="0.1137254902" green="0.1137254902" blue="0.1137254902" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7tu-Lj-5sO">
+                    <rect key="frame" x="16" y="60" width="36" height="38"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
+                    <state key="normal" image="xmark.circle.fill" catalog="system"/>
+                    <connections>
+                        <action selector="close" destination="-1" eventType="touchUpInside" id="TyT-fH-qQm"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="Zx1-kZ-2zz" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="1eo-mC-LLY"/>
+                <constraint firstItem="Zx1-kZ-2zz" firstAttribute="top" secondItem="7tu-Lj-5sO" secondAttribute="bottom" constant="16" id="6vQ-67-dto"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Zx1-kZ-2zz" secondAttribute="trailing" constant="16" id="CKE-xd-10p"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="A9L-qB-cX5" secondAttribute="bottom" constant="16" id="Cbm-lo-IFn"/>
+                <constraint firstItem="S39-Sl-7nE" firstAttribute="top" secondItem="1fI-xJ-H9F" secondAttribute="bottom" constant="40" id="E6u-Ex-FZr"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="S39-Sl-7nE" secondAttribute="trailing" constant="16" id="EQK-wq-AqM"/>
+                <constraint firstItem="1fI-xJ-H9F" firstAttribute="top" secondItem="Zx1-kZ-2zz" secondAttribute="bottom" constant="16" id="Hvd-hz-b01"/>
+                <constraint firstItem="7tu-Lj-5sO" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="M65-aw-Rv2"/>
+                <constraint firstItem="A9L-qB-cX5" firstAttribute="top" secondItem="S39-Sl-7nE" secondAttribute="bottom" constant="16" id="Q77-4w-Y3U"/>
+                <constraint firstItem="S39-Sl-7nE" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="UL3-Bm-O9F"/>
+                <constraint firstItem="7tu-Lj-5sO" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="16" id="ege-cV-t1N"/>
+                <constraint firstItem="A9L-qB-cX5" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="gUJ-8y-Ock"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="A9L-qB-cX5" secondAttribute="trailing" constant="16" id="o4s-Z2-pMq"/>
+                <constraint firstItem="1fI-xJ-H9F" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="rRT-Oe-d7K"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="1fI-xJ-H9F" secondAttribute="trailing" constant="16" id="xS7-kb-TUA"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="137.68115942028987" y="84.375"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="xmark.circle.fill" catalog="system" width="64" height="60"/>
+    </resources>
+</document>

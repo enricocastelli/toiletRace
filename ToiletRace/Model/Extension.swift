@@ -239,10 +239,9 @@ extension UIPanGestureRecognizer {
 extension TimeInterval{
     
     func string() -> String {
-        let time = NSInteger(self)
-        let ms = Int((self.truncatingRemainder(dividingBy: 1)) * 100)
-        let seconds = time % 60
-        let minutes = (time / 60) % 60
+        let ms = self.ms()
+        let seconds = self.seconds()
+        let minutes = self.minutes()
         return String(format: "%0.2d:%0.2d.%0.2d",minutes,seconds,ms)
     }
     func stringAbs() -> String {
@@ -251,6 +250,21 @@ extension TimeInterval{
         let seconds = abs(time % 60)
         return String(format: "-%0.2d:%0.2d",seconds,ms)
     }
+    
+    func minutes() -> Int {
+        let time = NSInteger(self)
+        return (time / 60) % 60
+    }
+    
+    func seconds() -> Int {
+        let time = NSInteger(self)
+        return time % 60
+    }
+    
+    func ms() -> Int {
+        return Int((self.truncatingRemainder(dividingBy: 1)) * 100)
+    }
+
 }
 
 extension String {

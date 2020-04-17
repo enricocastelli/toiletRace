@@ -35,6 +35,7 @@ class MultiplayerVC: UIViewController, StoreProvider {
         tableView.refreshControl = UIRefreshControl()
         tableView.register(UINib(nibName: RoomCell.id, bundle: nil), forCellReuseIdentifier: RoomCell.id)
         tableView.refreshControl?.addTarget(self, action: #selector(handleRefreshControl),for: .valueChanged)
+        tableView.separatorStyle = .none
     }
     
     private func setBarView(){
@@ -44,7 +45,6 @@ class MultiplayerVC: UIViewController, StoreProvider {
         barView.rightButton.tintColor = UIColor.aqua
         barView.lineHidden = false
     }
-    
     
     @IBAction func createTapped(_ sender: UIButton) {
         addTapped()
