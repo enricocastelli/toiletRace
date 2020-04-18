@@ -29,5 +29,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, StoreProvider {
         return true
     }
     
+    
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        guard let urlString = userActivity.webpageURL?.absoluteString, let range = urlString.range(of: "/race:") else { return true }
+        let link = String(urlString[range.upperBound...])
+        DeeplinkManager.shared.open(link)
+        return true
+    }
 }
-

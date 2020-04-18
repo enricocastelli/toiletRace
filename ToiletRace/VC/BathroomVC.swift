@@ -30,6 +30,7 @@ class BathroomVC: UIViewController {
         setupTable()
         setBarView()
         addPlayersObserver(room.id)
+        navigation.isSwipeBackEnabled = false
     }
     
     private func setupTable() {
@@ -42,7 +43,9 @@ class BathroomVC: UIViewController {
     private func setBarView(){
         barView.leftImage = isRematch ? UIImage(systemName: "house.fill") : UIImage(systemName: "arrow.left.circle.fill")
         barView.onLeftTap = backTapped
-        barView.rightImage = nil
+        barView.rightImage = UIImage(systemName: "link.circle.fill")
+        barView.rightButton.tintColor = UIColor.aqua
+        barView.onRightTap = shareLink
         barView.lineHidden = false
     }
     
@@ -96,9 +99,16 @@ class BathroomVC: UIViewController {
         }
     }
     
+    func shareLink() {
+        guard let link = DeeplinkManager.shared.urlWithRoom(room.id) else { return }
+        let activityViewController = UIActivityViewController(activityItems: [link], applicationActivities: nil)
+        navigation.present(activityViewController, animated: true, completion: nil)
+    }
+    
     @IBAction func startTapped(_ sender: UIButton) {
         sender.isEnabled = false
         if room.imOwner() {
+            badgeCheck()
             sendStartRoom(room.id, completion: {
                 self.goToRace()
             }) { (error) in
@@ -113,6 +123,12 @@ class BathroomVC: UIViewController {
                 sender.isEnabled = true
                 self.presentGeneralError(error)
             }
+        }
+    }
+    
+    private func badgeCheck() {
+        if room.players.count == 1 {
+            self.saveBadge(.foreverAlone)
         }
     }
 

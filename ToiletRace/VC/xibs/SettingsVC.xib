@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="Brandon_reg.otf">
-            <string>BrandonGrotesque-Regular</string>
+        <array key="Lato-Light.ttf">
+            <string>Lato-Light</string>
+        </array>
+        <array key="Lato-Thin.ttf">
+            <string>Lato-Thin</string>
         </array>
     </customFonts>
     <objects>
@@ -25,16 +27,16 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bfh-Q3-PXA">
-                    <rect key="frame" x="8" y="174" width="398" height="39.5"/>
+                    <rect key="frame" x="8" y="130" width="398" height="41.5"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Level" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bca-P9-v38">
-                            <rect key="frame" x="16" y="8" width="47.5" height="23.5"/>
-                            <fontDescription key="fontDescription" name="BrandonGrotesque-Regular" family="Brandon Grotesque" pointSize="20"/>
+                            <rect key="frame" x="16" y="8" width="46.5" height="25.5"/>
+                            <fontDescription key="fontDescription" name="Lato-Light" family="Lato" pointSize="21"/>
                             <color key="textColor" white="0.17818970479999999" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="xzO-WD-b0R">
-                            <rect key="frame" x="176" y="4.5" width="206" height="32"/>
+                            <rect key="frame" x="176" y="5.5" width="206" height="32"/>
                             <segments>
                                 <segment title="Easy"/>
                                 <segment title="Medium"/>
@@ -55,26 +57,39 @@
                         <constraint firstAttribute="trailing" secondItem="xzO-WD-b0R" secondAttribute="trailing" constant="16" id="yqx-3e-BDc"/>
                     </constraints>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ccO-hN-RTI">
-                    <rect key="frame" x="16" y="108" width="30" height="30"/>
-                    <state key="normal" title="╳">
-                        <color key="titleColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
-                    </state>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="80B-7f-UgA">
+                    <rect key="frame" x="16" y="60" width="36" height="38"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
+                    <state key="normal" image="xmark.circle.fill" catalog="system"/>
                     <connections>
-                        <action selector="backTapped:" destination="-1" eventType="touchUpInside" id="EBp-LZ-aSw"/>
+                        <action selector="backTapped:" destination="-1" eventType="touchUpInside" id="gYo-M6-M4b"/>
                     </connections>
                 </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Made by Enrico during quarantine ♥️ enricoappstellli@gmail.com" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WjM-j9-vSV">
+                    <rect key="frame" x="16" y="837.5" width="382" height="38.5"/>
+                    <fontDescription key="fontDescription" name="Lato-Thin" family="Lato" pointSize="16"/>
+                    <color key="textColor" white="0.17818970479999999" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="bfh-Q3-PXA" firstAttribute="top" secondItem="ccO-hN-RTI" secondAttribute="bottom" constant="36" id="Jg0-x5-tRU"/>
-                <constraint firstItem="ccO-hN-RTI" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="64" id="LjG-4M-HkA"/>
+                <constraint firstItem="bfh-Q3-PXA" firstAttribute="top" secondItem="80B-7f-UgA" secondAttribute="bottom" constant="32" id="FxS-zC-bJz"/>
+                <constraint firstItem="80B-7f-UgA" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="16" id="LRS-ek-Dfn"/>
                 <constraint firstItem="bfh-Q3-PXA" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="8" id="Oa3-i4-nkl"/>
-                <constraint firstItem="ccO-hN-RTI" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="RiC-Vc-CfR"/>
+                <constraint firstItem="80B-7f-UgA" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="ceg-TC-6R3"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="bfh-Q3-PXA" secondAttribute="trailing" constant="8" id="fTF-Jg-7qW"/>
+                <constraint firstAttribute="bottom" secondItem="WjM-j9-vSV" secondAttribute="bottom" constant="20" id="oal-gt-Z70"/>
+                <constraint firstItem="WjM-j9-vSV" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="qej-aH-Lpy"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="WjM-j9-vSV" secondAttribute="trailing" constant="16" id="zRi-qE-2ve"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="139" y="118"/>
         </view>
     </objects>
+    <resources>
+        <image name="xmark.circle.fill" catalog="system" width="64" height="60"/>
+    </resources>
 </document>

@@ -15,6 +15,8 @@ enum StorageKeys {
     static let name = "name"
     static let record = "record"
     static let badges = "badges"
+    static let wins = "wins"
+    static let multiWins = "multiWins"
 }
 
 protocol StoreProvider {}
@@ -94,8 +96,10 @@ extension StoreProvider {
         UserDefaults.standard.value(forKey: StorageKeys.record) as? TimeInterval
     }
     
-    func setBadge(_ badge: Badge) {
+    func saveBadge(_ badge: Badge) {
         var arr = getBadges()
+        guard !arr.contains(badge) else { return }
+        SessionData.shared.newBadges.append(badge)
         arr.append(badge)
         let mapped = arr.map {$0.index}
         UserDefaults.standard.setValue(mapped, forKey: StorageKeys.badges)
@@ -106,6 +110,31 @@ extension StoreProvider {
             return badges.map { ( Badge($0)) }
         }
         return []
+    }
+    
+    func saveWin() {
+        UserDefaults.standard.setValue(getWin() + 1, forKey: StorageKeys.wins)
+        if getWin() == 10 {
+            saveBadge(.flushWinner)
+        }
+        if getWin() == 50 {
+            saveBadge(.almightyPooper)
+        }
+    }
+    
+    func saveMultiWin() {
+        UserDefaults.standard.setValue(getMultiWin() + 1, forKey: StorageKeys.multiWins)
+        if getMultiWin() == 10 {
+            saveBadge(.pipeDominator)
+        }
+    }
+    
+    func getWin() -> Int {
+        UserDefaults.standard.value(forKey: StorageKeys.wins) as? Int ?? 0
+    }
+    
+    func getMultiWin() -> Int {
+        UserDefaults.standard.value(forKey: StorageKeys.multiWins) as? Int ?? 0
     }
 }
 

@@ -35,6 +35,10 @@ extension Room: StoreProvider {
         return players.first?.id == getID()
     }
     
+    func isPrivate() -> Bool {
+        return self.id.contains("&P")
+    }
+    
     func isExpired() -> Bool {
         guard let date = date.toDate() else { return true }
         return Date() > date.addingTimeInterval(600)

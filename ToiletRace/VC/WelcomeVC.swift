@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseDynamicLinks
 
 class WelcomeVC: UIViewController, TextPresenter {
 

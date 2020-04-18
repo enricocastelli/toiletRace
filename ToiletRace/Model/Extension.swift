@@ -133,6 +133,30 @@ extension UIImage {
         self.init(cgImage: cgImage)
     }
     
+    func blackWhite() -> UIImage? {
+        guard let currentCGImage = self.cgImage else { return nil }
+        let currentCIImage = CIImage(cgImage: currentCGImage)
+        let filter = CIFilter(name: "CIColorMonochrome")
+        filter?.setValue(currentCIImage, forKey: "inputImage")
+
+        // set a gray value for the tint color
+        filter?.setValue(CIColor(red: 0.7, green: 0.7, blue: 0.7), forKey: "inputColor")
+
+        filter?.setValue(1.0, forKey: "inputIntensity")
+        guard let outputImage = filter?.outputImage else { return nil }
+
+        let context = CIContext()
+        
+        if let cgimg = context.createCGImage(outputImage, from: outputImage.extent) {
+            let processedImage = UIImage(cgImage: cgimg)
+            return processedImage
+        }
+        return nil
+    }
+    
+    static func pooImage(_ pooName: PooName) -> (UIImage) {
+        return  UIImage(named: pooName.rawValue)!
+    }
     
     static var paper: UIImage {
         return  UIImage(named: "paper")!
@@ -158,10 +182,29 @@ extension UIImage {
         return  UIImage(named: "tiles")!
     }
     
-    static func pooImage(_ pooName: PooName) -> (UIImage) {
-        return  UIImage(named: pooName.rawValue)!
+    static var fart: UIImage {
+        return  UIImage(named: "fart")!
     }
     
+    static var plunger: UIImage {
+        return  UIImage(named: "plunger")!
+    }
+    
+    static var winner: UIImage {
+        return  UIImage(named: "winner")!
+    }
+    
+    static var washroom: UIImage {
+        return  UIImage(named: "washroom")!
+    }
+    
+    static var clean: UIImage {
+        return  UIImage(named: "clean")!
+    }
+    
+    static var heartbreak: UIImage {
+        return  UIImage(named: "heartbreak")!
+    }
 }
 
 

@@ -19,7 +19,7 @@ extension RoomsProvider {
             guard let room = snapshot.toRoom() else { return }
             if room.isExpired() {
                 self.deleteRoom(room.id, completion: {}) { (_) in }
-            } else if room.status != .Active {
+            } else if room.status != .Active && !room.isPrivate() {
                 self.didAddedRoom(room)
             }
         }
@@ -33,10 +33,11 @@ extension RoomsProvider {
         rooms().removeAllObservers()
     }
     
-    func createRoom(_ name: String, completion: @escaping(Room) ->(), failure: @escaping(Error) ->()) {
+    func createRoom(_ name: String, isPrivate: Bool, completion: @escaping(Room) ->(), failure: @escaping(Error) ->()) {
         let random = String(Int(arc4random_uniform(99)))
         let uuid = UUID().uuidString.prefix(5).lowercased() + "-" + random
-        let room = Room(name: name, id: "\(testName())\(uuid)", players: [createSelf(.Confirmed)], status: .Waiting, date: Date().toString())
+        let privateString = isPrivate ? "&P" : ""
+        let room = Room(name: name, id: "\(testName())\(privateString)\(uuid)", players: [createSelf(.Confirmed)], status: .Waiting, date: Date().toString())
         guard let data = room.toData() else {
             failure(PooError.GeneralError)
             return }

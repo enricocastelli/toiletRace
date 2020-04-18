@@ -21,6 +21,7 @@ class MultiplayerVC: UIViewController, StoreProvider {
             roomsLabel.text = "\(rooms.count) ROOMS OPEN"
         }
     }
+    var createRoomVC: CreateRoomVC?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +31,11 @@ class MultiplayerVC: UIViewController, StoreProvider {
         roomsLabel.text = "\(rooms.count) ROOMS OPEN"
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        handleRefreshControl()
+    }
+        
     private func setupTable() {
         tableView.backgroundColor = .white
         tableView.refreshControl = UIRefreshControl()
@@ -55,14 +61,10 @@ class MultiplayerVC: UIViewController, StoreProvider {
     }
     
     private func addTapped() {
-        presentFieldAlert("Create a new Room", subtitle: "Type a name...", textPlaceholder: "The Bathroom", firstButtonTitle: "OK", secondButtonTitle: "Cancel", firstCompletion: { text in
-            self.createRoom(text, completion: { (room) in
-                self.removeRoomObservers()
-                self.navigation.push(BathroomVC(room))
-            }) { (error) in
-                self.presentGeneralError(error)
-            }
-        }, secondCompletion: nil)
+        createRoomVC = CreateRoomVC()
+        createRoomVC?.delegate = self
+        createRoomVC?.modalPresentationStyle = .overCurrentContext
+        self.present(createRoomVC!, animated: false, completion: nil)
     }
     
     @objc func handleRefreshControl() {
@@ -125,5 +127,18 @@ extension MultiplayerVC: RoomsProvider {
     func didRemovedRoom(_ room: Room) {
         self.rooms.removeAll {$0.id == room.id }
         self.tableView.reloadData()
+    }
+}
+
+extension MultiplayerVC: CreateRoomDelegate { 
+    
+    func shouldCreateRoom(name: String, isPrivate: Bool) {
+        self.createRoom(name, isPrivate: isPrivate, completion: { (room) in
+            self.removeRoomObservers()
+            self.createRoomVC?.closeAnimation()
+            self.navigation.push(BathroomVC(room))
+        }) { (error) in
+            self.presentGeneralError(error)
+        }
     }
 }

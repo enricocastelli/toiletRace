@@ -183,7 +183,9 @@ class ShowroomVC: UIViewController, StoreProvider, PooNodeCreator {
     
     func advance() {
         DispatchQueue.main.async {
-            if self.isMultiplayer {
+            if let preopenedRoom = SessionData.shared.preopenedRoom {
+                self.navigation.push(BathroomVC(preopenedRoom))
+            } else if self.isMultiplayer {
                 self.navigation.push(MultiplayerVC())
             } else {
                 self.goToRace()

@@ -18,11 +18,16 @@ class BadgesVC: UIViewController, StoreProvider {
     @IBOutlet weak var minuteCounterView: CounterView!
     @IBOutlet weak var secondsCounterView: CounterView!
     @IBOutlet weak var decimalCounterView: CounterView!
-
-
+    @IBOutlet weak var explanationView: UIView!
+    @IBOutlet weak var explanationLabel: UILabel!
+    
+    var array = [Badge]()
+    var animationEnabled = true
+    var bigView: RoundView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        badgesCollectionView.register(BadgeCell.self, forCellWithReuseIdentifier: "cell")
+        badgesCollectionView.register(UINib(nibName: BadgeCell.id, bundle: nil), forCellWithReuseIdentifier: BadgeCell.id)
         if let time = getRecord() {
             minuteCounterView.update(time.minutes()) {}
             secondsCounterView.update(time.seconds()) {}
@@ -31,22 +36,27 @@ class BadgesVC: UIViewController, StoreProvider {
             lapLabel.text = "NO RECORD SET YET"
             secondsCounterView.isHidden = true
             decimalCounterView.isHidden = true
+            minuteCounterView.isHidden = true
         }
+        explanationView.transform = CGAffineTransform(translationX: 0, y: view.frame.height)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        guard bigView == nil else { return }
+        array = Badge.array
+        badgesCollectionView.reloadData()
         addBigView()
     }
     
     private func addBigView() {
-        let bigView = RoundView(frame: CGRect(x: 0, y: -view.frame.height/2, width: view.frame.width*2, height: view.frame.width*2))
-        bigView.backgroundColor = UIColor.aqua.withAlphaComponent(0.4)
-        bigView.center = CGPoint(x: view.center.x, y: 0)
-        bigView.transform = CGAffineTransform(scaleX: 0, y: 0)
-        view.insertSubview(bigView, at: 0)
-        UIView.animate(withDuration: 0.5, delay: 0.2, options: [], animations: {
-            bigView.transform = CGAffineTransform.identity
+        bigView = RoundView(frame: CGRect(x: 0, y: 0, width: view.frame.width*2, height: view.frame.width*2))
+        bigView!.backgroundColor = UIColor.aqua.withAlphaComponent(0.2)
+        bigView!.center = CGPoint(x: view.center.x, y: view.frame.height)
+        bigView!.transform = CGAffineTransform(scaleX: 0, y: 0)
+        view.insertSubview(bigView!, at: 0)
+        UIView.animate(withDuration: 0.5, animations: {
+            self.bigView!.transform = CGAffineTransform.identity
         }, completion: nil)
     }
     
@@ -55,38 +65,32 @@ class BadgesVC: UIViewController, StoreProvider {
     }
 }
 
-extension BadgesVC: UICollectionViewDataSource, UICollectionViewDelegate {
+extension BadgesVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return Badge.array.count
+        return array.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! BadgeCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BadgeCell.id, for: indexPath) as! BadgeCell
         let badge = Badge.array[indexPath.row]
-        cell.label.text = badge.desc
-        if getBadges().contains(badge) {
-            cell.label.font = Font.with(.bold, 18)
+        cell.badge = getBadges().contains(badge) ? badge : nil
+        if animationEnabled {
+            let delay = 0.2*Double(indexPath.row)
+            cell.animateShowing(delay)
         }
         return cell
     }
-}
-
-
-class BadgeCell: UICollectionViewCell {
     
-    let label = UILabel()
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        contentView.addContentView(label)
-        label.font = Font.with(.light, 16)
-        label.textAlignment = .center
-        label.numberOfLines = 0
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width/5, height: view.frame.width/3)
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        explanationLabel.text = Badge.array[indexPath.row].explanation
+        UIView.animate(withDuration:0.3) {
+            self.explanationView.transform = CGAffineTransform.identity
+        }
     }
 }
 

@@ -64,8 +64,7 @@ class SessionData {
     
     static let shared = SessionData()
     var selectedPlayer = Poo(name: .GuanoStar)
+    var preopenedRoom: Room?
+    var newBadges = [Badge]()
 }
-
-// BEWARE OF THE ALMIGHTYYY POOOOPPPP
-var shouldShowMighty = false
 

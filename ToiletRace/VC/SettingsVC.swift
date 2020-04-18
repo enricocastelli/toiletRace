@@ -12,15 +12,7 @@ class SettingsVC: UIViewController, StoreProvider {
 
     @IBOutlet weak var segmented: UISegmentedControl!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        segmented.selectedSegmentIndex = retrieveLevel()
-    }
 
-    @IBAction func segmentedTapped(_ sender: UISegmentedControl) {
-        saveLevel(sender.selectedSegmentIndex)
-    }
-    
     
     @IBAction func backTapped(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)

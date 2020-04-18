@@ -24,6 +24,7 @@ class Loading: UIView {
         label.center = CGPoint(x: center.x, y: frame.height - 80)
         label.text = "LOADING..."
         label.textColor = UIColor.brown
+        label.font = Font.with(.medium, 27)
         addSubview(pooImage)
         addSubview(label)
         alpha = 0

@@ -24,6 +24,9 @@ class GameResultVC: UIViewController, StoreProvider, RematchProvider {
     var finalResults: [Result]
     var animationEnabled = true
     var resultTimer = Timer()
+    var userResult: Result? {
+        return self.finalResults.filter{$0.poo == SessionData.shared.selectedPlayer}.first
+    }
     
     init(results: [Result], room: Room? = nil) {
         finalResults = results
@@ -48,6 +51,7 @@ class GameResultVC: UIViewController, StoreProvider, RematchProvider {
             })
         }
         recordCheck()
+        badgeCheck()
     }
     
     private func setTableView() {
@@ -67,11 +71,28 @@ class GameResultVC: UIViewController, StoreProvider, RematchProvider {
     }
     
     private func recordCheck() {
-        // test
-        setBadge(.flushWinner)
-        if let time = finalResults.filter({$0.poo == SessionData.shared.selectedPlayer}).first?.time {
+        if let time = userResult?.time {
             storeRecord(time)
         }
+    }
+    
+    private func badgeCheck() {
+        if let time = userResult?.time, time < 1800.0 {
+            saveBadge(.faster)
+        }
+        if finalResults.first?.poo == SessionData.shared.selectedPlayer {
+            // user is first
+            multiplayer == nil ? saveWin() : saveMultiWin()
+        }
+        if !SessionData.shared.newBadges.isEmpty {
+            newBadge()
+        }
+    }
+    
+    private func newBadge() {
+        presentAlert("WOW", subtitle: "You just gained a new badge! Go find out which poop you unlocked!", firstButtonTitle: "Nice", secondButtonTitle: nil, firstCompletion: {
+            SessionData.shared.newBadges = []
+        }, secondCompletion: nil)
     }
     
     private func updatePlayers() {
@@ -112,12 +133,14 @@ class GameResultVC: UIViewController, StoreProvider, RematchProvider {
     }
     
     private func multiplayerRematch(_ room: Room) {
+        navigation.startLoading()
         barView.leftButton.isEnabled = false
         // first update room to get latest updates
         getRoom(room.id, completion: { (updatedRoom) in
             guard updatedRoom.players.count == self.finalResults.count else {
                 self.presentAlert("Wait", subtitle: "Not every player finished the race yet!", firstButtonTitle: "Ok", secondButtonTitle: nil, firstCompletion: {}, secondCompletion: nil)
                 self.barView.leftButton.isEnabled = true
+                self.navigation.stopLoading()
                 return
             }
             self.resultTimer.invalidate()
@@ -126,16 +149,20 @@ class GameResultVC: UIViewController, StoreProvider, RematchProvider {
             if updatedRoom.imOwner() {
                 self.multiplayer?.sendStatus(PlayerStatus.Confirmed)
                 self.updateRoomStatus(updatedRoom.id, .Waiting, {
+                    self.navigation.stopLoading()
                     self.navigation.push(bathroom, shouldRemove: true)
                 }) { (error) in
+                    self.navigation.stopLoading()
                     self.barView.leftButton.isEnabled = true
                     self.presentGeneralError(error)
                 }
             } else {
+                self.navigation.stopLoading()
                 self.multiplayer?.sendStatus(PlayerStatus.Confirmed)
                 self.navigation.push(bathroom, shouldRemove: true)
             }
         }) { (error) in
+            self.navigation.stopLoading()
             self.barView.leftButton.isEnabled = true
             self.presentGeneralError(error)
         }

@@ -7,6 +7,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="Lato-Light.ttf">
+            <string>Lato-Light</string>
+        </array>
         <array key="Lato-Medium.ttf">
             <string>Lato-Medium</string>
         </array>
@@ -17,7 +20,9 @@
                 <outlet property="badgesCollectionView" destination="A9L-qB-cX5" id="73a-wD-TAX"/>
                 <outlet property="badgesLabel" destination="S39-Sl-7nE" id="cYi-N1-6HX"/>
                 <outlet property="decimalCounterView" destination="0Cp-u3-dGw" id="Bwe-C7-ARh"/>
-                <outlet property="lapLabel" destination="whs-SS-vm5" id="a8W-Fm-vIM"/>
+                <outlet property="explanationLabel" destination="AzL-9Y-wLO" id="KJK-ay-kNA"/>
+                <outlet property="explanationView" destination="Kfh-aM-7EW" id="x1O-Rq-VSt"/>
+                <outlet property="lapLabel" destination="Zx1-kZ-2zz" id="A8D-BH-wx0"/>
                 <outlet property="minuteCounterView" destination="hjs-if-pqA" id="qZ3-gA-9qA"/>
                 <outlet property="recordContainerView" destination="1fI-xJ-H9F" id="2nM-MX-Rif"/>
                 <outlet property="secondsCounterView" destination="P8X-9g-p08" id="r28-60-xnQ"/>
@@ -32,8 +37,8 @@
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="A9L-qB-cX5">
                     <rect key="frame" x="16" y="310.5" width="382" height="535.5"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="16" minimumInteritemSpacing="16" id="Lwu-wr-Gh1">
-                        <size key="itemSize" width="80" height="80"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="40" minimumInteritemSpacing="40" id="Lwu-wr-Gh1">
+                        <size key="itemSize" width="80" height="100"/>
                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -53,36 +58,36 @@
                     <rect key="frame" x="16" y="154" width="382" height="76.5"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P8X-9g-p08" customClass="CounterView" customModule="The_Toilet_Race" customModuleProvider="target">
-                            <rect key="frame" x="153" y="0.0" width="76" height="76.5"/>
+                            <rect key="frame" x="160.5" y="0.0" width="61" height="76.5"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="width" secondItem="P8X-9g-p08" secondAttribute="height" multiplier="1:1" id="170-ZB-9ac"/>
+                                <constraint firstAttribute="width" secondItem="P8X-9g-p08" secondAttribute="height" multiplier="4:5" id="170-ZB-9ac"/>
                             </constraints>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=":" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="whs-SS-vm5">
-                            <rect key="frame" x="233" y="0.0" width="4.5" height="76.5"/>
+                            <rect key="frame" x="225.5" y="0.0" width="4.5" height="76.5"/>
                             <fontDescription key="fontDescription" name="Lato-Medium" family="Lato" pointSize="16"/>
                             <color key="textColor" red="0.1137254902" green="0.1137254902" blue="0.1137254902" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=":" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L1n-JO-HPf">
-                            <rect key="frame" x="144.5" y="0.0" width="4.5" height="76.5"/>
+                            <rect key="frame" x="152" y="0.0" width="4.5" height="76.5"/>
                             <fontDescription key="fontDescription" name="Lato-Medium" family="Lato" pointSize="16"/>
                             <color key="textColor" red="0.1137254902" green="0.1137254902" blue="0.1137254902" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Cp-u3-dGw" customClass="CounterView" customModule="The_Toilet_Race" customModuleProvider="target">
-                            <rect key="frame" x="241.5" y="0.0" width="77.5" height="76.5"/>
+                            <rect key="frame" x="234" y="0.0" width="62" height="76.5"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="width" secondItem="0Cp-u3-dGw" secondAttribute="height" multiplier="1:1" constant="1" id="uzy-Ef-X66"/>
+                                <constraint firstAttribute="width" secondItem="0Cp-u3-dGw" secondAttribute="height" multiplier="4:5" constant="1" id="uzy-Ef-X66"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hjs-if-pqA" customClass="CounterView" customModule="The_Toilet_Race" customModuleProvider="target">
-                            <rect key="frame" x="64" y="0.0" width="76.5" height="76.5"/>
+                            <rect key="frame" x="87" y="0.0" width="61" height="76.5"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="width" secondItem="hjs-if-pqA" secondAttribute="height" multiplier="1:1" id="MjK-g5-Bsx"/>
+                                <constraint firstAttribute="width" secondItem="hjs-if-pqA" secondAttribute="height" multiplier="4:5" id="MjK-g5-Bsx"/>
                             </constraints>
                         </view>
                     </subviews>
@@ -122,9 +127,33 @@
                         <action selector="close" destination="-1" eventType="touchUpInside" id="TyT-fH-qQm"/>
                     </connections>
                 </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kfh-aM-7EW">
+                    <rect key="frame" x="16" y="824" width="382" height="40"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BADGES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AzL-9Y-wLO">
+                            <rect key="frame" x="0.0" y="8" width="382" height="24"/>
+                            <fontDescription key="fontDescription" name="Lato-Light" family="Lato" pointSize="20"/>
+                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="AzL-9Y-wLO" firstAttribute="top" secondItem="Kfh-aM-7EW" secondAttribute="top" constant="8" id="4e9-jK-Aet"/>
+                        <constraint firstItem="AzL-9Y-wLO" firstAttribute="leading" secondItem="Kfh-aM-7EW" secondAttribute="leading" id="9ef-i6-ys0"/>
+                        <constraint firstAttribute="trailing" secondItem="AzL-9Y-wLO" secondAttribute="trailing" id="RzC-tc-yj9"/>
+                        <constraint firstAttribute="bottom" secondItem="AzL-9Y-wLO" secondAttribute="bottom" constant="8" id="sPU-82-St6"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="8"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="Kfh-aM-7EW" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="106-Z3-MH3"/>
                 <constraint firstItem="Zx1-kZ-2zz" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="1eo-mC-LLY"/>
                 <constraint firstItem="Zx1-kZ-2zz" firstAttribute="top" secondItem="7tu-Lj-5sO" secondAttribute="bottom" constant="16" id="6vQ-67-dto"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Zx1-kZ-2zz" secondAttribute="trailing" constant="16" id="CKE-xd-10p"/>
@@ -135,6 +164,8 @@
                 <constraint firstItem="7tu-Lj-5sO" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="M65-aw-Rv2"/>
                 <constraint firstItem="A9L-qB-cX5" firstAttribute="top" secondItem="S39-Sl-7nE" secondAttribute="bottom" constant="16" id="Q77-4w-Y3U"/>
                 <constraint firstItem="S39-Sl-7nE" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="UL3-Bm-O9F"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Kfh-aM-7EW" secondAttribute="trailing" constant="16" id="cSx-bY-Ety"/>
+                <constraint firstAttribute="bottom" secondItem="Kfh-aM-7EW" secondAttribute="bottom" constant="32" id="dSF-du-CQc"/>
                 <constraint firstItem="7tu-Lj-5sO" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="16" id="ege-cV-t1N"/>
                 <constraint firstItem="A9L-qB-cX5" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="gUJ-8y-Ock"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="A9L-qB-cX5" secondAttribute="trailing" constant="16" id="o4s-Z2-pMq"/>
