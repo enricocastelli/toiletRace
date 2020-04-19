@@ -77,7 +77,7 @@ class GameResultVC: UIViewController, StoreProvider, RematchProvider {
     }
     
     private func badgeCheck() {
-        if let time = userResult?.time, time < 1800.0 {
+        if let time = userResult?.time, time < 30 {
             saveBadge(.faster)
         }
         if finalResults.first?.poo == SessionData.shared.selectedPlayer {

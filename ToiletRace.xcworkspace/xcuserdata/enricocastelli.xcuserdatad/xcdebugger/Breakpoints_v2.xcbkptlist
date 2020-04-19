@@ -15,9 +15,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "441"
-            endingLineNumber = "441"
-            landmarkName = "sendMultiplayerData()"
-            landmarkType = "7">
+            endingLineNumber = "441">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

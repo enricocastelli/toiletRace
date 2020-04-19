@@ -37,7 +37,7 @@ extension RoomsProvider {
         let random = String(Int(arc4random_uniform(99)))
         let uuid = UUID().uuidString.prefix(5).lowercased() + "-" + random
         let privateString = isPrivate ? "&P" : ""
-        let room = Room(name: name, id: "\(testName())\(privateString)\(uuid)", players: [createSelf(.Confirmed)], status: .Waiting, date: Date().toString())
+        let room = Room(name: name, id: "\(getID())\(privateString)\(uuid)", players: [createSelf(.Confirmed)], status: .Waiting, date: Date().toString())
         guard let data = room.toData() else {
             failure(PooError.GeneralError)
             return }

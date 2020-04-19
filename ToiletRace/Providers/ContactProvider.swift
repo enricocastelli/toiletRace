@@ -25,6 +25,13 @@ extension ContactProvider where Self: GameViewController {
         if started == false {
             detectObstacleCollision(contact: contact)
         }
+        if contact.nodeA == pooNode || contact.nodeB == pooNode {
+            let otherNode = contact.nodeA == pooNode ? contact.nodeB : contact.nodeA
+            UIImpactFeedbackGenerator.init(style: .light).impactOccurred()
+            if otherNode.name != "finish" &&  otherNode.name != "carpet" && otherNode.name != "floor" {
+                noWipe = false
+            }
+        }
         if contact.nodeB.name == "finish" {
             guard isValidFinish(contact.nodeA) else { return }
             handleFinish(contact.nodeA)

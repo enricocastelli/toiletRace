@@ -52,6 +52,7 @@ class GameViewController: UIViewController, BonusProvider, PooNodeCreator, Conta
     /// bool if it should rotate camera at the end
     var shouldRotateCamera: Bool = false
     var room: Room?
+    var noWipe = true
     
     // MARK:- PREPARATION AND INITIAL COMMON METHODS
     
@@ -239,7 +240,6 @@ class GameViewController: UIViewController, BonusProvider, PooNodeCreator, Conta
     
     /// called from controllerView, user tapped the screen
     func shouldTurn(force: CGFloat) {
-        self.handleFinish(pooNode)
         let turningForce = SessionData.shared.selectedPlayer.turningForce()*force
         let right = force > 0
         let force = SCNVector3(turningForce, 0, 0)
@@ -338,6 +338,9 @@ class GameViewController: UIViewController, BonusProvider, PooNodeCreator, Conta
         multiplayer?.sendStatus(.Finish(time: raceResultManager.userTime()?.string() ?? ""))
         addFinalAnimation()
         controllerView.addFinishView()
+        if noWipe {
+            saveBadge(.noWipe)
+        }
         let _ = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { (_) in
             DispatchQueue.main.async {
                 let resultVC = GameResultVC(results: self.raceResultManager.getResults(opponents: self.currentPlayers.filter({$0.id != self.getID()})), room: self.room)
@@ -377,9 +380,6 @@ extension GameViewController : BonusButtonDelegate {
 extension GameViewController: SCNPhysicsContactDelegate {
    
     func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
-        if contact.nodeA == pooNode || contact.nodeB == pooNode {
-            UIImpactFeedbackGenerator.init(style: .light).impactOccurred()
-        }
         contactStarted(world, contact)
     }
 }

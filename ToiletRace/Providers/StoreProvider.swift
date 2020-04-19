@@ -60,9 +60,29 @@ extension StoreProvider {
         #if DEBUG
         return testName()
         #else
-        return UserDefaults.standard.object(forKey: StorageKeys.name) as? String ?? UIDevice.current.name.playerName
+        return UserDefaults.standard.object(forKey: StorageKeys.name) as? String ?? playerName()
         #endif
     }
+    
+    func playerName() -> String {
+        let device = UIDevice.current.name
+        let nameString = device.replacingOccurrences(of: "iPhone", with: "").replacingOccurrences(of: "'s", with: "").replacingOccurrences(of: "di", with: "").replacingOccurrences(of: " ", with: "")
+        guard nameString != "" && nameString != " " && nameString.count < 60 else { return "iPhone" }
+        return nameString
+    }
+    
+    private func testName() -> String {
+        if UIDevice.current.name == "Enrico\'s iPhone" {
+            return "test-6s"
+        } else if UIDevice.current.name == "iPhone di Enrico" {
+            return "test-7"
+        } else if UIDevice.current.name == "iPhone 11 Pro Max" {
+            return "test-sim-max"
+        } else {
+            return "test-sim"
+        }
+    }
+
     
     func saveLevel(_ level:Int) {
         UserDefaults.standard.setValue(level, forKey: StorageKeys.level)
@@ -84,7 +104,7 @@ extension StoreProvider {
     
     func storeRecord(_ record: TimeInterval) {
         if let savedRecord = getRecord() {
-            if record > savedRecord {
+            if record < savedRecord {
                 UserDefaults.standard.setValue(record, forKey: StorageKeys.record)
             }
         } else {
@@ -135,17 +155,5 @@ extension StoreProvider {
     
     func getMultiWin() -> Int {
         UserDefaults.standard.value(forKey: StorageKeys.multiWins) as? Int ?? 0
-    }
-}
-
-func testName() -> String {
-    if UIDevice.current.name == "Enrico\'s iPhone" {
-        return "test-6s"
-    } else if UIDevice.current.name == "iPhone di Enrico" {
-        return "test-7"
-    } else if UIDevice.current.name == "iPhone 11 Pro Max" {
-        return "test-sim-max"
-    } else {
-        return "test-sim"
     }
 }

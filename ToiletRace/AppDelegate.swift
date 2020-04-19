@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, StoreProvider {
         // Override point for customization after application launch.
         FirebaseApp.configure()
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        isFirstTime()
+        let  _ = isFirstTime()
         let firstVC = WelcomeVC()
         let nav = Navigation(rootViewController: firstVC)
         nav.navigationBar.isHidden = true
