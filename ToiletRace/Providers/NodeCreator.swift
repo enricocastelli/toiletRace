@@ -166,12 +166,14 @@ extension NodeCreator {
         let boxNode = SCNNode(geometry: geoOB)
         boxNode.physicsBody = SCNPhysicsBody(type: SCNPhysicsBodyType.kinematic, shape: nil)
         boxNode.physicsBody?.categoryBitMask = Collider.bounds
+        boxNode.physicsBody?.restitution = 4
         boxNode.position = SCNVector3(-(geoOB.width/2) - geoTunnel.outerRadius, 0.0, CGFloat(zed + 4))
         let geoOB2 = geoOB.copy() as! SCNBox
         geoOB2.width = (CGFloat(Matrix.boundsLength/2) - geoTunnel.outerRadius)
         let boxNode2 = SCNNode(geometry: geoOB2)
         boxNode2.physicsBody = SCNPhysicsBody(type: SCNPhysicsBodyType.kinematic, shape: nil)
         boxNode2.physicsBody?.categoryBitMask = Collider.bounds
+        boxNode2.physicsBody?.restitution = 4
         boxNode2.position = SCNVector3((geoOB.width/2) + geoTunnel.outerRadius, 0.0, CGFloat(zed + 4))
         boxNode.name = "bath"
         boxNode2.name = "bath"

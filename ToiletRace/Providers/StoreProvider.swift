@@ -79,7 +79,7 @@ extension StoreProvider {
         } else if UIDevice.current.name == "iPhone 11 Pro Max" {
             return "test-sim-max"
         } else {
-            return "test-sim"
+            return "Enri's poop"
         }
     }
 
