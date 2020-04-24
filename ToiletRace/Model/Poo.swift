@@ -246,14 +246,14 @@ class Poo: StoreProvider, Equatable {
             let material = SCNMaterial()
             material.lightingModel = .physicallyBased
             material.diffuse.contents = UIImage(named: "puffBase")
-            material.diffuse.intensity = 0.7
+            material.diffuse.intensity = 0.2
             material.ambientOcclusion.contents = UIImage(named: "puffOcc")
             material.normal.contents = UIImage(named: "puffNormal")
             material.specular.contents = UIImage(named: "puffSpec")
             material.roughness.contents = 0.8
             material.selfIllumination.contents = UIColor.brown
-            material.displacement.contents = UIImage(named: "raisHei")
-            material.displacement.intensity = 0.1
+//            material.displacement.contents = UIImage(named: "raisHei")
+//            material.displacement.intensity = 0.1
             return material
         case .HoleRunner:
             let material = SCNMaterial()
@@ -265,13 +265,14 @@ class Poo: StoreProvider, Equatable {
             material.transparent.contents = UIColor.black
             material.ambientOcclusion.contents = UIColor.brown
             material.selfIllumination.contents = UIColor.brown
-            material.displacement.contents = UIImage(named: "raisHei")
-            material.displacement.intensity = 0.1
+//            material.displacement.contents = UIImage(named: "raisHei")
+//            material.displacement.intensity = 0.1
             return material
         case .IndianSurprise:
             let material = SCNMaterial()
             material.lightingModel = .physicallyBased
             material.diffuse.contents = UIImage(named: "bactBase")
+            material.diffuse.intensity = 0.1
             material.normal.contents = UIImage(named: "bactNormal")
             material.transparent.contents = UIColor.black
             material.ambientOcclusion.contents = UIImage(named: "bactOcc")
@@ -279,8 +280,8 @@ class Poo: StoreProvider, Equatable {
             material.selfIllumination.contents = UIColor.brown
             material.emission.contents = UIColor.brown
             material.emission.intensity = 1
-            material.displacement.contents = UIImage(named: "bactDisp")
-            material.displacement.intensity = 0.1
+//            material.displacement.contents = UIImage(named: "bactDisp")
+//            material.displacement.intensity = 0.1
             return material
         case .BrownTornado:
             let material = SCNMaterial()
@@ -291,8 +292,8 @@ class Poo: StoreProvider, Equatable {
             material.ambientOcclusion.contents = UIColor.brown
             material.selfIllumination.contents = UIColor.brown
             material.emission.contents = UIColor.black
-            material.displacement.contents = UIImage(named: "cornHeight")
-            material.displacement.intensity = 0.1
+//            material.displacement.contents = UIImage(named: "cornHeight")
+//            material.displacement.intensity = 0.1
             return material
         case .GarganTurd:
             let material = SCNMaterial()
@@ -304,8 +305,8 @@ class Poo: StoreProvider, Equatable {
             material.selfIllumination.contents = UIColor.white
             material.emission.contents = UIColor.black
             material.emission.intensity = 1
-            material.displacement.contents = UIImage(named: "cornHeight")
-            material.displacement.intensity = 0.35
+//            material.displacement.contents = UIImage(named: "cornHeight")
+//            material.displacement.intensity = 0.35
             return material
         case .FecalRaider:
             let material = SCNMaterial()
@@ -316,20 +317,20 @@ class Poo: StoreProvider, Equatable {
             material.selfIllumination.contents = UIColor.white
             material.emission.contents = UIColor.black
             material.emission.intensity = 1
-            material.displacement.contents = UIImage(named: "absDisp")
-            material.displacement.intensity = 0.05
+//            material.displacement.contents = UIImage(named: "absDisp")
+//            material.displacement.intensity = 0.05
             return material
         case .ApolloPoo:
             let material = SCNMaterial()
             material.lightingModel = .physicallyBased
             material.diffuse.contents = UIImage(named: "raisBase")
-            material.diffuse.intensity = 0.5
+            material.diffuse.intensity = 0.1
             material.ambientOcclusion.contents = UIImage(named: "raisOcc")
             material.normal.contents = UIImage(named: "raisNormal")
             material.roughness.contents = UIImage(named: "raisSpec")
             material.selfIllumination.contents = UIColor.white
-            material.displacement.contents = UIImage(named: "raisHei")
-            material.displacement.intensity = 0.2
+//            material.displacement.contents = UIImage(named: "raisHei")
+//            material.displacement.intensity = 0.2
             return material
         case .MightyPoop:
             let material = SCNMaterial()
@@ -338,8 +339,8 @@ class Poo: StoreProvider, Equatable {
             material.ambientOcclusion.contents = UIImage(named: "raisOcc")
             material.roughness.contents = UIImage(named: "nuggetNormal")
             material.selfIllumination.contents = UIColor.black
-            material.displacement.contents = UIImage(named: "bactDisp")
-            material.displacement.intensity = 0.2
+//            material.displacement.contents = UIImage(named: "bactDisp")
+//            material.displacement.intensity = 0.2
             return material
         }
     }
